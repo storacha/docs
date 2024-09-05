@@ -7,15 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && pnpm lint:md",
-    "lint:md": "remark src/pages/docs -e .md,.mdx, --frail --quiet --output",
+    "lint:md": "remark src/pages -e .md,.mdx, --frail --quiet --output",
     "test": "echo 'no tests yet'"
   },
   "dependencies": {
-    "next": "12.0.0",
+    "next": "14.0.1",
     "nextra": "^2.13.2",
     "nextra-theme-docs": "^2.13.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18",
+    "react-dom": "^18",
     "shiki": "^0.14.5"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 # Terms of service
+
 <!-- 
 \[If you are still using the legacy Storacha API (e.g., you created an account before November 14, 2023), please view the applicable Terms of Service [here](https://old.storacha/terms/).] -->
 

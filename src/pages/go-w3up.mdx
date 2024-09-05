@@ -12,10 +12,10 @@ You can easily integrate Storacha into your Go apps using `go-w3up`, our Go clie
 In this guide, we'll walk through the following steps:
 
 1. [Installing the client library](#install)
-1. [Generating a DID](#generate-a-did)
-1. [Obtaining proofs](#obtain-proofs)
-1. [Loading your private key and proofs](#load-priviate-key-and-proofs)
-1. [Uploading a CAR file](#upload-a-car)
+2. [Generating a DID](#generate-a-did)
+3. [Obtaining proofs](#obtain-proofs)
+4. [Loading your private key and proofs](#load-priviate-key-and-proofs)
+5. [Uploading a CAR file](#upload-a-car)
 
 ## Install
 
@@ -51,6 +51,7 @@ Output should look something like:
 # did:key:z6Mkh9TtUbFJcUHhMmS9dEbqpBbHPbL9oxg1zziWn1CYCNZ2
 MgCb+bRGl02JqlWMPUxCyntxlYj0T/zLtR2tn8LFvw6+Yke0BKAP/OUu2tXpd+tniEoOzB3pxqxHZpRhrZl1UYUeraT0=
 ```
+
 </Steps>
 
 <Callout>
@@ -83,6 +84,7 @@ w3 space create [NAME]
 ```sh
 w3 delegation create -c 'store/*' -c 'upload/*' [DID] -o proof.ucan
 ```
+
 </Steps>
 
 <Callout>

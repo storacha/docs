@@ -84,9 +84,9 @@ The Storacha aggregation pipeline is fully verifiable thanks to [UCAN](/docs/con
 There are 4 roles in the aggregation pipeline:
 
 1. **Storefront** - facilitates data storage services to applications and users, getting the requested data stored into Filecoin deals asynchronously.
-1. **Aggregator** - aggregates smaller data (Filecoin Pieces) into a larger piece that can effectively be stored with a Filecoin Storage Provider.
-1. **Dealer** - arranges deals with Filecoin Storage Probviders for the aggregates.
-1. **Deal Tracker** - follows the filecoin chain to keep track of successful deals.
+2. **Aggregator** - aggregates smaller data (Filecoin Pieces) into a larger piece that can effectively be stored with a Filecoin Storage Provider.
+3. **Dealer** - arranges deals with Filecoin Storage Probviders for the aggregates.
+4. **Deal Tracker** - follows the filecoin chain to keep track of successful deals.
 
 Roughly speaking, a piece progresses through the pipeline via the following stages:
 
@@ -96,10 +96,10 @@ Roughly speaking, a piece progresses through the pipeline via the following stag
 The client submits a piece to the _storefront_ (storacha) for aggregation and storage in Filecoin storage providers. The receipt for this invocation contains two links for async tasks:
 
 1. `filecoin/submit` - allows the client to continue following the receipt chain through the aggregation pipeline. It is executed after the _storefront_ has verified the piece CID corresponds to the shard CID.
-1. `filecoin/accept` - a "short cut" to the end of the pipeline, where the data aggregation proof will eventually become available. It is executed when the _dealer_ has successfully stored an aggregate containing the submitted piece in one or more Filecoin Storage Providers.
- 
+2. `filecoin/accept` - a "short cut" to the end of the pipeline, where the data aggregation proof will eventually become available. It is executed when the _dealer_ has successfully stored an aggregate containing the submitted piece in one or more Filecoin Storage Providers.
+
 ### `filecoin/submit`
- 
+
 The _storefront_ issues a receipt for `filecoin/submit` to indicate it has verified the offered piece and submitted it to the pipeline. The receipt for this invocation contains a link for an async task `piece/offer`, which is executed when the storefront offers the piece to an _aggregator_.
 
 ### `piece/offer`

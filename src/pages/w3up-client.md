@@ -86,7 +86,7 @@ If your agent has no other spaces, saving the space will set it as the "current 
 await client.setCurrentSpace(space.did())
 ```
 
-One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/web3-storage/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account: 
+One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/web3-storage/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
 
 ```js
 const recovery = await space.createRecovery(myAccount.did())

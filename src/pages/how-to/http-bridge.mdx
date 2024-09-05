@@ -130,6 +130,7 @@ If you already have a file available on the public IPFS network by CID, you can 
 ```sh
 ipfs dag export bafybeidhkumeonuwkebh2i4fc7o7lguehauradvlk57gzake6ggjsy372a > hello.car
 ```
+
 </Callout>
 
 Hang on to the `bafy...` Content ID output here! You'll need it for the "Registering Uploads" section below. Next,
@@ -164,6 +165,7 @@ in it, replacing `did:key:z6Mkabc123` with the space you used to generate auth h
   ]
 }
 ```
+
 <Callout type="info">
 **Important:** Make sure you use the CID from the output of `ipfs-car hash <file>` as the `link` in the file above!
 It should start with `bag...`. It is _not_ the same as the DAG root CID (which usually starts `bafy...`).

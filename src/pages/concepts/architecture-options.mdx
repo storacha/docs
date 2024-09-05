@@ -66,7 +66,6 @@ You can serialize the delegation using `delegation.archive()` and send it to you
 
 The client the user is using does not need to call `client.login(email)`, as it is not claiming any delegations via email address (but instead getting a delegation from your backend).
 
-
 When your user receives the delegation, they can deserialize it using [`Delegation.extract()`](https://github.com/web3-storage/ucanto/blob/c8999a59852b61549d163532a83bac62290b629d/packages/core/src/delegation.js#L399) and pass it in using `client.addSpace()`, and from there they can run any of the upload methods.
 
 <Callout type="info">

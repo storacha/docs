@@ -72,6 +72,7 @@ async function parseProof(data) {
 ```
 
 When the `backend` function is called in the developer's backend:
+
 - It's passed the DID of the user's Agent
 - Backend client initializes with an Agent that has permission to the developer's Space
 - It then generates a UCAN delegated to the user Agent DID passed in with only the `space/blob/add`, `space/index/add`, `filecoin/offer` and `upload/add` abilities (to give the user ability to upload) and set to expire in 24 hours
@@ -106,6 +107,7 @@ async function frontend() {
 ```
 
 When the `frontend` function is called in the user's environment:
+
 - An Agent DID is created
 - The `backend` function hosted at an API endpoint is called, passing in the Agent DID
 - The client is set up with a UCAN delegating upload capabilities to the Agent
