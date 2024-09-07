@@ -85,10 +85,6 @@ jobs:
           path_to_add: ${{ env.outputDir }}
           secret_key: ${{ secrets.W3_PRINCIPAL }}
           proof: ${{ secrets.W3_PROOF }}
-      - name: Update IPFS DNSLink https://docs.storacha.network
-        run: npx dnslink-cloudflare --record _dnslink --domain docs.storacha.network --link /ipfs/${{ steps.ipfs.outputs.cid }}
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_TOKEN }}
       - name: Deploy preview build to Cloudflare Pages
         uses: mathiasvr/command-output@v1.1.0
         id: cloudflare
