@@ -104,7 +104,7 @@ Now that you've created and provisioned a space, you're ready to upload files to
 
 Call `uploadFile` to upload a single file, or `uploadDirectory` to upload multiple files.
 
-`uploadFile` expects a "Blob like" input, which can be a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/web3-storage/files-from-path), which can load compatible objects from the local filesystem.
+`uploadFile` expects a "Blob like" input, which can be a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/storacha/files-from-path), which can load compatible objects from the local filesystem.
 
 `uploadDirectory` requires `File`-like objects instead of `Blob`s, as the file's `name` property is used to build the directory hierarchy.
 
