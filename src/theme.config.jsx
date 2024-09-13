@@ -5,7 +5,7 @@ import { DocsLogo } from './components/brand'
  * @type {import('nextra-theme-docs').DocsThemeConfig}
  */
 export default {
-  logo: <DocsLogo>docs.storacha.network</DocsLogo>,
+  logo: <DocsLogo>Storacha Docs</DocsLogo>,
   primaryHue: {
     dark: 192,
     light: 200

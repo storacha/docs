@@ -1,6 +1,6 @@
 # www 🌐✨
 
-**The** `web3.storage` _website._
+**The** Storacha documentation _website._
 
 ## Getting Started
 
