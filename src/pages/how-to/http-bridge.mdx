@@ -31,8 +31,8 @@ but confines them to two separate HTTP headers, `X-Auth-Secret` and `Authorizati
 by clients without interacting with our service.
 
 Details of how to generate the header values can be found in the
-[W3UP UCAN Bridge Protocol](https://github.com/web3-storage/specs/blob/main/w3-ucan-bridge.md) specification, but
-they can also be generated for you by the [`w3` CLI](https://github.com/web3-storage/w3cli):
+[W3UP UCAN Bridge Protocol](https://github.com/storacha/specs/blob/main/w3-ucan-bridge.md) specification, but
+they can also be generated for you by the [`w3` CLI](https://github.com/storacha/w3cli):
 
 ### Generating Auth Headers with `w3cli`
 
@@ -113,11 +113,11 @@ https://up.storacha.network/bridge
 
 ## Storing Files
 
-You can store individual files as [big as 5GB](https://github.com/web3-storage/w3infra/blob/26106e315e79bf8072d2bd052786e46563d9a1da/upload-api/service.js#L12-L16) in
+You can store individual files as [big as 5GB](https://github.com/storacha/w3infra/blob/26106e315e79bf8072d2bd052786e46563d9a1da/upload-api/service.js#L12-L16) in
 spaces on Storacha. To store larger files, see the [Sharded Uploads](#sharded-uploads) section below.
 
 To upload a file to your space you'll first need convert it to a CAR. Assuming your file is
-named `hello.txt` you can first use [`ipfs-car`](https://github.com/web3-storage/ipfs-car) to create a CAR:
+named `hello.txt` you can first use [`ipfs-car`](https://github.com/storacha/ipfs-car) to create a CAR:
 
 ```sh
 ipfs-car pack hello.txt > hello.car
@@ -428,7 +428,7 @@ prescribe any particular sharding algorithm - you'll need to:
 6. repeat until end of blocks
 
 If you're implementing this yourself it may be helpful to look
-into [our JavaScript implementation](https://github.com/web3-storage/w3up/blob/d6978d7ab299be76987c6533d18e6857f6998fe6/packages/upload-client/src/index.js#L38).
+into [our JavaScript implementation](https://github.com/storacha/w3up/blob/d6978d7ab299be76987c6533d18e6857f6998fe6/packages/upload-client/src/index.js#L38).
 We provide an example here using the [`carbites-cli`](https://www.npmjs.com/package/carbites-cli) utility:
 
 First we'll create an absolutely gigantic file:

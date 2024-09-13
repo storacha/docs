@@ -12,9 +12,9 @@ export default {
   },
   primarySaturation: 100,
   project: {
-    link: 'https://github.com/storacha-network/w3up'
+    link: 'https://github.com/storacha/w3up'
   },
-  docsRepositoryBase: 'https://github.com/storacha-network/docs/tree/main',
+  docsRepositoryBase: 'https://github.com/storacha/docs/tree/main',
   footer: {
     component: <footer className='py-6 text-center text-lg'></footer>
   },
@@ -22,11 +22,11 @@ export default {
   useNextSeoProps() {
     const { frontMatter } = useConfig()
     return {
-      titleTemplate: '%s ⁂ storacha.network',
-      description: frontMatter.description || 'Learn how to use web3.storage to decentralize your data storage',
+      titleTemplate: '%s 🔥 storacha.network',
+      description: frontMatter.description || 'Learn how to use Storacha to decentralize your data storage',
       additionalMetaTags: [
         { content: 'en', httpEquiv: 'Content-Language' },
-        { name: 'apple-mobile-web-app-title', content: 'docs.storacha.network' },
+        { name: 'apple-mobile-web-app-title', content: 'Storacha Docs' },
         { name: 'msapplication-TileColor', content: '#fff' },
         { name: 'msapplication-TileImage', content: '/app-icon.svg' }
       ],

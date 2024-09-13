@@ -25,7 +25,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - name: Add to web3.storage
-        uses: web3-storage/add-to-web3@v3
+        uses: storacha/add-to-web3@v3
         id: ipfs
         with:
           path_to_add: ${{ env.outputDir }}
@@ -79,7 +79,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - name: Add to web3.storage
-        uses: web3-storage/add-to-web3@v3
+        uses: storacha/add-to-web3@v3
         id: ipfs
         with:
           path_to_add: ${{ env.outputDir }}

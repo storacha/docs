@@ -46,7 +46,7 @@ npm install @web3-storage/w3up-client
 
 ### Creating a client instance
 
-The package provides a [static create function](https://web3-storage.github.io/w3up/functions/_web3_storage_w3up_client.create.html) that returns a [Client object](https://web3-storage.github.io/w3up/classes/_web3_storage_w3up_client.Client.html). How you initialize it depends on the environment the client is used in: **persistent** or **ephemeral**.
+The package provides a [static create function](https://storacha.github.io/w3up/functions/_web3_storage_w3up_client.create.html) that returns a [Client object](https://storacha.github.io/w3up/classes/_web3_storage_w3up_client.Client.html). How you initialize it depends on the environment the client is used in: **persistent** or **ephemeral**.
 
 Examples of **persistent** environments:
 
@@ -270,7 +270,7 @@ async function frontend() {
 
 You are now ready to upload using the client! In general, the easiest way to upload data is using the `uploadFile` or `uploadDirectory` method.
 
-`uploadFile` expects a "Blob like" input, which can be a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [File](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/web3-storage/files-from-path), which can load compatible objects from the local filesystem. By default, files uploaded to Storacha will be wrapped in an IPFS directory listing. This preserves the original filename and makes links more human-friendly than CID strings, which look like random gibberish.
+`uploadFile` expects a "Blob like" input, which can be a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [File](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/storacha/files-from-path), which can load compatible objects from the local filesystem. By default, files uploaded to Storacha will be wrapped in an IPFS directory listing. This preserves the original filename and makes links more human-friendly than CID strings, which look like random gibberish.
 
 `uploadDirectory` requires `File`-like objects instead of `Blob`s, as the file's name property is used to build the directory hierarchy.
 
@@ -331,7 +331,7 @@ function makeFileObjects () {
 }
 ```
 
-In Node.js, the [`files-from-path` library](https://github.com/web3-storage/files-from-path) reads File objects from the local file system. The `filesFromPaths` helper asynchronously returns an array of Files that you can use directly with the `uploadDirectory` client method:
+In Node.js, the [`files-from-path` library](https://github.com/storacha/files-from-path) reads File objects from the local file system. The `filesFromPaths` helper asynchronously returns an array of Files that you can use directly with the `uploadDirectory` client method:
 
 ```javascript
 import { filesFromPaths } from 'files-from-path'

@@ -32,7 +32,7 @@ import { create } from '@web3-storage/w3up-client'
 const client = await create()
 ```
 
-See the [w3up-client README](https://github.com/web3-storage/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
+See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
 
 ## Create and provision a space
 
@@ -86,7 +86,7 @@ If your agent has no other spaces, saving the space will set it as the "current 
 await client.setCurrentSpace(space.did())
 ```
 
-One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/web3-storage/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
+One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/storacha/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
 
 ```js
 const recovery = await space.createRecovery(myAccount.did())

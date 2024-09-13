@@ -25,7 +25,7 @@ w3up-client in backend-\>\>storacha w3up service: Upload data
 You'll need a registered Space, and your client in the backend to have a delegation to use the Space.
 
 <Callout>
-  **Recommended**: It's easiest to create and register your Space using [w3cli](https://github.com/web3-storage/w3cli), then create an identity for your server and delegate it the ability to upload to your Space. The [bring your own delegations](/docs/how-to/upload/#bring-your-own-delegations) section shows how to generate an identity, create a delegation and then use it on the server.
+  **Recommended**: It's easiest to create and register your Space using [w3cli](https://github.com/storacha/w3cli), then create an identity for your server and delegate it the ability to upload to your Space. The [bring your own delegations](/docs/how-to/upload/#bring-your-own-delegations) section shows how to generate an identity, create a delegation and then use it on the server.
 </Callout>
 
 After this, once your user uploads data to your backend, you can run any of the upload methods.
@@ -53,20 +53,20 @@ Typically `w3up-client` will be running in your end-user's client code, as well 
 You'll need a registered Space, and your client in the backend to have a delegation to use the Space.
 
 <Callout>
-  **Recommended**: It's easiest to create and register your Space using [w3cli](https://github.com/web3-storage/w3cli), then create an identity for your server and delegate it the ability to upload to your Space. The [bring your own delegations](/docs/how-to/upload/#bring-your-own-delegations) section shows how to generate an identity, create a delegation and then use it on the server.
+  **Recommended**: It's easiest to create and register your Space using [w3cli](https://github.com/storacha/w3cli), then create an identity for your server and delegate it the ability to upload to your Space. The [bring your own delegations](/docs/how-to/upload/#bring-your-own-delegations) section shows how to generate an identity, create a delegation and then use it on the server.
 </Callout>
 
 Your backend code can then re-delegate it's capabilities to your users. Your user does not need a registered Space - just an Agent with a delegation from your Space.
 
 When your user is ready to upload, they should request a delegation from your backend to upload to your Space. They must send their Agent DID so that the delegation is restricted to be used by only them.
 
-In your backend, you can call [`client.createDelegation(...)`](https://github.com/web3-storage/w3up/blob/main/packages/w3up-client/README.md#createdelegation) passing in the Agent object from `client.agent()` in your end user's instance, and passing params to limit the scope of the delegation (e.g., `space/blob/add`, `upload/add`, expiration time)
+In your backend, you can call [`client.createDelegation(...)`](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md#createdelegation) passing in the Agent object from `client.agent()` in your end user's instance, and passing params to limit the scope of the delegation (e.g., `space/blob/add`, `upload/add`, expiration time)
 
 You can serialize the delegation using `delegation.archive()` and send it to your user.
 
 The client the user is using does not need to call `client.login(email)`, as it is not claiming any delegations via email address (but instead getting a delegation from your backend).
 
-When your user receives the delegation, they can deserialize it using [`Delegation.extract()`](https://github.com/web3-storage/ucanto/blob/c8999a59852b61549d163532a83bac62290b629d/packages/core/src/delegation.js#L399) and pass it in using `client.addSpace()`, and from there they can run any of the upload methods.
+When your user receives the delegation, they can deserialize it using [`Delegation.extract()`](https://github.com/storacha/ucanto/blob/c8999a59852b61549d163532a83bac62290b629d/packages/core/src/delegation.js#L399) and pass it in using `client.addSpace()`, and from there they can run any of the upload methods.
 
 <Callout type="info">
   This does not provide visibility over which users are uploading what; to track this, you'll need to share that information separately (e.g., once they've run upload and get back a content CID, you can have them send that CID to you for tracking).
@@ -160,4 +160,4 @@ There is a world of possibilities when users "bring their own" Space; you could 
 
 ---
 
-If you have code snippet(s) for any of the above architectural options, please share them in a PR or [Github issue](https://github.com/web3-storage/www/issues) and we'll link them here!
+If you have code snippet(s) for any of the above architectural options, please share them in a PR or [Github issue](https://github.com/storacha/www/issues) and we'll link them here!

@@ -3,7 +3,7 @@
   name: Agent
   definition: A software component that manages signing keys and delegations needed to invoke w3up APIs.
   details: |
-    Agents are used to invoke capabilities provided by the w3up service layer, using the [ucanto](https://github.com/web3-storage/ucanto) RPC framework. 
+    Agents are used to invoke capabilities provided by the w3up service layer, using the [ucanto](https://github.com/storacha/ucanto) RPC framework. 
     
     Agents are created locally on an end-user's device, and users are encouraged to create new agents for each device (or browser) that they want to use, rather than sharing agent keys between devices.
 
