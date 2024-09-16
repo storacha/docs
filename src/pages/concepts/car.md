@@ -85,15 +85,13 @@ ipfs dag import path/to/input.car
 
 ### `ipfs-car`
 
-The [`ipfs-car`](https://github.com/storacha/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](/how-tos/work-with-car-files/#ipfs-car).
+The [`ipfs-car`](https://github.com/storacha/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](/concepts/car/#ipfs-car).
 
 See the `ipfs-car` [README](https://github.com/storacha/ipfs-car#api) for API documentation and usage examples.
 
 ### `@ipld/car`
 
-The [`@ipld/car`](https://github.com/ipld/js-car) package contains the main JavaScript implementation of the CAR specification and is used by ipfs-car under the hood. If you want to store non-file data using [advanced IPLD formats](/how-tos/work-with-car-files/#advanced-ipld-formats), you should use @ipld/car directly.
-
-@ipld/car also provides the CarReader interface used by the Storacha client's [putCar](/reference/js-client-library/#store-car-files)[method](/reference/js-client-library/#store-car-files).
+The [`@ipld/car`](https://github.com/ipld/js-car) package contains the main JavaScript implementation of the CAR specification and is used by ipfs-car under the hood. If you want to store non-file data using [advanced IPLD formats](/concepts/car/#advanced-ipld-formats), you should use `@ipld/car` directly.
 
 Here's a simple example of loading a CAR file from a Node.js stream and storing it with Storacha:
 
