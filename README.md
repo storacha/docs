@@ -45,7 +45,7 @@ Update the `_meta.json` file in the directory when you add a new page. There sho
     "title": "future tech"
   },
   "specs": {
-    "href": "https://github.com/web3-storage/specs",
+    "href": "https://github.com/storacha/specs",
     "title": "Specs"
   }
 }

@@ -4,7 +4,7 @@ The w3up platform by Storacha is built on a technology called UCAN, a system whi
 
 UCAN stands for User Controlled Authorization Networks, and it's fundamentally about changing the relationship between users and service providers in a way that empowers the end-user.
 
-If you really want to dive into UCANs, the [UCAN spec](https://github.com/ucan-wg/spec) goes into detail about how everything works. You can also take a look at [ucanto](https://github.com/web3-storage/ucanto), our UCAN-based framework for building UCAN services and interacting with them over the wire. You won't need to use `ucanto` directly in order to use w3up, but it's a good resource if you're curious about how things work under the hood.
+If you really want to dive into UCANs, the [UCAN spec](https://github.com/ucan-wg/spec) goes into detail about how everything works. You can also take a look at [ucanto](https://github.com/storacha/ucanto), our UCAN-based framework for building UCAN services and interacting with them over the wire. You won't need to use `ucanto` directly in order to use w3up, but it's a good resource if you're curious about how things work under the hood.
 
 Broadly speaking, there are two big pieces of the "auth" puzzle: authentication and authorization. Authentication tries to answer the question "are you who you claim to be," while authorization tries to answer "are you allowed to do what you're trying to do." UCAN addresses both pieces of the puzzle in a novel way.
 
@@ -96,13 +96,14 @@ async function delegationRequestHandler (request) {
   // Here, we assume that you've previously created an agent
   // and that the agent is configured to use the space that
   // you want to issue delegations to.
-  // see the docs at https://github.com/web3-storage/w3up-client
+  // see the docs at https://github.com/storacha/w3up-client
   // for more about using the client.
   const client = await create()
 
   // createDelegation takes in the DID of the "audience" that
   // we're issuing the delegation to, as well as a list of
   // "ability" strings.
+  //
   // Here, we're passing in the abilities needed to upload to the space:
   // 'space/blob/add', 'space/index/add', 'filecoin/offer', and 'upload/add'.
   //
@@ -111,8 +112,8 @@ async function delegationRequestHandler (request) {
   // operation on the space. To give full access, use the special "top" ability
   // "*", which includes all abilities that your agent has access to.
   //
-  // See the capabilities spec for more about capabilities:
-  // https://github.com/web3-storage/w3protocol/blob/main/spec/capabilities.md
+  // See the protocol specs for more info about available capabilities:
+  // https://github.com/storacha/specs
   const delegation = await client.createDelegation(
     userDID,
     ['space/blob/add', 'space/index/add', 'filecoin/offer', 'upload/add']

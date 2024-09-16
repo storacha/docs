@@ -30,7 +30,7 @@ There are a few ways to create and interact with CAR files from the command line
 
 ### ipfs-car
 
-The [ipfs-car](https://github.com/web3-storage/ipfs-car) JavaScript package includes a command-line tool for easily creating, unpacking, and verifying CAR files.
+The [ipfs-car](https://github.com/storacha/ipfs-car) JavaScript package includes a command-line tool for easily creating, unpacking, and verifying CAR files.
 
 You can install the command globally:
 
@@ -85,9 +85,9 @@ ipfs dag import path/to/input.car
 
 ### `ipfs-car`
 
-The [`ipfs-car`](https://github.com/web3-storage/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](https://storacha.network/docs/how-tos/work-with-car-files/#ipfs-car).
+The [`ipfs-car`](https://github.com/storacha/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](https://storacha.network/docs/how-tos/work-with-car-files/#ipfs-car).
 
-See the `ipfs-car` [README](https://github.com/web3-storage/ipfs-car#api) for API documentation and usage examples.
+See the `ipfs-car` [README](https://github.com/storacha/ipfs-car#api) for API documentation and usage examples.
 
 ### `@ipld/car`
 

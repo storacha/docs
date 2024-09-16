@@ -39,7 +39,7 @@ mAYIEAP8OEaJlcm9vdHOAZ3ZlcnNpb24BwwUBcRIg+oHTbzShh1WzBo9ISkonCW+KAcy/+zW8Zb...
 # Pass the output to `w3 space add` in ci
 ```
 
-Then on the CI side (in [github flavour](https://github.com/web3-storage/add-to-web3/blob/abc09576bd0f06e881b250012cc94c535b2d577f/action.yml#L42-L54))
+Then on the CI side (in [github flavour](https://github.com/storacha/add-to-web3/blob/abc09576bd0f06e881b250012cc94c535b2d577f/action.yml#L42-L54))
 
 ```yaml
 steps:
@@ -116,7 +116,7 @@ $ npm i --global @web3-storage/w3cli
 
 ## Import the signing key
 
-Set `W3_PRINCIPAL=<the signing key>` in the CI environment. The `w3` commmand will use the value as the signing key to use. see: https://github.com/web3-storage/w3cli?tab=readme-ov-file#w3\_principal
+Set `W3_PRINCIPAL=<the signing key>` in the CI environment. The `w3` commmand will use the value as the signing key to use. see: https://github.com/storacha/w3cli?tab=readme-ov-file#w3\_principal
 
 The value is the `key` we created above with `w3 key create`. The `key` must be the one for the `did` that was used to create the proof.
 
@@ -159,7 +159,7 @@ The [add-to-web3][] action is a lightweight wrapper around [w3cli][]. You create
 Use it in your Github Workflow like this
 
 ```yaml
-uses: web3-storage/add-to-web3@v3
+uses: storacha/add-to-web3@v3
 id: w3up
 with:
   path_to_add: 'dist'
@@ -178,12 +178,12 @@ It uploads `path_to_add` to Storacha.
 
 It outputs the root CID as `cid` and IPFS Gateway URL as `url` for subsequent steps in your workflow to use.
 
-We use the action to publish _this website_ (👁️⁂👁️) to IPFS when a PR is merged to `main`. We use the `cid` output from the action as input to [update a dns record](https://github.com/web3-storage/www/blob/18044a3814846967fca1126ab3baa3973c43e908/.github/workflows/deploy.yml#L79-L89) called a [DNSlink][] for the domain.
+We use the action to publish _this website_ (👁️⁂👁️) to IPFS when a PR is merged to `main`. We use the `cid` output from the action as input to [update a dns record](https://github.com/storacha/www/blob/18044a3814846967fca1126ab3baa3973c43e908/.github/workflows/deploy.yml#L79-L89) called a [DNSlink][] for the domain.
 
 Setting the [DNSLink][] announces the new root CID for the website, so [IPFS-aware browsers](https://brave.com/ipfs-support/) and [IPFS Companion](https://docs.ipfs.tech/install/ipfs-companion/) can load the site over IPFS.
 
-[w3cli]: https://github.com/web3-storage/w3cli
+[w3cli]: https://github.com/storacha/w3cli
 
-[add-to-web3]: https://github.com/web3-storage/add-to-web3
+[add-to-web3]: https://github.com/storacha/add-to-web3
 
 [DNSLink]: https:/dnslink.io

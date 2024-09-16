@@ -32,7 +32,7 @@ import { create } from '@web3-storage/w3up-client'
 const client = await create()
 ```
 
-See the [w3up-client README](https://github.com/web3-storage/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
+See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
 
 ## Create and provision a space
 
@@ -86,7 +86,7 @@ If your agent has no other spaces, saving the space will set it as the "current 
 await client.setCurrentSpace(space.did())
 ```
 
-One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/web3-storage/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
+One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/storacha/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
 
 ```js
 const recovery = await space.createRecovery(myAccount.did())
@@ -104,7 +104,7 @@ Now that you've created and provisioned a space, you're ready to upload files to
 
 Call `uploadFile` to upload a single file, or `uploadDirectory` to upload multiple files.
 
-`uploadFile` expects a "Blob like" input, which can be a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/web3-storage/files-from-path), which can load compatible objects from the local filesystem.
+`uploadFile` expects a "Blob like" input, which can be a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) when running in a browser. On Node.js, see the [`files-from-path` library](https://github.com/storacha/files-from-path), which can load compatible objects from the local filesystem.
 
 `uploadDirectory` requires `File`-like objects instead of `Blob`s, as the file's `name` property is used to build the directory hierarchy.
 
