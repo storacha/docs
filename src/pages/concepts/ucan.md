@@ -103,6 +103,7 @@ async function delegationRequestHandler (request) {
   // createDelegation takes in the DID of the "audience" that
   // we're issuing the delegation to, as well as a list of
   // "ability" strings.
+  //
   // Here, we're passing in the abilities needed to upload to the space:
   // 'space/blob/add', 'space/index/add', 'filecoin/offer', and 'upload/add'.
   //
@@ -111,8 +112,8 @@ async function delegationRequestHandler (request) {
   // operation on the space. To give full access, use the special "top" ability
   // "*", which includes all abilities that your agent has access to.
   //
-  // See the capabilities spec for more about capabilities:
-  // https://github.com/storacha/w3up/blob/main/spec/capabilities.md
+  // See the protocol specs for more info about available capabilities:
+  // https://github.com/storacha/specs
   const delegation = await client.createDelegation(
     userDID,
     ['space/blob/add', 'space/index/add', 'filecoin/offer', 'upload/add']
