@@ -32,9 +32,9 @@ Nitro Data LLC ("Company") commits to provide a level of service for Storacha Cu
 
 2.9 "Services" means, collectively, the Upload Service and the Read Service.
 
-2.10 “Upload Service” refers to uploads through the website, client, and CLI for supported file types and sizes as defined by the docs available at https://storacha/docs/.
+2.10 “Upload Service” refers to uploads through the website, client, and CLI for supported file types and sizes as defined by the docs available at https://docs.storacha.network/.
 
-2.11 “Read Service” refers to reading successfully uploaded data, using its CID, over [w3link](https://storacha/products/w3link/) or via Bitswap using IPFS nodes peered with Storacha nodes.
+2.11 “Read Service” refers to reading successfully uploaded data, using its CID, over https://w3s.link or via Bitswap using IPFS nodes peered with Storacha nodes.
 
 2.12 "Service Discount" is the percentage of the monthly service fees for the Services deducted from Customer’s next monthly bill for a validated Claim.
 
