@@ -27,9 +27,9 @@ npm install @web3-storage/w3up-client
 To use the client, import and call the `create` function:
 
 ```js
-import { create } from '@web3-storage/w3up-client'
+import { create } from "@web3-storage/w3up-client";
 
-const client = await create()
+const client = await create();
 ```
 
 See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
@@ -38,65 +38,38 @@ See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages
 
 When you upload things to Storacha, each upload is associated with a "space", which is a unique identifier that acts as a namespace for your content. Spaces are identified by DID using keys created locally on your devices.
 
-To create a space using `w3up-client`, use the `createSpace` client method:
+The first thing to do is login your Agent with your email address. Calling `login` will cause an email to be sent to the given address. Once a user clicks the confirmation link in the email, the `login` method will resolve. Make sure to check for errors, as `login` will fail if the email is not confirmed within the expiration timeout. Authorization needs to happen only once per agent.
 
 ```js
-const space = await client.createSpace('my-awesome-space')
+const myAccount = await client.login("zaphod@beeblebrox.galaxy");
 ```
 
-The name parameter is optional. If provided, it will be stored in your client's local state store and can be used to provide a friendly name for user interfaces.
-
-To use a space for uploads, it needs to be provisioned with the storage service, and can be done so with an account. To login or create an account, call the `login` client method:
+If your account doesn't have a payment plan yet, you'll be prompted to select one after verifying your email. A payment plan is required to provision a space. You can use the following loop to wait until a payment plan is selected:
 
 ```js
-const myAccount = await client.login('zaphod@beeblebrox.galaxy')
+// Wait for a payment plan with a 1-second polling interval and 15-minute timeout
+await account.plan.wait();
 ```
 
-Calling `login` causes an email to be sent to the given address, unless the client is already logged in. Once a user clicks the confirmation link in the email, the promise returned by the `login` method will resolve. Make sure to check for errors, as `login` will fail if the email is not confirmed within the expiration timeout.
-
-If your account does not yet have a payment plan, you'll be prompted to choose one after your email address has been verified. You will need a payment plan in order to provision your space. You can use the following code to wait for a payment plan to be selected:
+Spaces can be created using the `createSpace` client method:
 
 ```js
-// wait for payment plan to be selected
-while (true) {
-  const res = await myAccount.plan.get()
-  if (res.ok) break
-  console.log('Waiting for payment plan to be selected...')
-  await new Promise(resolve => setTimeout(resolve, 1000))
-}
+const space = await client.createSpace("my-awesome-space", { account });
 ```
 
-Now you may provision your space with your account:
+Alternatively, you can use the w3cli command [`w3 space create`](https://github.com/storacha/w3cli#w3-space-create-name).
+
+The `name` parameter is optional. If provided, it will be stored in your client's local state store and can be used to provide a friendly name for user interfaces.
+
+If an `account` is provided in the options, a delegated recovery account is automatically created and provisioned, allowing you to store data and delegate access to the recovery account. This means you can access your space from other devices, as long as you have access to your account.
+
+If this is your Agent's first space, it will automatically be set as the "current space." If you already have spaces and want to set the new one as current, you can do so manually:
 
 ```js
-await myAccount.provision(space.did())
+await client.setCurrentSpace(space.did());
 ```
 
-ℹ️ Note: creating a space and provisioning it needs to happen only **once**!
-
-Finally, save your space to your agent's state store:
-
-```js
-await space.save()
-```
-
-If your agent has no other spaces, saving the space will set it as the "current space" in your agent. If you already have other spaces, you may want to set it as the current:
-
-```js
-await client.setCurrentSpace(space.did())
-```
-
-One last thing - now that you've saved your space locally, it's a good idea to setup recovery via [Storacha Account](https://github.com/storacha/specs/blob/main/w3-account.md), so that when you move to a different device you can still administer your space as long as you can log in to your Storacha Account:
-
-```js
-const recovery = await space.createRecovery(myAccount.did())
-await client.capability.access.delegate({
-  space: space.did(),
-  delegations: [recovery],
-})
-```
-
-ℹ️ Note: If you do not create and delegate space recovery you run the risk of losing access to your space!
+ℹ️ Note: If you do not create the space passing the account parameter you run the risk of losing access to your space!
 
 ## Upload files
 
@@ -112,12 +85,12 @@ You can control the directory layout and create nested directory structures by u
 
 ```js
 const files = [
-  new File(['some-file-content'], 'readme.md'),
-  new File(['import foo'], 'src/main.py'),
-  new File([someBinaryData], 'images/example.png')
-]
+  new File(["some-file-content"], "readme.md"),
+  new File(["import foo"], "src/main.py"),
+  new File([someBinaryData], "images/example.png"),
+];
 
-const directoryCid = await client.uploadDirectory(files)
+const directoryCid = await client.uploadDirectory(files);
 ```
 
 In the example above, `directoryCid` resolves to an IPFS directory with the following layout:
