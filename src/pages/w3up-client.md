@@ -41,7 +41,7 @@ When you upload things to Storacha, each upload is associated with a "space", wh
 The first thing to do is login your Agent with your email address. Calling `login` will cause an email to be sent to the given address. Once a user clicks the confirmation link in the email, the `login` method will resolve. Make sure to check for errors, as `login` will fail if the email is not confirmed within the expiration timeout. Authorization needs to happen only once per agent.
 
 ```js
-const myAccount = await client.login("zaphod@beeblebrox.galaxy");
+const account = await client.login("zaphod@beeblebrox.galaxy");
 ```
 
 If your account doesn't have a payment plan yet, you'll be prompted to select one after verifying your email. A payment plan is required to provision a space. You can use the following loop to wait until a payment plan is selected:
