@@ -113,4 +113,4 @@ When the `frontend` function is called in the user's environment:
 - The client is set up with a UCAN delegating upload capabilities to the Agent
 - It's now ready to upload!
 
-However, there's other interesting possibilities - for instance, you could create an app where your users make Spaces and delegate permission to your app to read their uploads. Read the [Architecture options](/docs/concepts/architecture-options/) section to explore more.
+However, there's other interesting possibilities - for instance, you could create an app where your users make Spaces and delegate permission to your app to read their uploads. Read the [Architecture options](/concepts/architecture-options/) section to explore more.

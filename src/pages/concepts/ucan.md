@@ -290,7 +290,7 @@ Note that the `w3 delegation create` command we used in step 5 delegates the `'*
 
 UCAN delegation is a powerful tool for managing access to your w3up resources. Hopefully this post has given you some ideas about how delegation can help you build out new experiences using w3up.
 
-Thanks for following along, and feel free to [get in touch](https://storacha.network/docs/community/help-and-support/) if you have any questions!
+Thanks for following along, and feel free to [get in touch](/community/help-and-support/) if you have any questions!
 
 [reference-client#createdelegation]: ../../api/w3up-client/classes/client.Client.md#createdelegation
 

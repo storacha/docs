@@ -8,7 +8,7 @@ To make IPFS data accessible outside of the peer-to-peer network, [special IPFS 
 
 As more browsers like [Brave](https://brave.com/ipfs-support/) and [Opera](https://blogs.opera.com/tips-and-tricks/2021/02/opera-crypto-files-for-keeps-ipfs-unstoppable-domains/) adopt native IPFS support, the need for gateways will naturally lessen over time. Today, you can reach the widest audience by using HTTP gateways in your web applications, but it's a great idea to also surface the original ipfs:// URI for your content, so that IPFS-native browsers can access the content directly through Bitswap.
 
-For more information about fetching content that you uploaded through an IPFS HTTP gateway, see the [Retrieve section](/docs/how-to/retrieve).
+For more information about fetching content that you uploaded through an IPFS HTTP gateway, see the [Retrieve section](/how-to/retrieve).
 
 ## Types of gateway
 

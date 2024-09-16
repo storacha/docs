@@ -6,7 +6,7 @@ For most use cases, you never need to know about this process, as the conversion
 
 ## What is a Content Archive?
 
-The [Content Archive format](https://ipld.io/specs/transport/car/) is a way of packaging up [content addressed data](https://storacha.network/docs/concepts/content-addressing/) into archive files that can be easily stored and transferred. You can think of them like [TAR files](https://en.wikipedia.org/wiki/Tar_\(computing\)) that are designed for storing collections of content addressed data.
+The [Content Archive format](https://ipld.io/specs/transport/car/) is a way of packaging up [content addressed data](https://docs.storacha.network/concepts/content-addressing/) into archive files that can be easily stored and transferred. You can think of them like [TAR files](https://en.wikipedia.org/wiki/Tar_\(computing\)) that are designed for storing collections of content addressed data.
 
 The type of data stored in CARs is defined by [IPLD](https://ipld.io/), or InterPlanetary Linked Data. IPLD is a specification and set of implementations for structured data types that can link to each other using a hash-based Content Identifier (CID). Data linked in this way forms a Directed Acyclic Graph, or DAG, and you'll likely see a few references to DAGs in the documentation for IPLD and IPFS.
 
@@ -85,15 +85,15 @@ ipfs dag import path/to/input.car
 
 ### `ipfs-car`
 
-The [`ipfs-car`](https://github.com/storacha/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](https://storacha.network/docs/how-tos/work-with-car-files/#ipfs-car).
+The [`ipfs-car`](https://github.com/storacha/ipfs-car) package includes library functions for packing and unpacking files into CARs, using the IPFS UnixFs data model. The library includes the same functionality as the ipfs-car command line utility [described above](/how-tos/work-with-car-files/#ipfs-car).
 
 See the `ipfs-car` [README](https://github.com/storacha/ipfs-car#api) for API documentation and usage examples.
 
 ### `@ipld/car`
 
-The [`@ipld/car`](https://github.com/ipld/js-car) package contains the main JavaScript implementation of the CAR specification and is used by ipfs-car under the hood. If you want to store non-file data using [advanced IPLD formats](https://storacha.network/docs/how-tos/work-with-car-files/#advanced-ipld-formats), you should use @ipld/car directly.
+The [`@ipld/car`](https://github.com/ipld/js-car) package contains the main JavaScript implementation of the CAR specification and is used by ipfs-car under the hood. If you want to store non-file data using [advanced IPLD formats](/how-tos/work-with-car-files/#advanced-ipld-formats), you should use @ipld/car directly.
 
-@ipld/car also provides the CarReader interface used by the Storacha client's [putCar](https://storacha.network/docs/reference/js-client-library/#store-car-files)[method](https://storacha.network/docs/reference/js-client-library/#store-car-files).
+@ipld/car also provides the CarReader interface used by the Storacha client's [putCar](/reference/js-client-library/#store-car-files)[method](/reference/js-client-library/#store-car-files).
 
 Here's a simple example of loading a CAR file from a Node.js stream and storing it with Storacha:
 

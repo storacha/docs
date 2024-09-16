@@ -77,4 +77,4 @@ However, if you are a power user interacting with shard CIDs as well (like in th
 
 ## When should I care about Piece CIDs?
 
-Piece CIDs are how you can reference your data when it is stored in Filecoin Storage Providers. You can think of Piece CIDs as another way to reference a shard - they are in fact calculated from shard data. Piece CIDs are used in [PoDSI (Proof of Data Segment Inclusion)](/docs/concepts/podsi/) - a proof that a piece is included in a larger piece, which allows users and third parties to prove their data is stored with a Filecoin Storage Provider.
+Piece CIDs are how you can reference your data when it is stored in Filecoin Storage Providers. You can think of Piece CIDs as another way to reference a shard - they are in fact calculated from shard data. Piece CIDs are used in [PoDSI (Proof of Data Segment Inclusion)](/concepts/podsi/) - a proof that a piece is included in a larger piece, which allows users and third parties to prove their data is stored with a Filecoin Storage Provider.

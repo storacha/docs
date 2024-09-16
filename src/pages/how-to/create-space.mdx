@@ -2,9 +2,9 @@ import { Callout } from 'nextra/components'
 
 # How to create a space
 
-In this how-to guide, you'll learn how to create a Storacha Space to organize stored data. For an overview of the various ways Storacha can be integrated with your application, check out [Architecture Options](/docs/concepts-architecture-options/).
+In this how-to guide, you'll learn how to create a Storacha Space to organize stored data. For an overview of the various ways Storacha can be integrated with your application, check out [Architecture Options](/concepts-architecture-options/).
 
-A Space acts as a namespace for your uploads. It is created locally, offline, and associated with a cryptographic key pair (identified by the [`did:key`](https://w3c-ccg.github.io/did-method-key/) of the public key). You can register this Space with your [storacha account](/docs/how-to/create-account/) to take responsibility for the uploads in the space. Once you do this, you don't need to worry about keeping track of the Space's private key, because your Storacha account has been authorized to use the Space.
+A Space acts as a namespace for your uploads. It is created locally, offline, and associated with a cryptographic key pair (identified by the [`did:key`](https://w3c-ccg.github.io/did-method-key/) of the public key). You can register this Space with your [storacha account](/how-to/create-account/) to take responsibility for the uploads in the space. Once you do this, you don't need to worry about keeping track of the Space's private key, because your Storacha account has been authorized to use the Space.
 
 ## Using the CLI
 
@@ -26,7 +26,7 @@ The easiest way to create and register a Space is by using the CLI.
 
 Separately, you can visit [console.storacha](https://console.storacha.network/), sign up with your email and select a plan, and create a space using the UI, but we recommend that developers get familiar with the CLI since it's a powerful tool for many things you might want to do.
 
-The Space you create can be used to [upload](/docs/how-to/upload/) data using the CLI, the w3up client, or when you log into the web console.
+The Space you create can be used to [upload](/how-to/upload/) data using the CLI, the w3up client, or when you log into the web console.
 
 ## Using the JS client
 
@@ -34,5 +34,5 @@ The Space you create can be used to [upload](/docs/how-to/upload/) data using th
 2. Call `client.createSpace('Documents')` and wait for the promise to resolve.
 
 <Callout>
-  The space must be provisioned by an account before it can be used for uploads. See [our guide](/docs/w3up-client/#create-and-provision-a-space) for details.
+  The space must be provisioned by an account before it can be used for uploads. See [our guide](/w3up-client/#create-and-provision-a-space) for details.
 </Callout>
