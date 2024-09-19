@@ -19,7 +19,7 @@ This Privacy Policy applies to our collection, use, and disclosure of the person
 
 We are a conduit for information controlled by others. It is our users who are responsible for the user-uploaded and/or community-hosted content transmitted across our network (e.g., images, written content, graphics, etc.).
 
-This Privacy Policy also does not apply to any third-party domains, websites, APIs, applications, and networks, even if linked via the storacha.network website, as these third-party properties may have their own terms and privacy policies.
+This Privacy Policy also does not apply to any third-party domains, websites, APIs, applications, and networks, even if linked via the Storacha website, as these third-party properties may have their own terms and privacy policies.
 
 ### What information do we collect and on what basis?
 
