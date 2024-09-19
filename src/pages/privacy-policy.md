@@ -2,14 +2,14 @@
 
 ## Privacy
 
-This Privacy Policy governs all use of the Storacha website (“Storacha” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”).
+This Privacy Policy governs all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”).
 
 The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time.  By accessing or using any part of our Services you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
 
 We keep your personal information personal and private. We will not sell or rent your personal information to anyone. We will not share or otherwise disclose your personal information except as necessary to provide our Services or as otherwise described in this Privacy Policy without first providing you with notice and the opportunity to consent.
 By accessing or using any part of our Services, including the Websites, you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
 
-The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time by Nitro Data LLC (collectively, the “Agreement”).
+The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time by Storacha, Inc. (collectively, the “Agreement”).
 
 ### Who Do We Collect Information From?
 
@@ -19,7 +19,7 @@ This Privacy Policy applies to our collection, use, and disclosure of the person
 
 We are a conduit for information controlled by others. It is our users who are responsible for the user-uploaded and/or community-hosted content transmitted across our network (e.g., images, written content, graphics, etc.).
 
-This Privacy Policy also does not apply to any third-party domains, websites, APIs, applications, and networks, even if linked via the Storacha website, as these third-party properties may have their own terms and privacy policies.
+This Privacy Policy also does not apply to any third-party domains, websites, APIs, applications, and networks, even if linked via the storacha.network website, as these third-party properties may have their own terms and privacy policies.
 
 ### What information do we collect and on what basis?
 
@@ -104,4 +104,4 @@ Questions about our Privacy Policy?  Please contact support@storacha.network
 
 If we decide to change our Privacy Policy, we will post those changes on this page.
 
-This document is CC-BY-SA. It was last updated October 27, 2023.
+This document is CC-BY-SA. It was last updated September 19, 2024.
