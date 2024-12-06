@@ -36,8 +36,8 @@ A Referrer is eligible to receive Rewards if a successful referral (“Successfu
 ### 3.4 Referrer Reward restrictions:
 - Referrer will only receive Credits if they have a Lite/Medium or Business/Extra Spicy plan at the time or referral
 - Total referral reward limit: 460 Credits
-     - Up to 16 Credits for Lite/Medium tier referrals
-     - Up to 3 Credits for Business/Extra Spicy tier referrals
+  - Up to 16 Credits for Lite/Medium tier referrals
+  - Up to 3 Credits for Business/Extra Spicy tier referrals
 - All Credits expire 12 months from date of issue
 
 ### 3.5 Free Trial and Rewards for Referred Users
@@ -57,32 +57,32 @@ Eligibility for Racha Points:
 - Credits and Racha Points have no monetary value and cannot be exchanged for cash
 - Rewards are non-transferable, non-assignable, and cannot be sold or traded
 - Credits and Racha Points:
-     - Are valid only for designated Program benefits
-     - Cannot be transferred between accounts
-     - May not be bartered, sold, or monetized
-     - Do not constitute property or currency
-     - May expire according to Program terms
+  - Are valid only for designated Program benefits
+  - Cannot be transferred between accounts
+  - May not be bartered, sold, or monetized
+  - Do not constitute property or currency
+  - May expire according to Program terms
 
 ## 5. Participant Relationship Status
 
 ### 5.1. Independent Participation
 - Participation in the Referral Program is voluntary and independent
 - Neither Program participation nor reward receipt creates or implies any:
-     - Employment relationship
-     - Agency relationship
-     - Partnership
-     - Joint venture
-     - Franchise arrangement
-     - Sales representative status
-     - Legal representation authority
+  - Employment relationship
+  - Agency relationship
+  - Partnership
+  - Joint venture
+  - Franchise arrangement
+  - Sales representative status
+  - Legal representation authority
 
 ### 5.2. Prohibited Activities
 - Participants must not:
-     - Represent themselves as Storacha, Inc. (“Company”) employees or official representatives
-     - Make promises or commitments on behalf of the Company
-     - Modify Company offerings or terms
-     - Use Company trademarks or branding beyond approved Program materials
-     - Enter into agreements on the Company's behalf
+  - Represent themselves as Storacha, Inc. (“Company”) employees or official representatives
+  - Make promises or commitments on behalf of the Company
+  - Modify Company offerings or terms
+  - Use Company trademarks or branding beyond approved Program materials
+  - Enter into agreements on the Company's behalf
 
 ### 5.3. Scope of Relationship
 - Participants act solely as independent promoters
@@ -162,19 +162,19 @@ The Company is not responsible for:
 - Participants expressly acknowledge that Rewards are discretionary benefits, not legal entitlements
 - No legal partnership, agency, or similar relationship is created through Program participation
 - Participants waive any right to claim damages related to:
-     - Program changes or termination
-     - Technical limitations or failures
-     - Reward distribution timing
-     - Verification processes
+  - Program changes or termination
+  - Technical limitations or failures
+  - Reward distribution timing
+  - Verification processes
 ### 11.4 Discretionary Authority
 - Notwithstanding any other provisions in these terms, the Company maintains absolute and sole discretion to withhold, delay, or rescind any reward for any reason whatsoever, including but not limited to:
-     - Technical errors or malfunctions
-     - Clerical or administrative errors
-     - System calculation errors
-     - Display errors
-     - Pricing errors
-     - Data entry mistakes
-     - Any other errors or mistakes of any kind
+  - Technical errors or malfunctions
+  - Clerical or administrative errors
+  - System calculation errors
+  - Display errors
+  - Pricing errors
+  - Data entry mistakes
+  - Any other errors or mistakes of any kind
 - The appearance of earned or accrued Rewards in a user's account does not constitute a binding obligation on the Company
 - No participant shall have any vested right or entitlement to receive Rewards, regardless of whether all apparent qualifying conditions have been met
 
