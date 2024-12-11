@@ -31,8 +31,8 @@ The Space you create can be used to [upload](/how-to/upload/) data using the CLI
 ## Using the JS client
 
 1. Install the client library from npm using your command line: `npm install @web3-storage/w3up-client`.
-2. Call `client.createSpace('Documents')` and wait for the promise to resolve.
+2. Execute `client.createSpace('Documents', { skipGatewayAuthorization: true })` and wait for the promise to resolve.
 
 <Callout>
-  The space must be provisioned by an account before it can be used for uploads. See [our guide](/w3up-client/#create-and-provision-a-space) for details.
+  The space must be provisioned by an account before it can be used for uploads. Additionally, it needs to authorize a Gateway to serve the files you upload. See [our guide](/w3up-client/#create-and-provision-a-space) for more details.
 </Callout>
