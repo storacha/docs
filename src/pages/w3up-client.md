@@ -51,25 +51,59 @@ If your account doesn't have a payment plan yet, you'll be prompted to select on
 await account.plan.wait();
 ```
 
-Spaces can be created using the `createSpace` client method:
+Spaces can be created using the `createSpace` client method. When creating a space, you must specify which Gateways will have permission to serve the content you upload. To do this, you first need to establish a connection with the Gateway. This connection allows client to publish the delegations required for the Gateway to serve your content:
 
 ```js
-const space = await client.createSpace("my-awesome-space", { account });
+import * as UcantoClient from '@ucanto/client'
+import { HTTP } from '@ucanto/transport'
+import * as CAR from '@ucanto/transport/car'
+
+const storachaGateway = UcantoClient.connect({
+    id: id,
+    codec: CAR.outbound,
+    channel: HTTP.open({ url: new URL('https://freeway.dag.haus') }),
+});
 ```
 
-Alternatively, you can use the w3cli command [`w3 space create`](https://github.com/storacha/w3cli#w3-space-create-name).
-
-The `name` parameter is optional. If provided, it will be stored in your client's local state store and can be used to provide a friendly name for user interfaces.
-
-If an `account` is provided in the options, a delegated recovery account is automatically created and provisioned, allowing you to store data and delegate access to the recovery account. This means you can access your space from other devices, as long as you have access to your account.
-
-If this is your Agent's first space, it will automatically be set as the "current space." If you already have spaces and want to set the new one as current, you can do so manually:
+Once connected to the Gateway, you can create a space:
 
 ```js
-await client.setCurrentSpace(space.did());
+const space = await client.createSpace("my-awesome-space", { 
+  account,
+  authorizeGatewayServices: [storachaGateway],
+});
 ```
 
-ℹ️ Note: If you do not create the space passing the account parameter you run the risk of losing access to your space!
+If you want to ensure that no Gateway is authorized to serve the content of your space, you can use the `skipGatewayAuthorization` flag:
+
+```js
+const space = await client.createSpace("my-awesome-space", { 
+  account,
+  skipGatewayAuthorization: true,
+});
+```
+
+Alternatively, you can use the `w3cli` command [`w3 space create`](https://github.com/storacha/w3cli#w3-space-create-name) for a streamlined approach.
+
+**Additional Notes**
+
+1.  :warning: **Important**  :warning:
+    If you do not provide the `account` parameter when creating a space, you risk losing access to your space in case of device loss or credential issues.
+
+2.  **Account Parameter**\
+    Supplying an `account` in the options automatically provisions a delegated recovery account. This enables you to store data securely and delegate access to the recovery account, allowing access to your space from other devices as long as you have your account credentials.
+
+3.  **Name Parameter**\
+    The `name` parameter is optional. If provided, it will be stored in your client’s local state and can serve as a user-friendly identifier for interfaces.
+
+4.  **Current Space**
+
+    - If this is your Agent's first space, it will be automatically set as the "current space."
+    - For additional spaces, you can manually set a new space as the current one using:
+
+    ```js
+    await client.setCurrentSpace(space.did());
+    ```
 
 ## Upload files
 
