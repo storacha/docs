@@ -36,8 +36,9 @@ A Referrer is eligible to receive Rewards if a successful referral (“Successfu
 ### 3.4 Referrer Reward restrictions:
 - Referrer will only receive Credits if they have a Lite/Medium or Business/Extra Spicy plan at the time or referral
 - Total referral reward limit: 460 Credits
-  - Up to 16 Credits for Lite/Medium tier referrals
-  - Up to 3 Credits for Business/Extra Spicy tier referrals
+  - Up to 160 Credits for Lite/Medium tier referrals
+  - Up to 300 Credits for Business/Extra Spicy tier referrals
+- Credits can only be applied towards paid subscription plans (Lite/Medium and Business/Extra Spicy), not overages
 - All Credits expire 12 months from date of issue
 
 ### 3.5 Free Trial and Rewards for Referred Users
