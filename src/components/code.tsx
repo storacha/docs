@@ -4,6 +4,9 @@ import { Lang, Theme } from 'shiki'
 const w3upExample = `
 import * as Client from '@web3-storage/w3up-client'
 import { filesFromPaths } from 'files-from-path'
+import * as UcantoClient from '@ucanto/client'
+import { HTTP } from '@ucanto/transport'
+import * as CAR from '@ucanto/transport/car'
 
 const client = await Client.create()
 
@@ -11,12 +14,12 @@ const client = await Client.create()
 if (!Object.keys(client.accounts()).length) {
   // waits for you to click the link in your email to verify your identity
   const account = await client.login('you@example.org')
-  // create a space for your uploads
-  const space = await client.createSpace('lets-go')
+  // create a space for your uploads and authorize the Storacha Gateway by default
+  const space = await client.createSpace('lets-go', {
+    account, // associate this space with your account & configure recovery
+  })
   // save the space to the store, and set as "current"
   await space.save()
-  // associate this space with your account
-  await account.provision(space.did())
 }
 
 // content-address your files
