@@ -51,11 +51,14 @@ To create a space using the `w3` command line tool, use the `w3 space create` co
 w3 space create Documents
 ```
 
+If no Gateways are specified (`authorizeGatewayServices`), or if the `skipGatewayAuthorization` flag is not set, the client will automatically grant access to the [Storacha Gateway](https://github.com/storacha/freeway) to serve the content you upload to your space.
+
 The DID for the new space will be printed to the console. It should look something like this, although the part after `did:key` will be unique to your space:
 
 ```bash
 did:key:z6MkixXechJLc3TWibQj9RN6AiFx8VoMY9HNB3Y97WcwK3fm
 ```
+
 
 You can now run `w3 space ls` to show a list of your spaces:
 
