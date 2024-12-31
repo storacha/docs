@@ -51,41 +51,10 @@ If your account doesn't have a payment plan yet, you'll be prompted to select on
 await account.plan.wait();
 ```
 
-Spaces can be created using the `createSpace` client method. When creating a space, you can specify which Gateways are authorized to serve the content you upload. To achieve this, you must first establish a connection with the desired Gateway. This connection enables the client to publish the necessary delegations that grant the Gateway permission to serve your content. 
-
-If no Gateways are specified (`authorizeGatewayServices`), or if the `skipGatewayAuthorization` flag is not set, the client will automatically grant access to the [Storacha Gateway](https://github.com/storacha/freeway) to serve the content you upload to your space.
-
-To configure other Gateways to serve the content you upload to your new space, follow these steps:
+Spaces can be created using the `createSpace` client method.
 
 ```js
-import * as UcantoClient from '@ucanto/client'
-import { HTTP } from '@ucanto/transport'
-import * as CAR from '@ucanto/transport/car'
-
-// Connects to Storacha Freeway Gateway
-const storachaGateway = UcantoClient.connect({
-    id: id,
-    codec: CAR.outbound,
-    channel: HTTP.open({ url: new URL('https://freeway.dag.haus') }),
-});
-```
-
-Once connected to the Gateway, you can create a space:
-
-```js
-const space = await client.createSpace("my-awesome-space", { 
-  account,
-  authorizeGatewayServices: [storachaGateway],
-});
-```
-
-If you want to ensure that no Gateway is authorized to serve the content of your space, you can use the `skipGatewayAuthorization` flag:
-
-```js
-const space = await client.createSpace("my-awesome-space", { 
-  account,
-  skipGatewayAuthorization: true,
-});
+const space = await client.createSpace("my-awesome-space", { account });
 ```
 
 Alternatively, you can use the `w3cli` command [`w3 space create`](https://github.com/storacha/w3cli#w3-space-create-name) for a streamlined approach.
@@ -108,6 +77,47 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
     ```js
     await client.setCurrentSpace(space.did());
+    ```
+
+5.  **Authorized Gateways**
+
+    When creating a space, you can specify which Gateways are authorized to serve the content you upload. By default, if no other flags are set the client will automatically grant access to the [Storacha Gateway](https://github.com/storacha/freeway) to serve the content you upload to your space.
+
+    However, you can authorize other Storacha compliant gateways to serve content instead.
+
+    To achieve this, you must first establish a connection with the desired Gateway. This connection enables the client to publish the necessary delegations that grant the Gateway permission to serve your content.
+
+    To configure other Gateways to serve the content you upload to your new space, follow these steps:
+
+    ```js
+    import * as UcantoClient from '@ucanto/client'
+    import { HTTP } from '@ucanto/transport'
+    import * as CAR from '@ucanto/transport/car'
+
+    // Connects to Storacha Freeway Gateway
+    const storachaGateway = UcantoClient.connect({
+        id: id,
+        codec: CAR.outbound,
+        channel: HTTP.open({ url: new URL('https://freeway.dag.haus') }),
+    });
+    ```
+
+    Once connected to the Gateway, you can create a space and authorize serving content from that gateway:
+
+    ```js
+    const space = await client.createSpace("my-awesome-space", { 
+      account,
+      authorizeGatewayServices: [storachaGateway],
+    });
+    ```
+
+    If you want to ensure that no Gateway is authorized to serve the content of your space, you can use the `skipGatewayAuthorization` flag:
+
+    ```js
+    const space = await client.createSpace("my-awesome-space", { 
+      account,
+      skipGatewayAuthorization: true,
+    });
     ```
 
 ## Upload files
