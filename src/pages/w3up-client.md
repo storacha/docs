@@ -98,7 +98,7 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
     const storachaGateway = UcantoClient.connect({
         id: id,
         codec: CAR.outbound,
-        channel: HTTP.open({ url: new URL('https://freeway.dag.haus') }),
+        channel: HTTP.open({ url: new URL('https://w3s.link') }),
     });
     ```
 
