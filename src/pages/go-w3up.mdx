@@ -21,7 +21,7 @@ In this guide, we'll walk through the following steps:
 
 You'll need [Go](https://go.dev/) version 1.21.4 or higher.
 
-In addition to the w3up library you're also likely to need elements of `go-ucanto` - a library for performing UCAN RPC calls. Add the libraries to your project's dependencies:
+In addition to the w3up library, you're also likely to need elements of `go-ucanto` - a library for performing UCAN RPC calls. Add the libraries to your project's dependencies:
 
 ```bash
 go get github.com/storacha/go-w3up
@@ -30,7 +30,7 @@ go get github.com/storacha/go-ucanto
 
 ## Generate a DID
 
-Currently the best way to generate a DID is to use the w3up JS CLI:
+Currently, the best way to generate a DID is to use the w3up JS CLI:
 
 <Steps>
 ### Install w3 CLI
@@ -45,7 +45,7 @@ npm install -g @web3-storage/w3cli
 w3 key create
 ```
 
-Output should look something like:
+The output should look something like this:
 
 ```sh
 # did:key:z6Mkh9TtUbFJcUHhMmS9dEbqpBbHPbL9oxg1zziWn1CYCNZ2
@@ -60,7 +60,7 @@ MgCb+bRGl02JqlWMPUxCyntxlYj0T/zLtR2tn8LFvw6+Yke0BKAP/OUu2tXpd+tniEoOzB3pxqxHZpRh
 
 ## Obtain proofs
 
-Proofs are delegations to your DID enabling it to perform tasks. Currently the best way to obtain proofs that will allow you to interact with the Storacha API is to use the w3up JS CLI:
+Proofs are delegations to your DID enabling it to perform tasks. Currently, the best way to obtain proofs that will allow you to interact with the Storacha API is to use the w3up JS CLI:
 
 <Steps>
 ### Install w3 CLI
@@ -93,7 +93,7 @@ w3 delegation create -c 'store/*' -c 'upload/*' [DID] -o proof.ucan
 
 ## Load private key and proofs
 
-To interact with the Storacha API you need your private key to sign UCAN invocations and a proof that your key has been delegated capabilities to perform tasks:
+To interact with the Storacha API you need your private key to sign UCAN invocations and proof that your key has been delegated capabilities to perform tasks:
 
 ```go
 package main
