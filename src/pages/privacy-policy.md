@@ -2,14 +2,14 @@
 
 ## Privacy
 
-This Privacy Policy governs all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”).
+This Privacy Policy governs all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services, and products available at or through the Website or Gateway (collectively, “Services”).
 
-The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time.  By accessing or using any part of our Services you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
+The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time.  By accessing or using any part of our Services you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
 
 We keep your personal information personal and private. We will not sell or rent your personal information to anyone. We will not share or otherwise disclose your personal information except as necessary to provide our Services or as otherwise described in this Privacy Policy without first providing you with notice and the opportunity to consent.
 By accessing or using any part of our Services, including the Websites, you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
 
-The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time by Storacha, Inc. (collectively, the “Agreement”).
+The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time by Storacha, Inc. (collectively, the “Agreement”).
 
 ### Who Do We Collect Information From?
 
@@ -40,13 +40,13 @@ Any of the information we collect from you may be used in one of the following w
 - To improve our Services — we continually strive to improve our site offerings based on the information and feedback we receive from you.
 - To improve customer service — your information helps us to more effectively respond to your customer service requests and support needs.
 - To send periodic emails or notifications — the email address or other contact information you provide may be used to send you information, notifications that you request about changes to topics or in response to your posts, respond to inquiries, and/or other requests or questions.
-- To comply with applicable laws — to perform activities necessary to ensure compliance with applicable national, state, provincial and other applicable laws, and to respond to requests from government authorities. If we are going to disclose your personal information in response to a legal process, we will take best efforts to give you notice so you can challenge the disclosure (for example by seeking court intervention), unless we are prohibited by law or believe doing so may endanger others or cause illegal conduct.
-- To protect legal interests — to protect the legal interests, health or safety of a user, us, or other third parties.
+- To comply with applicable laws — to perform activities necessary to ensure compliance with applicable national, state, provincial, and other applicable laws, and to respond to requests from government authorities. If we are going to disclose your personal information in response to a legal process, we will take best efforts to give you notice so you can challenge the disclosure (for example by seeking court intervention), unless we are prohibited by law or believe doing so may endanger others or cause illegal conduct.
+- To protect legal interests — to protect the legal interests, health, or safety of a user, us, or other third parties.
 - In the event of a merger or sale — in the event that we, or some or all assets related to our Services are acquired by, transferred to, or merged with a third-party entity or in connection with a merger, acquisition, sale, or other change of control, we may transfer some or all of the personal information that we have collected about you to another organization as part of that transaction.
 
 ### How do we protect your information?
 
-We implement a variety of security measures to maintain the safety of your personal information when you enter, submit, or access your personal information which may include anonymization, encryption, adhering to the principle of data minimization and implementing other cyber-security measures.
+We implement a variety of security measures to maintain the safety of your personal information when you enter, submit, or access your personal information which may include anonymization, encryption, adhering to the principle of data minimization, and implementing other cyber-security measures.
 
 ### What is your data retention policy?
 
@@ -55,7 +55,7 @@ We will retain information where needed to (a) fulfill the purposes described in
 We will make a good faith effort to:
 
 - Retain server logs containing the IP address of all requests to servers under our control related to our Services for no more than 180 days.
-- Retain the IP addresses associated with registered users no more than 5 years.
+- Retain the IP addresses associated with registered users for no more than 5 years.
 
 ### Do we use cookies?
 
@@ -67,7 +67,7 @@ We do not sell, trade, or otherwise transfer to outside parties your personally 
 
 ### What rights may be available to me?
 
-In certain circumstances, local data protection laws (such as the GDPR) may give you rights with respect to personal information if you are located in or are a resident of that country, state, or territory (including if you are located in the EU/EEA). These rights differ based upon local data protection laws in your country, state, or territory, but these rights may include one or more of the following:
+In certain circumstances, local data protection laws (such as the GDPR) may give you rights with respect to personal information if you are located in or are a resident of that country, state, or territory (including if you are located in the EU/EEA). These rights differ based on local data protection laws in your country, state, or territory, but these rights may include one or more of the following:
 
 - _Access to Personal Information._ You may have the right to obtain confirmation from us that we process your personal information and, if so, you may have the right to request access to your personal information.
 - _Rectification._ You may have the right to request that we rectify inaccurate personal information concerning you and, depending on the purposes of the processing, you may have the right to have incomplete personal information completed.
@@ -82,7 +82,7 @@ In certain circumstances, local data protection laws (such as the GDPR) may give
 
 ### Third party links
 
-Occasionally, at our discretion, we may include or offer third party products or services on our site. These third party sites have separate and independent privacy policies and may collect or use your data in a way we are not aware of. We therefore have no responsibility or liability for the content and activities of these linked sites. Nonetheless, we seek to protect the integrity of our site and welcome any feedback about these sites.
+Occasionally, at our discretion, we may include or offer third-party products or services on our site. These third-party sites have separate and independent privacy policies and may collect or use your data in a way we are not aware of. We therefore have no responsibility or liability for the content and activities of these linked sites. Nonetheless, we seek to protect the integrity of our site and welcome any feedback about these sites.
 
 ### Children’s Online Privacy Protection Act Compliance
 
@@ -104,4 +104,4 @@ Questions about our Privacy Policy?  Please contact support@storacha.network
 
 If we decide to change our Privacy Policy, we will post those changes on this page.
 
-This document is CC-BY-SA. It was last updated September 19, 2024.
+This document is CC-BY-SA. It was last updated on September 19, 2024.

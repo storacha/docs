@@ -53,7 +53,7 @@ The CLI content-addresses your files, packs them into 1 or more CAR files, and u
 
 https://w3s.link/ipfs/bafybeib4ht2a53pttgipw6mgckqqhmgkifnmh2glzsju2c6ait5ibnkow4
 
-By default, `w3` will wrap files in a folder, so that their filename is preserved. They can then be accessed directly by adding their name in the URL path:
+By default, `w3` will wrap files in a folder, so that their filename is preserved. They can then be accessed directly by adding their name to the URL path:
 
 https://w3s.link/ipfs/bafybeib4ht2a53pttgipw6mgckqqhmgkifnmh2glzsju2c6ait5ibnkow4/lets-go.txt
 
