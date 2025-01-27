@@ -25,7 +25,7 @@ Must comply with all platform [Terms of Service](https://docs.storacha.network/t
 
 ### 3.1 Types of Rewards:
 
-Two types of Rewards can be earned by participating the Program:
+Two types of Rewards can be earned by participating in the Program:
 
 - Storage credits (“Credits”) that can be applied to Lite/Medium or Business/Extra Spicy subscriptions
 - Loyalty points (“Racha Points”)
@@ -50,7 +50,7 @@ A Referrer is eligible to receive Rewards if a successful referral (“Successfu
   - Up to 160 Credits for Lite/Medium tier referrals
   - Up to 300 Credits for Business/Extra Spicy tier referrals
 - Credits can only be applied towards paid subscription plans (Lite/Medium and Business/Extra Spicy), not overages
-- All Credits expire 12 months from date of issue
+- All Credits expire 12 months from the date of issue
 
 ### 3.5 Free Trial and Rewards for Referred Users
 

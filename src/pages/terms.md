@@ -1,6 +1,6 @@
 # Terms of service
 
-The following terms and conditions govern all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”). The Services are offered subject to your acceptance without modification of all of the terms and conditions contained herein. As all data uploaded to storacha.network will be available via IPFS, the Services are also subject to the [Terms of Service of IPFS.io](https://discuss.ipfs.tech/tos) and [Privacy Policy of IPFS.io](https://discuss.ipfs.tech/privacy).
+The following terms and conditions govern all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services, and products available at or through the Website or Gateway (collectively, “Services”). The Services are offered subject to your acceptance without modification of all of the terms and conditions contained herein. All data is uploaded to storacha.network will be available via IPFS, the Services are also subject to the [Terms of Service of IPFS.io](https://discuss.ipfs.tech/tos) and [Privacy Policy of IPFS.io](https://discuss.ipfs.tech/privacy).
 
 If you do not agree to all the terms and conditions of this agreement (“Agreement” or “TOS”), then you may not access the Website or use any of the Services.
 
@@ -12,7 +12,7 @@ Data stored via the Services will be available via IPFS and stored on Filecoin u
 
 The maximum size of a registered upload is 750GB. Uploads greater than this size may not be registered successfully with your account, though if the data is successfully stored with storacha.network, you will still be responsible for paying for this storage.
 
-We reserve the right to terminate the Services at our sole discretion or to transfer operation of the Services to a third party or smart contract. Prior to termination or transfer, we will provide 90 days’ notice to users via email to allow users enough time to make arrangements if any (e.g. remote pinning to their own IPFS node, remote pinning to another service, or preparing to manage the renewal of their Filecoin deals on their own).
+We reserve the right to terminate the Services at our sole discretion or to transfer the operation of the Services to a third party or smart contract. Prior to termination or transfer, we will provide 90 days’ notice to users via email to allow users enough time to make arrangements if any (e.g. remote pinning to their own IPFS node, remote pinning to another service, or preparing to manage the renewal of their Filecoin deals on their own).
 
 All data uploaded to storacha.network is available to anyone who requests it using the correct CID. **Users should not store any private or sensitive information in an unencrypted form using storacha.network.** Deleting files from storacha.network via the site's web console or API will remove them from the file listing for a user's account, but you may be charged for at least 30 days of storage for those files. Additionally, uploaded files typically remain on our infrastructure for at minimum thirty (30) days, and nodes on the IPFS network may retain copies of the data indefinitely. **Users should not use storacha.network to store data that may need to be permanently deleted in the future.**
 
@@ -38,11 +38,11 @@ You may change your chosen tier at any point. You will be charged for the tier y
 
 ### Changes
 
-We reserve the right to change our Paid Plans or adjust pricing for our service or any components thereof in any manner and at any time, in our sole discretion and without notice. If we adjust the pricing of your Paid Plan, we will provide you with at least fourteen (14) days’ notice before these changes take effect. By continuing to use the Services, you agree to terms of this Agreement (including any updated terms).
+We reserve the right to change our Paid Plans or adjust pricing for our service or any components thereof in any manner and at any time, in our sole discretion and without notice. If we adjust the pricing of your Paid Plan, we will provide you with at least fourteen (14) days’ notice before these changes take effect. By continuing to use the Services, you agree to the terms of this Agreement (including any updated terms).
 
 ### Taxes
 
-The Fees do not include any taxes, levies, duties, or similar governmental assessments, including value-added, sales, use, or withholding taxes assessable by any domestic or foreign jurisdiction (“Taxes”). You agree that you’re responsible for any applicable Taxes, and that you will provide us with any applicable tax identification information that we may require by law to ensure our compliance with applicable tax regulations and authorities in applicable jurisdictions.
+The Fees do not include any taxes, levies, duties, or similar governmental assessments, including value-added, sales, use, or withholding taxes assessable by any domestic or foreign jurisdiction (“Taxes”). You agree that you’re responsible for any applicable Taxes and that you will provide us with any applicable tax identification information that we may require by law to ensure our compliance with applicable tax regulations and authorities in applicable jurisdictions.
 
 ### Overages
 
@@ -58,12 +58,12 @@ Posting or distributing Content that contains any viruses, malware, worms, Troja
 Tricking users into revealing sensitive information to an unauthorized party (e.g., phishing) or misleading users as to the source of Content (e.g., spoofing);
 Naming your Content in a manner that misleads readers into thinking you are another person or company;
 Posting or distributing spam, including Content advertised via unwanted electronic messages on newsgroups, email lists, blogs, websites, and other unsolicited promotional materials;
-Unethical or unwanted commercial Content designed to drive traffic to third party sites or boost the search engine rankings of third party sites;
+Unethical or unwanted commercial Content designed to drive traffic to third-party sites or boost the search engine rankings of third-party sites;
 Interfering with or disrupting the Services, or creating an undue burden on the Services or the networks or services connected to the Services, including (a) activity impacting the service level of other storacha.network users or (b) via a distributed denial of service attack.
 
 ### Infringement of Others’ Rights
 
-Infringing the proprietary rights, including but not limited to the copyright, patent, trademark or trade secret rights, of any third party;
+Infringing the proprietary rights, including but not limited to the copyright, patent, trademark, or trade secret rights, of any third party;
 Failing to comply with any third-party licenses relating to Content or failing to complete all necessary steps to pass any required license terms to end users;
 Violating the privacy or publicity rights of any third party.
 
@@ -84,13 +84,13 @@ If you are on any U.S. or E.U. sanctions list, or residing in any U.S. or E.U.-s
 
 This Agreement will be governed by the laws of the state of Delaware without regard to conflict of law principles.
 
-To the extent you provide any ideas, suggestions, or other feedback to us regarding the Services (“Feedback”) you agree to release and assign to us all rights, titles, and interests (such as intellectual property rights) to that Feedback.  You further agree that we may make any such Feedback available under the MIT/Apache 2.0 dual open source license.
+To the extent you provide any ideas, suggestions, or other feedback to us regarding the Services (“Feedback”) you agree to release and assign to us all rights, titles, and interests (such as intellectual property rights) to that Feedback.  You further agree that we may make any such Feedback available under the MIT/Apache 2.0 dual open-source license.
 
 You are responsible for maintaining the confidentiality of all usernames, passwords, and other access credentials created by or assigned by you, and are solely responsible for all activities that occur with such credentials. If you permit third-parties to use your credentials to access the Services, you do so at your sole risk and we will not be directly or indirectly responsible or liable to you in any manner for any damages, harms, losses, or claims arising out of or in connection with such permission of your credentials.
 
-You may have access to third-party websites and webpages through the Services, and you take full responsibility for your use of those third-party sites which fall outside our scope and control.
+You may have access to third-party websites and webpages through the Services, and you take full responsibility for your use of those third-party sites that fall outside our scope and control.
 
-The Services are provided “as is,” unless otherwise stated. We hereby disclaim all warranties of any kind, express or implied, including, without limitation, the warranties of merchantability, fitness for a particular purpose and non-infringement. We make no warranty that the Services will be error free or that access thereto will be continuous or uninterrupted, unless otherwise expressly stated for a particular Service. You understand that you upload, download or otherwise obtain content via the Services at your own discretion and risk.
+The Services are provided “as is,” unless otherwise stated. We hereby disclaim all warranties of any kind, express or implied, including, without limitation, the warranties of merchantability, fitness for a particular purpose, and non-infringement. We make no warranty that the Services will be error-free or that access thereto will be continuous or uninterrupted, unless otherwise expressly stated for a particular Service. You understand that you upload, download, or otherwise obtain content via the Services at your own discretion and risk.
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW (A) YOU ASSUME ALL LIABILITY FOR ANY DAMAGES, CLAIMS, EXPENSES OR OTHER COSTS (INCLUDING, WITHOUT LIMITATION, ATTORNEYS’ FEES) YOU SUFFER OR INCUR AS A RESULT OF THIRD-PARTY CLAIMS RELATING TO YOUR USE OF THE SERVICES, (B) YOU ASSUME ALL LIABILITY FOR ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE OR CONSEQUENTIAL DAMAGES ARISING FROM OR RELATED TO YOUR USE OF THE SERVICES, AND (C) YOUR MAXIMUM AGGREGATE DAMAGES ARISING OUT OF OR IN CONNECTION WITH THE SERVICES SHALL BE LIMITED TO $100, REGARDLESS OF THE CAUSE.
 
