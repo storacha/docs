@@ -7,7 +7,7 @@ Ready to get started using Storacha? Get up and running in minutes by following 
 3. Upload a file.
 4. Get your uploaded file using your browser or curl.
 
-This guide uses our w3cli CLI since it's the fastest way to get started using Storacha. In the "How-To" section of the docs, we also include instructions on using the Javascript client or web interface to create an account, store data, and more.
+This guide uses our `w3cli` CLI since it's the fastest way to get started using Storacha. In the "How-To" section of the docs, we also include instructions on using the Javascript client or web interface to create an account, store data, and more.
 
 ## You will need
 
