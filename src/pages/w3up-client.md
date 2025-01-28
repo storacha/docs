@@ -34,7 +34,7 @@ const client = await create();
 
 See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
 
-## Create and provision a space
+## Create and Provision a Space
 
 Each uploaded thing to Storacha is associated with a "Space". A space is a unique identifier that acts as a namespace for your content. Spaces are identified by a DID (decentralized identifier) using keys created locally on your devices.
 
@@ -153,7 +153,7 @@ In the example above, `directoryCid` resolves to an IPFS directory with the foll
     └── main.py
 ```
 
-## View your file on an IPFS gateway
+## View Your File on an IPFS Gateway
 
 The `uploadFile` and `uploadDirectory` methods described in the previous step both return a CID, or Content Identifier - a unique hash of the data.
 
