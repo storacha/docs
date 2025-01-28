@@ -36,7 +36,7 @@ See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages
 
 ## Create and provision a space
 
-When you upload things to Storacha, each upload is associated with a "space", which is a unique identifier that acts as a namespace for your content. Spaces are identified by DID using keys created locally on your devices.
+Each uploaded thing to Storacha is associated with a "Space". A space is a unique identifier that acts as a namespace for your content. Spaces are identified by a DID (decentralized identifier) using keys created locally on your devices.
 
 The first thing to do is login your Agent with your email address. Calling `login` will cause an email to be sent to the given address. Once a user clicks the confirmation link in the email, the `login` method will resolve. Make sure to check for errors, as `login` will fail if the email is not confirmed within the expiration timeout. Authorization needs to happen only once per agent.
 
@@ -61,7 +61,7 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
 **Additional Notes**
 
-1.  :warning: **Important**  :warning:
+1.  :warning: **Important**
     If you do not provide the `account` parameter when creating a space, you risk losing access to your space in case of device loss or credential issues.
 
 2.  **Account Parameter**\
