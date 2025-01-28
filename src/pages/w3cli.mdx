@@ -13,7 +13,7 @@ In this guide, we'll walk through the following steps:
 
 ## Install
 
-You'll need [Node.js](https://nodejs.org) version 18 or higher, with NPM version 7 or higher to complete this guide.
+You'll need [Node.js](https://nodejs.org) version `18` or higher, with NPM version `7` or higher to complete this guide.
 
 You can check your local versions like this:
 
@@ -29,7 +29,7 @@ npm install -g @web3-storage/w3cli
 
 Once the install is complete, you'll have a `w3` command available. Try running `w3 --help` to get an idea of what's possible.
 
-### Standalone binaries
+### Standalone Binaries
 
 <Callout type="warning">
   These binaries are built from the Go client codebase which is not as fully featured as the JS client.
@@ -37,15 +37,15 @@ Once the install is complete, you'll have a `w3` command available. Try running 
 
 Pre-compiled, standalone binaries are now available for MacOS, Linux and Windows: [Download latest release](https://github.com/storacha/go-w3up/releases/latest).
 
-Please ensure you [read the documentation for using the Go CLI](https://github.com/storacha/go-w3up#cli). These binaries are built from the Go client codebase which is not as fully featured as the JS client. Currently to use the Go CLI tool you will need to obtain a delegation created by the JS CLI or [console](https://console.storacha.network).
+We strongly recommend reading the [Go CLI documentation](https://github.com/storacha/go-w3up#cli). These binaries are built from the Go client codebase which is not as fully featured as the JS client. To use the Go CLI tool, you will need to obtain a delegation created by the JS CLI or [console](https://console.storacha.network).
 
-## Create your first space
+## Create Your First Space
 
-When you upload things to Storacha, each upload is associated with a <abbr id="space">"space"</abbr>, which is a unique identifier that acts as a namespace for your content.
+Each uploaded thing to Storacha is associated with a <abbr id="space">"Space"</abbr>. A space is a unique identifier that acts as a namespace for your content.
 
-Spaces are identified by <abbr id="did">DID</abbr> using keys created locally on your devices. To use a space for uploads, it needs to be registered with the storage service by providing an email address.
+Spaces are identified by <abbr id="did">DID</abbr> using keys created locally on your devices. To use a space for uploads, it needs to be registered with the Storacha by providing an email address.
 
-To create a space using the `w3` command line tool, use the `w3 space create` command. You should give your space a "friendly" name, which acts like an alias for the space's DID and can make it easier to tell your spaces apart. In the example below, we'll use the name `Documents`:
+To create a space using the `w3` command line tool, use the `w3 space create` command. You should give your space a "friendly" name, which acts like an alias for the space's DID and can make it easier to tell your spaces apart. Names for spaces cannot be changed at thsi time. In the example below, we'll use the name `Documents`:
 
 ```bash
 w3 space create Documents
@@ -67,7 +67,7 @@ You can now run `w3 space ls` to show a list of your spaces:
 
 The `*` symbol indicates that the `Documents` space is currently active. If you make multiple spaces, you can switch between them with `w3 space use`, passing in the name or DID of the space you want to activate.
 
-## Upload files
+## Upload Files
 
 Now that you've [created and registered a space](#create-space), you're ready to upload files to Storacha!
 
@@ -83,6 +83,6 @@ If you uploaded a single file, the link will resolve to an IPFS directory listin
 
 When uploading directories, files beginning with a `.` character are ignored by default. To include hidden files instead, pass in the `-H` or `--hidden` flag.
 
-## View your file with IPFS
+## View Your File with IPFS
 
 When your upload completes, you should see a link to your files on the `w3s.link` <abbr id="gateway">IPFS gateway</abbr>. Just click the link to see your file!
