@@ -35,7 +35,7 @@ You need to create a Storacha account associated with an email address and set i
 3. Create a new Space for storing your data and register it:
 
 ```sh
-w3 space create Documents # pick a good name!
+w3 space create Documents # pick a good name! you can't change it later
 ```
 
 ## Upload
