@@ -89,8 +89,8 @@ __  _  __  ____  \_ |__  \_____  \      _______/  |_   ____  _______ _____      
 
 Congratulations! You've just covered the basics of Storacha. To learn more, take a look at these useful resources:
 
-- For a deep dive into storing files, including using the Javascript client to do so, visit the [Upload how-to guide](/how-to/upload).
-- Read more about the power of [UCANs and IPFS](/concepts/ucans-and-storacha), and learn about the various options to integrate Storacha with your application.
+- For a deep dive into storing files, including using the Javascript client to do so, visit the [How to Upload guide](/how-to/upload).
+- Read and learn about the power of [UCANs and IPFS](/concepts/ucans-and-storacha) and the various options to integrate Storacha with your application.
 
 <!-- - Try out our image gallery example to see how easy it is to take advantage of these decentralized protocols using Storacha.
 - Visit the reference API section for more details on what else you can do with the Storacha client and how to integrate it into your own projects. -->
