@@ -7,7 +7,7 @@ Ready to get started using Storacha? Get up and running in minutes by following 
 3. Upload a file.
 4. Get your uploaded file using your browser or curl.
 
-This guide uses our CLI, w3cli, since it's the fastest way to get started using Storacha. In the "How-to" section of the docs, we also include instructions on using the Javascript client or web interface to create an account, store data, and more.
+This guide uses our w3cli CLI since it's the fastest way to get started using Storacha. In the "How-To" section of the docs, we also include instructions on using the Javascript client or web interface to create an account, store data, and more.
 
 ## You will need
 
@@ -28,7 +28,7 @@ npm install -g @web3-storage/w3cli
 
 ## Create an account
 
-You need to create a Storacha account associated with an email address and set it up so you can start uploading to a Space. The Space is created locally and associated with a private key, and is then registered with Storacha and associated with your email address. But don't worry about keeping track of the Space's private key! Storacha's email authorization system allows this private key to be treated as a throwaway key.
+You need to create a Storacha account associated with an email address and set it up so you can start uploading to a Space. The Space is created locally and associated with a private key. Then the Space is registered with Storacha and associated with your email address. But don't worry about keeping track of the Space's private key! Storacha's email authorization system allows this private key to be treated as a throwaway key.
 
 1. Run `w3 login alice@example.com` in the command line using your email address. This will send an email to your inbox with a link for validation.
 2. Once you click on the validation link, you'll be taken to a webpage where you can select a plan (like our Starter tier).
