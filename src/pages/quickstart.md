@@ -9,7 +9,7 @@ Ready to get started using Storacha? Get up and running in minutes by following 
 
 This guide uses our `w3cli` CLI since it's the fastest way to get started using Storacha. In the "How-To" section of the docs, we also include instructions on using the Javascript client or web interface to create an account, store data, and more.
 
-## You will need
+## You Will Need
 
 Node.js version `18` or higher and npm version `7` or higher to complete this guide. Check your local versions like this:
 
@@ -26,7 +26,7 @@ Install the CLI from npm using your command line:
 npm install -g @web3-storage/w3cli
 ```
 
-## Create an account
+## Create an Account
 
 You need to create a Storacha account associated with an email address and set it up so you can start uploading to a Space. The Space is created locally and associated with a private key. Then the Space is registered with Storacha and associated with your email address. But don't worry about keeping track of the Space's private key! Storacha's email authorization system allows this private key to be treated as a throwaway key.
 
@@ -57,7 +57,7 @@ By default, `w3` will wrap files in a folder, so that their filename is preserve
 
 https://w3s.link/ipfs/bafybeib4ht2a53pttgipw6mgckqqhmgkifnmh2glzsju2c6ait5ibnkow4/lets-go.txt
 
-## Get your file
+## Get Your File
 
 Your upload is now available over the public IPFS network using the content CID of your upload. The easiest way to fetch it is using the link that `w3 up` provided to the `w3s.link gateway`. The `w3s.link` is optimized for content uploaded to Storacha.
 
@@ -85,7 +85,7 @@ __  _  __  ____  \_ |__  \_____  \      _______/  |_   ____  _______ _____      
               \/      \/        \/  \/     \/                             \/ /_____/       \/ 
 ```
 
-## Next steps
+## Next Steps
 
 Congratulations! You've just covered the basics of Storacha. To learn more, take a look at these useful resources:
 
