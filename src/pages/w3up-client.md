@@ -120,7 +120,7 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
     });
     ```
 
-## Upload files
+## Upload Files
 
 Now that you've created and provisioned a space, you're ready to upload files to Storacha!
 
