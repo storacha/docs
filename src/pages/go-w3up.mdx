@@ -30,7 +30,7 @@ go get github.com/storacha/go-ucanto
 
 ## Generate a DID
 
-Currently the best way to generate a DID is to use the w3up JS CLI:
+Currently the best way to generate a DID (decentralized identifier) is to use the w3up JS CLI:
 
 <Steps>
 ### Install w3 CLI
@@ -58,7 +58,7 @@ MgCb+bRGl02JqlWMPUxCyntxlYj0T/zLtR2tn8LFvw6+Yke0BKAP/OUu2tXpd+tniEoOzB3pxqxHZpRh
   Save the private key (starting `Mg...`) to a file `private.key`.
 </Callout>
 
-## Obtain proofs
+## Obtain Proofs
 
 Proofs are delegations to your DID enabling it to perform tasks. Currently the best way to obtain proofs that will allow you to interact with the Storacha API is to use the w3up JS CLI:
 
@@ -73,13 +73,13 @@ npm install -g @web3-storage/w3cli
 
 [Generate a DID](#generate-a-did) and make a note of it (the string starting with `did:key:...`)
 
-### Create a space
+### Create a Space
 
 ```sh
 w3 space create [NAME]
 ```
 
-### Delegate capabilities to your DID
+### Delegate Capabilities to Your DID
 
 ```sh
 w3 delegation create -c 'store/*' -c 'upload/*' [DID] -o proof.ucan
@@ -91,7 +91,7 @@ w3 delegation create -c 'store/*' -c 'upload/*' [DID] -o proof.ucan
   Make a note of the space DID from above. You'll need it later.
 </Callout>
 
-## Load private key and proofs
+## Load Private Key and Proofs
 
 To interact with the Storacha API you need your private key to sign UCAN invocations and a proof that your key has been delegated capabilities to perform tasks:
 
@@ -120,7 +120,7 @@ proof, _ := delegation.ExtractProof(b)
 
 ## Upload a CAR
 
-Once you have loaded your space DID, your private key and your delegation proofs, you can upload a CAR to Storacha.
+Once you have loaded your space DID, your private key and your delegation proofs, you can upload a CAR ([content addressed archive file](/concepts/car)) to Storacha.
 
 ```go
 package main
