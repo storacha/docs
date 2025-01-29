@@ -59,7 +59,7 @@ https://w3s.link/ipfs/bafybeib4ht2a53pttgipw6mgckqqhmgkifnmh2glzsju2c6ait5ibnkow
 
 ## Get Your File
 
-Your upload is now available over the public IPFS network using the content CID of your upload. The easiest way to fetch it is using the link that `w3 up` provided to the `w3s.link gateway`. The `w3s.link` is optimized for content uploaded to Storacha.
+Your upload is now available over the public IPFS network using the content CID of your upload. The easiest way to fetch it is using the link that `w3 up` provided to the `w3s.link` gateway. The `w3s.link` gateway is optimized for content uploaded to Storacha.
 
 ```sh
 curl -L 'https://w3s.link/ipfs/bafybeib4ht2a53pttgipw6mgckqqhmgkifnmh2glzsju2c6ait5ibnkow4/lets-go.txt'
