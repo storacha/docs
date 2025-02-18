@@ -55,12 +55,18 @@ w3 space ls
 And use the `bridge generate-tokens` command to generate header values:
 
 ```sh
-w3 bridge generate-tokens did:key:z6Mkabc123 --can 'store/add' --can 'upload/add' --can 'upload/list' --expiration `date -v +24H +%s`
+w3 bridge generate-tokens did:key:z6Mkabc123 --can 'store/add' --can 'upload/add' --can 'upload/list' --expiration $(date -v +24H +%s)
 ```
 
 The example command above uses the `--expiration` option to specify that these headers will be
 valid for 24 hours. It uses the `--can` options to specify that the headers can be used to invoke
 `store/add`, `upload/add` or `upload/list` capabilities.
+
+If using Windows, replace single quote with double quotes. Also, replace the time to a unix format. Please reference this code sample made for Windows instead:
+```sh
+w3 bridge generate-tokens did:key:z6Mkabc123 --can "store/add" --can "upload/add" --can "upload/list" --expiration $((Get-Date).AddHours(24).ToUniversalTime() -UFormat %s)
+```
+PowerShell does not handle date arithmetic well. The best alternative is to manually calculate and pass the expiration timestamp if running into an issue.
 
 The result of `w3 bridge generate-tokens` will contain the values of the `X-Auth-Secret` and `Authorization` headers:
 
