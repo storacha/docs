@@ -11,7 +11,7 @@ In this guide, we'll walk through the following steps:
 
 ## Install
 
-You'll need [Node](https://nodejs.com) version 18 or higher, with NPM version 7 or higher to complete this guide.
+You'll need [Node](https://nodejs.com) version 22 or higher, with NPM version 7 or higher to complete this guide.
 You can check your local versions like this:
 
 ```bash
