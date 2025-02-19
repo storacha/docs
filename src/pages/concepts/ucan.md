@@ -148,7 +148,7 @@ async function getDIDFromRequest (request) {
 }
 ```
 
-When the frontend recieves the delegation from your service, they can call [`addProof`][reference-client#addproof] on their `w3up-client` instance and pass in the bytes of the delegation object. They will also need to call `client.setCurrentSpace(spaceDID)`, passing in the DID for the space that you delegated access to. Once that's done, they should be able to use the `uploadFile` and `uploadDirectory` client methods to send data to your Storacha space.
+When the frontend receives the delegation from your service, they can call [`addProof`][reference-client#addproof] on their `w3up-client` instance and pass in the bytes of the delegation object. They will also need to call `client.setCurrentSpace(spaceDID)`, passing in the DID for the space that you delegated access to. Once that's done, they should be able to use the `uploadFile` and `uploadDirectory` client methods to send data to your Storacha space.
 
 Note that in our example above, we granted a limited set of capabilities, so that our user can upload but not access any other functionality related to the space. If you want to delegate all permissions, use the `'*'` ability in your delegation, and use the client's [`addSpace` method][reference-client#addspace] instead of `addProof`.
 
@@ -284,7 +284,7 @@ Replace `SPACE_DID` with the space DID you just copied. If you run `w3 space ls`
 
 Now that your second agent has access to the space created by the first, you can use `w3 up` in your second terminal window to upload whatever you like.
 
-Note that the `w3 delegation create` command we used in step 5 delegates the `'*'` or "top" capability by default, so the second agent will have full access to the space. You can restrict the set of delegated capabilites using the `--can` flag. Try running `w3 delegation create --help` to see more options.
+Note that the `w3 delegation create` command we used in step 5 delegates the `'*'` or "top" capability by default, so the second agent will have full access to the space. You can restrict the set of delegated capabilities using the `--can` flag. Try running `w3 delegation create --help` to see more options.
 
 ## Wrapping up
 
