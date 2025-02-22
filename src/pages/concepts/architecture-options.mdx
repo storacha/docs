@@ -17,9 +17,9 @@ In this set up, you (the developer) own the space, your users upload data to you
 ```mermaid
 sequenceDiagram
 participant User
-w3up-client in backend-\>\>w3up-client in backend: Client set with Agent with delegation from Space
-User-\>\>w3up-client in backend: Upload data
-w3up-client in backend-\>\>storacha w3up service: Upload data
+w3up-client in backend->>w3up-client in backend: Client set with Agent with delegation from Space
+User->>w3up-client in backend: Upload data
+w3up-client in backend->>storacha w3up service: Upload data
 ```
 
 You'll need a registered Space, and your client in the backend to have a delegation to use the Space.
@@ -41,11 +41,11 @@ sequenceDiagram
 participant w3up-client in user
 participant w3up-client in backend
 participant storacha w3up service
-w3up-client in backend-\>\>w3up-client in backend: Client created with Agent and delegation from Space
-w3up-client in user-\>\>w3up-client in user: Client instantiated with default Agent
-w3up-client in user-\>\>w3up-client in backend: Request delegation with user's Agent DID
-w3up-client in backend-\>\>w3up-client in user: Send delegation from Space to user's Agent DID
-w3up-client in user-\>\>storacha w3up service: Upload data
+w3up-client in backend->>w3up-client in backend: Client created with Agent and delegation from Space
+w3up-client in user->>w3up-client in user: Client instantiated with default Agent
+w3up-client in user->>w3up-client in backend: Request delegation with user's Agent DID
+w3up-client in backend->>w3up-client in user: Send delegation from Space to user's Agent DID
+w3up-client in user->>storacha w3up service: Upload data
 ```
 
 Typically `w3up-client` will be running in your end-user's client code, as well as backend code that's able to generate UCANs that delegate the ability to upload and pass them to your users (e.g., `w3up-client` running in a serverless worker).
@@ -144,10 +144,10 @@ sequenceDiagram
 participant User
 participant Application backend
 participant storacha w3up service
-Application backend-\>\>User: Front end code that includes w3up-client
-User-\>\>storacha w3up service: (If needed) Create Space and register it
-User-\>\>storacha w3up service: (If needed) Use Agent email verification to "log in" to Space
-User-\>\>storacha w3up service: Upload data using w3up-client
+Application backend->>User: Front end code that includes w3up-client
+User->>storacha w3up service: (If needed) Create Space and register it
+User->>storacha w3up service: (If needed) Use Agent email verification to "log in" to Space
+User->>storacha w3up service: Upload data using w3up-client
 ```
 
 If you want your user to own their own Space, you'll typically be relying on the `w3up-client` methods to create a Space, authorize the Space, and authorize the Agent on the user-side; afterwards they can run any of the upload methods.
