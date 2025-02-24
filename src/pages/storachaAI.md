@@ -8,8 +8,9 @@ To make your experience even easier, we are working on multiple integrations. Yo
 ### ElizaOS
 A database adapter for ElizaOS that enables decentralized storage of agent data using the Storacha network.
 
-Example Code:
-```
+**Example**
+How a developer can use the Storacha database adapter with ElizaOS:
+```Node.js
 import { Agent } from '@elizaos/core';
 import { DatabaseAdapter } from '@storacha/elizaos-adapter';
 
