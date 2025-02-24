@@ -5,7 +5,7 @@ We recommend taking a look at [Quickstart Guide](https://docs.storacha.network/q
 
 To make your experience even easier, we are working on multiple integrations. You can find the available ones below:
 
-### ElizaOS
+## ElizaOS
 A database adapter for ElizaOS that enables decentralized storage of agent data using the Storacha network.
 
 **Example**
