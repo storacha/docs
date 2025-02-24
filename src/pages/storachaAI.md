@@ -1,4 +1,4 @@
-## Welcome to the hard drive for your robot brain! 
+### Welcome to the hard drive for your robot brain! 
 Use Storacha to store your LLM, RAG knowledge fragments, agent state, outputs and all the rest in a decentralized network of storage nodes.
 
 We recommend taking a look at [Quickstart Guide](https://docs.storacha.network/quickstart/) as you dive in. 
