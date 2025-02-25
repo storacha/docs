@@ -1,12 +1,12 @@
 ---
-title: Storacha AI
+title: Storacha Powering AI
 ---
 
 # Welcome to Storacha's AI Solution: the hard drive for your robot brain!
 
 Use Storacha to store your LLM, RAG knowledge fragments, agent state, outputs and all the rest in a decentralized network of storage nodes. 
 
-We recommend taking a look at [Quickstart Guide](https://docs.storacha.network/quickstart/) as you dive in. To make your experience even easier, we are working on multiple integrations. You can find the available ones below:
+We recommend taking a look at [Quickstart Guide](https://docs.storacha.network/quickstart/) as you dive in. To make your experience even easier, we are working on integrations with ElizaOS and Lit Protocol. 
 
 ## ElizaOS
 
@@ -62,3 +62,8 @@ const memories = await agent.getMemories({
   count: 10,
   tableName: 'conversations'
 });
+```
+
+## Lit Protocol
+
+Coming Soon 👀
