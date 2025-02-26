@@ -1,0 +1,129 @@
+import { Steps } from 'nextra/components'
+
+# @elizaos/plugin-storacha
+
+A plugin providing distributed storage functionality for ElizaOS agents. The Storacha plugin enables agents to interact with a distributed storage network, allowing for file uploads and retrieval.
+
+## Installation
+
+```bash
+pnpm install @elizaos/plugin-storacha
+```
+
+## Configuration
+
+<Steps>
+### Add the plugin to the Agent configuration:
+
+```typescript
+// eliza/agent/src/defaultCharacter.ts
+import { storagePlugin } from "@elizaos/plugin-storacha";
+
+export const defaultCharacter: Character = {
+    name: "Eliza",
+    username: "eliza",
+    plugins: [storagePlugin],
+    // ...
+};
+```
+
+### Create the env var file
+
+```bash
+cp .env.example agent/.env
+```
+
+### Load the Agent Private Key
+
+Set the `STORACHA_AGENT_PRIVATE_KEY` env var to the private key (e.g., `MgCYJE...Ig3Kk=`) you created in the [quickstart](./quickstart.mdx#generate-a-did).
+
+### Load the Agent Delegation
+
+Set the `STORACHA_AGENT_DELEGATION` env var to the delegation you created in the [quickstart](./quickstart.mdx#delegate-capabilities-to-your-agent).
+
+### Set the Model 
+
+If you are starting from scratch you may want to use OpenRouter API to provide the LLM Model for the Agent. Just create an account and API key at [openrouter.ai](https://openrouter.ai) and then set the `OPENROUTER_API_KEY` env var.
+
+The default agent character is already configured to use OpenRouter.
+</Steps>
+
+## Build & Run
+
+<Steps>
+### Start the Agent
+
+Build and start the agent from the project root folder:
+
+```bash
+pnpm install --no-frozen-lockfile
+pnpm build
+pnpm start
+```
+
+### Start the Web Client
+
+In another terminal start the Web Client to interact with the agent:
+
+```bash
+pnpm start:client
+```
+
+### Interact
+
+Open `http://localhost:5173` in browser and have fun!
+</Steps>
+
+## API Reference
+
+### Actions
+
+#### `STORAGE_UPLOAD`
+
+Use this action when the user wants to upload a file to Storacha distributed storage network.
+
+Supports multiple file types and sizes and provides a link to access uploaded files.
+
+##### Aliases
+
+* `UPLOAD`
+* `STORE`
+* `SAVE`
+* `PUT`
+* `PIN`
+
+#### `STORAGE_RETRIEVE`
+
+Use this action when a user asks you to retrieve a file from the Storacha network based on a CID.
+
+Embeds the file in the Agent response as an attachment, so the user can download it.
+
+##### Aliases
+
+* `RETRIEVE`
+* `RETRIEVE_FILE`
+* `RETRIEVE_FILE_FROM_STORAGE`
+* `RETRIEVE_FILE_FROM_IPFS`
+* `GET`
+* `GET_FILE`
+* `GET_FILE_FROM_STORAGE`
+* `GET_FILE_FROM_IPFS`
+* `GET_FILE_FROM_CID`
+* `LOAD`
+* `LOAD_FILE`
+* `LOAD_FILE_FROM_STORAGE`
+* `LOAD_FILE_FROM_IPFS`
+* `LOAD_FILE_FROM_CID`
+* `READ`
+* `READ_FILE`
+* `READ_FILE_FROM_STORAGE`
+* `READ_FILE_FROM_IPFS`
+* `READ_FILE_FROM_CID`
+
+## Future Enhancements
+
+* Conversation History & Agent Context Backup
+* Cross Agent Data Sharing
+* Encryption with LIT Protocol
+* Mutable references
+

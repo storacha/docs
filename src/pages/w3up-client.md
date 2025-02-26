@@ -44,7 +44,7 @@ The first thing to do is login your Agent with your email address. Calling `logi
 const account = await client.login("zaphod@beeblebrox.galaxy");
 ```
 
-If your account doesn't have a payment plan yet, you'll be prompted to select one after verifying your email. A payment plan is required to provision a space. You can use the following loop to wait until a payment plan is selected:
+If your account doesn't have a payment plan yet, you'll be prompted to select one after verifying your email. A payment plan is required to provision a space. You can use the following code to wait until a payment plan is selected:
 
 ```js
 // Wait for a payment plan with a 1-second polling interval and 15-minute timeout
@@ -61,7 +61,7 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
 **Additional Notes**
 
-1.  :warning: **Important**
+1.  ⚠️ **Important**
     If you do not provide the `account` parameter when creating a space, you risk losing access to your space in case of device loss or credential issues.
 
 2.  **Account Parameter**\
