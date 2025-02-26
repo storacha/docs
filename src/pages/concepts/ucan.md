@@ -54,11 +54,11 @@ Delegation is at the heart of what makes UCAN special! To learn more about deleg
 
 ## User owned accounts by default
 
-In our [Intro to UCAN article](./index.md), we gave a high-level overview of the new authorization protocol at the heart of our next-generation storage APIs. One of the most exciting things about UCAN is the ability for users to delegate access to their account's resources to other users, services, and devices. This guide will highlight some of the ways that delegation can be used with w3up, our new upload API. But first, let's consider some use cases that don't require delegation.
+In our [Intro to UCAN article](https://blog.web3.storage/posts/intro-to-ucan), we gave a high-level overview of the new authorization protocol at the heart of our next-generation storage APIs. One of the most exciting things about UCAN is the ability for users to delegate access to their account's resources to other users, services, and devices. This guide will highlight some of the ways that delegation can be used with w3up, our new upload API. But first, let's consider some use cases that don't require delegation.
 
 When applications use the w3ui components, or developers run the `w3` CLI, they need access to a "space," which is a unique ID that groups uploads together. Once a space has been registered with the w3up service, it can be used to upload files and other data.
 
-If you're uploading files from your laptop using [the `w3` command line tool](../../getting-started/w3cli.md), you can just create a space on the laptop and register it with the w3up service using the `w3 space register` command. The service will issue you a UCAN token that grants your client's "agent" some capabilities; in this case, you get the ability to upload data to Storacha, list your uploads, unlink uploads from your account, etc.
+If you're uploading files from your laptop using [the `w3` command line tool](../../w3cli.mdx), you can just create a space on the laptop and register it with the w3up service using the `w3 space register` command. The service will issue you a UCAN token that grants your client's "agent" some capabilities; in this case, you get the ability to upload data to Storacha, list your uploads, unlink uploads from your account, etc.
 
 Each client that you use to access w3up will have an "agent" associated with it. Agents are what we call the component that manages your local private keys and signs UCAN requests to the w3up service. When you create a space and register it, the agent you use to register the space is automatically issued a UCAN delegation that grants the agent the ability to upload to the space, as well as other "space related" capabilities like listing uploads.
 
@@ -78,7 +78,7 @@ To do this, you can delegate access to your own Storacha space, instead of havin
 
 On the client side, each user will still create an agent with a public/private keypair, but instead of using the agent to register with Storacha, they can send the agent's public ID to your app's web API or cloud function. That service will issue a UCAN that grants some permissions to the user's agent, without needing to coordinate anything between your app's backend and the Storacha service. In that way, storage access is attached to your application's session.
 
-When a new user signs into your web app, the frontend can use [`w3up-client`](../../getting-started/w3up-client.md), which will automatically create an agent keypair on first run. Instead of using the client to create and register spaces belonging to the user, the frontend can send the agent's public ID to your backend service instead.
+When a new user signs into your web app, the frontend can use [`w3up-client`](../../w3up-client.md), which will automatically create an agent keypair on first run. Instead of using the client to create and register spaces belonging to the user, the frontend can send the agent's public ID to your backend service instead.
 
 Your backend service can then use an instance of `w3up-client` that's been configured to use your service's agent. Since this agent has access to your w3up spaces, it can create UCAN delegations for the user's agent. The client's [`createDelegation` method][reference-client#createdelegation] will create a delegation object that you can send to the user.
 
