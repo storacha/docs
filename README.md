@@ -26,11 +26,11 @@ Built on next, the pages live in `src/app`. See https://nextjs.org/docs/app
 
 Add pages as markdown with .md extension to `src/pages`
 
-The path to the file is used as the url, e.g. `src/pages/w3cli.mdx` -> `/w3cli`.
+The path to the file is used as the URL, e.g. `src/pages/w3cli.mdx` -> `/w3cli`.
 
-The `_meta.json` in the directory defines the order of links in the sidebar and the values set their link text.
+The `_meta.json` in the directory defines the order of links in the sidebar and the values set for their link text.
 
-Update the `_meta.json` file in the directory when you add a new page. There should be one in each sub directory.
+Update the `_meta.json` file in the directory when you add a new page. There should be one in each sub-directory.
 
 
 `src/pages/_meta.json`
@@ -53,13 +53,13 @@ Update the `_meta.json` file in the directory when you add a new page. There sho
 
 In the above:
 -  `"pail"` is a hidden section, allowing us to add docs that we don't want to publish yet.
-- `"specs"` ads a sidebar link to the github repo, there is no associated markdown file here.
+- `"specs"` add a sidebar link to the github repo, there is no associated markdown file here.
 
 Docs section is built on nextra. See https://nextra.site/docs/guide/organize-files for more.
 
 ### Links
 
-To link to other pages using the root relative url in a standard markdown link. To link to the w3cli.md from the quickstart page, your would include:
+To link to other pages using the root relative URL in a standard markdown link. To link to the w3cli.md from the quickstart page, you would include:
 
 **quickstart.md**
 ```md
