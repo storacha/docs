@@ -88,7 +88,7 @@ async function frontend() {
   const client = await Client.create()
 
   // Fetch the delegation from the backend
-  const apiUrl = `/api/w3up-delegation/${client.agent().did()}`
+  const apiUrl = `/api/w3up-delegation/${client.agent.did()}`
   const response = await fetch(apiUrl)
   const data = await response.arrayBuffer()
 
