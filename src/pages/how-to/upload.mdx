@@ -1,4 +1,4 @@
-import { Callout } from "nextra/components";
+import { Callout } from 'nextra/components'
 
 # How to upload data using Storacha
 
@@ -7,21 +7,13 @@ In this how-to guide, you'll learn how to store data programmatically for your d
 Later in this section, we also cover uploading data using the CLI or web console. If you just want to quickly store a few files using Storacha rather than include upload functionality in an app or service you're building, you may want to hop down there.
 
 <Callout type="error" emoji="⚠️❗">
-  **Public Data 🌎**
-  <br />
-  All data uploaded to w3up is available to anyone who requests it using the
-  correct CID. Do not store any private or sensitive information in an
-  unencrypted form using w3up.
+  **Public Data 🌎**<br/>
+  All data uploaded to w3up is available to anyone who requests it using the correct CID. Do not store any private or sensitive information in an unencrypted form using w3up.
 </Callout>
 
 <Callout type="error" emoji="⚠️❗">
-  **Permanent Data ♾️**
-  <br />
-  Removing files from w3up will remove them from the file listing for your
-  account, but that doesn't prevent nodes on the decentralized storage network
-  from retaining copies of the data indefinitely. Storacha itself generally
-  retains and charges users for any uploaded data for a minimum of 30 days. Do
-  not use w3up for data that may need to be permanently deleted in the future.
+  **Permanent Data ♾️**<br/>
+  Removing files from w3up will remove them from the file listing for your account, but that doesn't prevent nodes on the decentralized storage network from retaining copies of the data indefinitely. Storacha itself generally retains and charges users for any uploaded data for a minimum of 30 days. Do not use w3up for data that may need to be permanently deleted in the future.
 </Callout>
 
 ## Using the CLI
@@ -70,7 +62,9 @@ Examples of **ephemeral** environments:
 
 #### Claim delegations via email validation
 
-<Callout type="warning">For persistent environment only</Callout>
+<Callout type="warning">
+  For persistent environment only
+</Callout>
 
 A new client can claim access to their existing Spaces by validating their email address.
 
@@ -87,8 +81,8 @@ You can use Storacha's email authorization flow to give permissions to your clie
 When a Space is created, access permissions are delegated to your email address. We use a special kind of DID for this, a `did:mailto:`. These UCANs are stashed with the Storacha service. When you validate your email address with a new Agent DID, Storacha issues a UCAN attestation, that says your Agent DID is owned by your email address. It also returns the UCAN permissions you previously stashed. You can then use the returned UCANs, along with the attestation to prove you are authorized to perform actions.
 
 ```javascript
-import { create } from "@web3-storage/w3up-client";
-const client = await create();
+import { create } from '@web3-storage/w3up-client'
+const client = await create()
 ```
 
 By default, constructing a client like this will re-use state persisted by other clients because `create` constructs the client with a store that persists data between processes and client instances.
@@ -96,13 +90,13 @@ By default, constructing a client like this will re-use state persisted by other
 Once you have created a client, you can login with your email address. Calling login will cause an email to be sent to the given address.
 
 ```javascript
-await client.login("zaphod@beeblebrox.galaxy");
+await client.login('zaphod@beeblebrox.galaxy')
 ```
 
 Once a user clicks the confirmation link in the email, the login method will resolve. Make sure to check for errors, as login will fail if the email is not confirmed within the expiration timeout. Authorization needs to happen only once per agent. This also claims all delegations available with your email address, so from there, you can select the Space you'd like to use.
 
 ```javascript
-await client.setCurrentSpace("did:key:..."); // select the relevant Space DID that is associated with your account
+await client.setCurrentSpace('did:key:...') // select the relevant Space DID that is associated with your account
 ```
 
 #### Bring your own delegations
@@ -145,20 +139,20 @@ w3 delegation create <did_from_ucan-key_command_above> --base64
 Then, when you initialize and configure the client, you can pass in this private key and UCAN delegation.
 
 ```javascript
-import * as Client from "@web3-storage/w3up-client";
-import { StoreMemory } from "@web3-storage/w3up-client/stores/memory";
-import * as Proof from "@web3-storage/w3up-client/proof";
-import { Signer } from "@web3-storage/w3up-client/principal/ed25519";
+import * as Client from '@web3-storage/w3up-client'
+import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
+import * as Proof from '@web3-storage/w3up-client/proof'
+import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
 
-async function main() {
+async function main () {
   // Load client with specific private key
-  const principal = Signer.parse(process.env.KEY);
-  const store = new StoreMemory();
-  const client = await Client.create({ principal, store });
+  const principal = Signer.parse(process.env.KEY)
+  const store = new StoreMemory()
+  const client = await Client.create({ principal, store })
   // Add proof that this agent has been delegated capabilities on the space
-  const proof = await Proof.parse(process.env.PROOF);
-  const space = await client.addSpace(proof);
-  await client.setCurrentSpace(space.did());
+  const proof = await Proof.parse(process.env.PROOF)
+  const space = await client.addSpace(proof)
+  await client.setCurrentSpace(space.did())
   // READY to go!
 }
 ```
@@ -183,15 +177,15 @@ Application Backend-\>\>storacha service: Upload data
 You are already set up to upload using your client instance as data becomes available to your backend - you can call `uploadFile` or `uploadDirectory` with it.
 
 ```javascript
-import { create } from "@web3-storage/w3up-client";
-import { filesFromPaths } from "files-from-path";
+import { create } from '@web3-storage/w3up-client'
+import { filesFromPaths } from 'files-from-path'
 
 // e.g "./best-gifs"
-const path = process.env.PATH_TO_FILES;
-const files = await filesFromPaths([path]);
+const path = process.env.PATH_TO_FILES
+const files = await filesFromPaths([path])
 
-const client = await create();
-const directoryCid = await client.uploadDirectory(files);
+const client = await create()
+const directoryCid = await client.uploadDirectory(files)
 ```
 
 In the example above, `directoryCid` resolves to an IPFS directory.
@@ -214,68 +208,59 @@ Your backend instance can also be used to delegate upload permissions directly t
 **Backend**
 
 ```js
-import * as Client from "@web3-storage/w3up-client";
-import { StoreMemory } from "@web3-storage/w3up-client/stores/memory";
-import * as Proof from "@web3-storage/w3up-client/proof";
-import { Signer } from "@web3-storage/w3up-client/principal/ed25519";
-import * as DID from "@ipld/dag-ucan/did";
+import * as Client from '@web3-storage/w3up-client'
+import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
+import * as Proof from '@web3-storage/w3up-client/proof'
+import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
+import * as DID from '@ipld/dag-ucan/did'
 
 async function backend(did) {
   // Load client with specific private key
-  const principal = Signer.parse(process.env.KEY);
-  const store = new StoreMemory();
-  const client = await Client.create({ principal, store });
+  const principal = Signer.parse(process.env.KEY)
+  const store = new StoreMemory()
+  const client = await Client.create({ principal, store })
 
   // Add proof that this agent has been delegated capabilities on the space
-  const proof = await Proof.parse(process.env.PROOF);
-  const space = await client.addSpace(proof);
-  await client.setCurrentSpace(space.did());
+  const proof = await Proof.parse(process.env.PROOF)
+  const space = await client.addSpace(proof)
+  await client.setCurrentSpace(space.did())
 
   // Create a delegation for a specific DID
-  const audience = DID.parse(did);
-  const abilities = [
-    "space/blob/add",
-    "space/index/add",
-    "filecoin/offer",
-    "upload/add",
-  ];
-  const expiration = Math.floor(Date.now() / 1000) + 60 * 60 * 24; // 24 hours from now
-  const delegation = await client.createDelegation(audience, abilities, {
-    expiration,
-  });
+  const audience = DID.parse(did)
+  const abilities = ['space/blob/add', 'space/index/add', 'filecoin/offer', 'upload/add']
+  const expiration = Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24 hours from now
+  const delegation = await client.createDelegation(audience, abilities, { expiration })
 
   // Serialize the delegation and send it to the client
-  const archive = await delegation.archive();
-  return archive.ok;
+  const archive = await delegation.archive()
+  return archive.ok
 }
 ```
 
 **Frontend**
 
 ```js
-import * as Delegation from "@web3-storage/w3up-client/delegation";
-import * as Client from "@web3-storage/w3up-client";
+import * as Delegation from '@web3-storage/w3up-client/delegation'
+import * as Client from '@web3-storage/w3up-client'
 
 async function frontend() {
   // Create a new client
-  const client = await Client.create();
+  const client = await Client.create()
 
   // Fetch the delegation from the backend
-  const apiUrl = `/api/w3up-delegation/${client.agent.did()}`;
-  const response = await fetch(apiUrl);
-  const data = await response.arrayBuffer();
+  const apiUrl = `/api/w3up-delegation/${client.agent.did()}`
+  const response = await fetch(apiUrl)
+  const data = await response.arrayBuffer()
 
   // Deserialize the delegation
-  const delegation = await Delegation.extract(new Uint8Array(data));
+  const delegation = await Delegation.extract(new Uint8Array(data))
   if (!delegation.ok) {
-    throw new Error("Failed to extract delegation", {
-      cause: delegation.error,
-    });
+    throw new Error('Failed to extract delegation', { cause: delegation.error })
   }
 
   // Add proof that this agent has been delegated capabilities on the space
-  const space = await client.addSpace(delegation.ok);
-  client.setCurrentSpace(space.did());
+  const space = await client.addSpace(delegation.ok)
+  client.setCurrentSpace(space.did())
 
   // READY to go!
 }
@@ -290,22 +275,19 @@ You are now ready to upload using the client! In general, the easiest way to upl
 `uploadDirectory` requires `File`-like objects instead of `Blob`s, as the file's name property is used to build the directory hierarchy.
 
 <Callout>
-  When uploading multiple files, give each file a unique name. All the files in
-  a `uploadDirectory` request will be bundled into one content archive, and
-  linking to the files inside is much easier if each file has a unique,
-  human-readable name.
+  When uploading multiple files, give each file a unique name. All the files in a `uploadDirectory` request will be bundled into one content archive, and linking to the files inside is much easier if each file has a unique, human-readable name.
 </Callout>
 
 You can control the directory layout and create nested directory structures by using / delimited paths in your filenames:
 
 ```javascript
 const files = [
-  new File(["some-file-content"], "readme.md"),
-  new File(["import foo"], "src/main.py"),
-  new File([someBinaryData], "images/example.png"),
-];
+  new File(['some-file-content'], 'readme.md'),
+  new File(['import foo'], 'src/main.py'),
+  new File([someBinaryData], 'images/example.png'),
+]
 
-const directoryCid = await client.uploadDirectory(files);
+const directoryCid = await client.uploadDirectory(files)
 ```
 
 In the example above, directoryCid resolves to an IPFS directory with the following layout:
@@ -324,58 +306,58 @@ There are a few different ways of creating `File` objects available, depending o
 In the browser, you can use a [file input element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) to allow the user to select files for upload:
 
 ```javascript
-function getFiles() {
-  const fileInput = document.querySelector('input[type="file"]');
-  return fileInput.files;
+function getFiles () {
+  const fileInput = document.querySelector('input[type="file"]')
+  return fileInput.files
 }
 ```
 
 You can also manually create File objects using the native File constructor provided by the browser runtime. This is useful when you want to store data created by your application, instead of files from the user's computer.
 
 ```javascript
-function makeFileObjects() {
+function makeFileObjects () {
   // You can create File objects from a Blob of binary data
   // see: https://developer.mozilla.org/en-US/docs/Web/API/Blob
   // Here we're just storing a JSON object, but you can store images,
   // audio, or whatever you want!
-  const obj = { hello: "world" };
-  const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+  const obj = { hello: 'world' }
+  const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' })
 
   const files = [
-    new File(["contents-of-file-1"], "plain-utf8.txt"),
-    new File([blob], "hello.json"),
-  ];
-  return files;
+    new File(['contents-of-file-1'], 'plain-utf8.txt'),
+    new File([blob], 'hello.json')
+  ]
+  return files
 }
 ```
 
 In Node.js, the [`files-from-path` library](https://github.com/storacha/files-from-path) reads File objects from the local file system. The `filesFromPaths` helper asynchronously returns an array of Files that you can use directly with the `uploadDirectory` client method:
 
 ```javascript
-import { filesFromPaths } from "files-from-path";
+import { filesFromPaths } from 'files-from-path'
 ```
 
 You can also manually create File objects by importing a Node.js implementation of File from the Storacha package. This is useful when you want to store data created by your application, instead of files from the user's computer.
 
 ```javascript
-async function getFiles(path) {
-  const files = await filesFromPaths([path]);
-  console.log(`read ${files.length} file(s) from ${path}`);
-  return files;
+async function getFiles (path) {
+  const files = await filesFromPaths([path])
+  console.log(`read ${files.length} file(s) from ${path}`)
+  return files
 }
 
-function makeFileObjects() {
+function makeFileObjects () {
   // You can create File objects from a Buffer of binary data
   // see: https://nodejs.org/api/buffer.html
   // Here we're just storing a JSON object, but you can store images,
   // audio, or whatever you want!
-  const obj = { hello: "world" };
-  const buffer = Buffer.from(JSON.stringify(obj));
+  const obj = { hello: 'world' }
+  const buffer = Buffer.from(JSON.stringify(obj))
   const files = [
-    new File(["contents-of-file-1"], "plain-utf8.txt"),
-    new File([buffer], "hello.json"),
-  ];
-  return files;
+    new File(['contents-of-file-1'], 'plain-utf8.txt'),
+    new File([buffer], 'hello.json')
+  ]
+  return files
 }
 ```
 
