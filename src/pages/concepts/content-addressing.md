@@ -1,6 +1,6 @@
 # Content addressing
 
-Storacha's decentralized file storage relies on _content addressing_ to find, reference, and retrieve your files on the network. Content addressing is a technique for organizing and locating data in a system in which the key used to locate content is derived from the content itself, rather than its location. While you don't need to understand content addressing to be able to incorporate sSoracha in your apps and services, if you're curious about what's going on under the hood, read on.
+Storacha's decentralized file storage relies on _content addressing_ to find, reference, and retrieve your files on the network. Content addressing is a technique for organizing and locating data in a system in which the key used to locate content is derived from the content itself, rather than its location. While you don't need to understand content addressing to be able to incorporate Storacha in your apps and services, if you're curious about what's going on under the hood, read on.
 
 ## The basic problem
 
