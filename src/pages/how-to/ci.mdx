@@ -32,7 +32,7 @@ $ w3 key create --json > ci-key.json
 # Extract the did as $AUDIENCE
 $ AUDIENCE=$(jq -r .did ci-key.json)
 
-# Create a signed proof that you delegate capabilties to that key. 
+# Create a signed proof that you delegate capabilities to that key. 
 $ w3 delegation create $AUDIENCE -c space/blob/add -c space/index/add -c filecoin/offer -c upload/add --base64
 mAYIEAP8OEaJlcm9vdHOAZ3ZlcnNpb24BwwUBcRIg+oHTbzShh1WzBo9ISkonCW+KAcy/+zW8Zb...
 
@@ -84,11 +84,11 @@ $ w3 key create --json
 
 Keep the `key` safe. It will be used by CI to sign requests to Storacha.
 
-The `did` from the command above is the public decentalised identifier for that private `key`.
+The `did` from the command above is the public decentralised identifier for that private `key`.
 
 ## Create a proof
 
-On your local machine, use [w3cli][] to delegate capabilties to upload to our space to the public DID for the signing key we created.
+On your local machine, use [w3cli][] to delegate capabilities to upload to our space to the public DID for the signing key we created.
 
 Our CI environment doesn't need to list our uploads or change our billing plan so we only delegate the `space/blob/add`, `space/index/add`, `filecoin/offer` and `upload/add` capabilities to it.
 
@@ -116,7 +116,7 @@ $ npm i --global @web3-storage/w3cli
 
 ## Import the signing key
 
-Set `W3_PRINCIPAL=<the signing key>` in the CI environment. The `w3` commmand will use the value as the signing key to use. see: https://github.com/storacha/w3cli?tab=readme-ov-file#w3\_principal
+Set `W3_PRINCIPAL=<the signing key>` in the CI environment. The `w3` command will use the value as the signing key to use. see: https://github.com/storacha/w3cli?tab=readme-ov-file#w3\_principal
 
 The value is the `key` we created above with `w3 key create`. The `key` must be the one for the `did` that was used to create the proof.
 
@@ -140,7 +140,7 @@ $ w3 up <path to files>
 
 that path might be the `dist` or `output` directory of a previous step that built your static website or collected some stats from a job.
 
-Once that command returns succesfully, you are done, your files are content addressed and available over IPFS.
+Once that command returns successfully, you are done, your files are content addressed and available over IPFS.
 
 If you want to capture the CID for your uploads pass the `--json` flag and use `jq` to extract it
 
