@@ -94,6 +94,23 @@ ElizaOS is an AI agent operating system for building, deploying, and managing in
 
 [View the ElizaOS integration docs](./elizaos.md)
 
+In case you want to access the Storacha Client directly from the agent code, Storacha provides the client integration in TypeScript/JavaScript.
+Enable the plugin in the `character` file, and then use the client implementation provided by the plugin e.g:
+
+**Upload**
+```js
+const storageClient = await getStorageClient(runtime);
+if (storageClient) {
+    const cid = await storageClient.getStorage().uploadFile(...);
+}
+```
+
+**Retrieve**
+```js
+const resp = await storageClient.getContent(cid)
+const content = await resp.arrayBuffer()
+```
+
 <Callout type="info">
   More integrations coming soon!
 </Callout>
