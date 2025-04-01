@@ -28,7 +28,7 @@ Add pages as markdown with .md extension to `src/pages`
 
 The path to the file is used as the URL, e.g. `src/pages/w3cli.mdx` -> `/w3cli`.
 
-The `_meta.json` in the directory defines the order of links in the sidebar and the values set for their link text.
+The `_meta.json` in the directory defines the order of links in the sidebar and the values set their link text.
 
 Update the `_meta.json` file in the directory when you add a new page. There should be one in each sub-directory.
 
@@ -53,7 +53,7 @@ Update the `_meta.json` file in the directory when you add a new page. There sho
 
 In the above:
 -  `"pail"` is a hidden section, allowing us to add docs that we don't want to publish yet.
-- `"specs"` add a sidebar link to the github repo, there is no associated markdown file here.
+- `"specs"` adds a sidebar link to the github repo, there is no associated markdown file here.
 
 Docs section is built on nextra. See https://nextra.site/docs/guide/organize-files for more.
 
