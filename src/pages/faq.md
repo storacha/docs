@@ -21,6 +21,9 @@ You can delete files listed in your account. Simply log-in to your account and u
 
 However, once a file is uploaded to Storacha, there cannot be a guarantee that all copies of the file are gone from the IPFS network. As soon as a file is uploaded, other IPFS nodes can access and store a copy of the data. The data only becomes unavailable when the last IPFS node has stopped pinning the file, and all copies are garbage collected. As a consequence you should only upload to Storacha files that you know can be shared with anyone forever, or are securely encrypted.
 
+## How can I delete a Space from Storacha? 
+Unfortunately, right now you cannot delete a Space. Having extra, empty Spaces will not increase your billed data usage. Eventually, we plan to offer the ability to delete spaces in the future.
+
 ## Are there client libraries other than Javascript?
 
 Yes! There is a [client in Go](/go-w3up). However, it is heavily under development at the time of writing and not yet fully featured. Alternatively, you can use the CLI for many programmatic use cases.
