@@ -82,9 +82,9 @@ The JS Client, Go Client or HTTP Bridge can be integrated directly in _any_ AI A
 
 Instructions for initializing clients with an identity and delegation:
 
-* [JS Client](../how-to/upload.mdx#bring-your-own-delegations)
-* [Go Client](../go-w3up.mdx#load-private-key-and-proofs)
-* [HTTP Bridge](../how-to/http-bridge.mdx)
+- [JS Client](../how-to/upload.mdx#bring-your-own-delegations)
+- [Go Client](../go-w3up.mdx#load-private-key-and-proofs)
+- [HTTP Bridge](../how-to/http-bridge.mdx)
 
 We also provide integrations for specific frameworks making it even easier to use Storacha in these environments.
 
@@ -98,6 +98,7 @@ In case you want to access the Storacha Client directly from the agent code, Sto
 Enable the plugin in the `character` file, and then use the client implementation provided by the plugin e.g:
 
 **Upload**
+
 ```js
 const storageClient = await getStorageClient(runtime);
 if (storageClient) {
@@ -106,6 +107,7 @@ if (storageClient) {
 ```
 
 **Retrieve**
+
 ```js
 const resp = await storageClient.getContent(cid)
 const content = await resp.arrayBuffer()
@@ -154,11 +156,11 @@ Replace `your-agent-private-key` with the private key you generated earlier and 
 
 Once configured, your AI application can use the following MCP tools to interact with Storacha storage:
 
-- **upload**: Store files on the Storacha Network with options to specify file content (base64 encoded), filename, and optional parameters like publishing to Filecoin.
+-   **upload**: Store files on the Storacha Network with options to specify file content (base64 encoded), filename, and optional parameters like publishing to Filecoin.
 
-- **retrieve**: Access stored files from the Storacha Network using Content Identifiers (CIDs) in various path formats (CID/filename, /ipfs/CID/filename, or ipfs://CID/filename).
+-   **retrieve**: Access stored files from the Storacha Network using Content Identifiers (CIDs) in various path formats (CID/filename, /ipfs/CID/filename, or ipfs://CID/filename).
 
-- **identity**: Get the DIDKey of the configured Storacha Agent, useful for verifying the identity being used for storage operations.
+-   **identity**: Get the DIDKey of the configured Storacha Agent, useful for verifying the identity being used for storage operations.
 
 </Steps>
 

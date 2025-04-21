@@ -12,7 +12,8 @@ Storacha runs on a serverless implementation of IPFS that is optimized for scale
 We wrote it as the solution to address increasing adoption of Storacha, which previously used kubo and IPFS Cluster. As a result, Storacha is designed to give strong performance and reliability regardless of how much data is being stored on it, meaning that you can rely on it as you and Storacha grow. And all data is backed up in Filecoin storage deals, which gives cryptographic proof that your data is physically being stored without needing to trust Storacha.
 
 ## How do I log in the CLI or other client after making an account on the console?
-If you already created an account in the console, then you'll need to log in the CLI or other client. 
+
+If you already created an account in the console, then you'll need to log in the CLI or other client.
 For the CLI, you can use the `w3 login your-email@here.com`. For the JS client, call `client.login('your-email@here.com')`. After it runs, an email will be send to your inbox. Once you click the `Verify Email Address` link from the email, the client you used to send the email will be access to the account including created Spaces and uploaded content.
 
 ## How do I store data on Storacha that is already available over the IPFS network without having to download and reupload it myself?
@@ -25,7 +26,8 @@ You can delete files listed in your account. Simply log-in to your account and u
 
 However, once a file is uploaded to Storacha, there cannot be a guarantee that all copies of the file are gone from the IPFS network. As soon as a file is uploaded, other IPFS nodes can access and store a copy of the data. The data only becomes unavailable when the last IPFS node has stopped pinning the file, and all copies are garbage collected. As a consequence you should only upload to Storacha files that you know can be shared with anyone forever, or are securely encrypted.
 
-## How can I delete a Space from Storacha? 
+## How can I delete a Space from Storacha?
+
 Unfortunately, right now you cannot delete a Space. Having extra, empty Spaces will not increase your billed data usage. Eventually, we plan to offer the ability to delete spaces in the future.
 
 ## Are there client libraries other than Javascript?

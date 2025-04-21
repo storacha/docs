@@ -103,6 +103,7 @@ Set up your MCP client to use the Storacha server by adding this configuration:
 ```
 
 Replace the placeholder values with your actual PrivateKey and base64 delegation.
+
 </Steps>
 
 ## Using the MCP Tools
@@ -123,6 +124,7 @@ const result = await uploadFile({
 ```
 
 Parameters:
+
 - `file`: Base64 encoded file content
 - `name`: Filename with extension
 - `publishToFilecoin`: (Optional) Whether to publish to Filecoin
@@ -141,6 +143,7 @@ const document = await retrieveFile({
 ```
 
 Parameters:
+
 - `filepath`: CID path in format: `CID/filename`, `/ipfs/CID/filename`, or `ipfs://CID/filename`
 - `useMultiformatBase64`: (Optional) Whether to use multiformat base64 encoding
 
