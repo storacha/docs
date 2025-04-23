@@ -1,0 +1,172 @@
+---
+title: "MCP Storage Server"
+description: "A guide to using the Storacha MCP Storage Server for AI applications"
+---
+
+import { Callout } from 'nextra/components'
+import { Steps } from 'nextra/components'
+
+# Storacha MCP Storage Server
+
+The **Model Context Protocol (MCP)** server implementation for Storacha provides a standardized interface for AI applications to store and retrieve files. It enables trustless, decentralized data exchange using IPFS and Content Identifiers (CIDs), ensuring data sovereignty and verifiability.
+
+## Free Storage Options
+
+Start using Storacha with these generous free storage options:
+
+- **GitHub Users**: Get **100MB free storage** instantly when signing up with GitHub - no credit card required
+- **Email Users**: Receive **5GB free storage** when registering with email and adding a credit card
+
+## Setting Up the MCP Server
+
+<Steps>
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+# Clone the repository
+git clone https://github.com/storacha/mcp-storage-server.git
+cd mcp-storage-server
+
+# Install dependencies
+pnpm install
+```
+
+### Generate Keys & Create Delegation
+
+First, install the CLI tool:
+
+```bash
+npm install -g @web3-storage/w3cli
+```
+
+Then login to Storacha:
+
+```bash
+w3 login
+```
+
+Select **Via GitHub** (or Email) and follow returned steps to authenticate.
+
+Create a space for your data:
+
+```bash
+w3 space create your-space-name
+```
+
+<Callout type="warning">
+  Save the recovery key to access your space from other devices.
+</Callout>
+
+Generate a private key:
+
+```bash
+w3 key create
+```
+
+This outputs an **AgentId** and **PrivateKey** that you'll need in the next step.
+
+Create a delegation with proper permissions:
+
+```bash
+w3 delegation create your-agent-id \
+  --can 'filecoin/offer' \
+  --can 'upload/add' \
+  --can 'space/blob/add' \
+  --can 'space/index/add' --base64
+```
+
+Replace `your-agent-id` with the AgentId from the previous step.
+
+### Configure Your MCP Client
+
+Set up your MCP client to use the Storacha server by adding this configuration:
+
+```json
+{
+  "mcpServers": {
+    "storacha-storage-server": {
+      "command": "node",
+      "args": ["./dist/index.js"],
+      "env": {
+        "MCP_TRANSPORT_MODE": "stdio",
+        "PRIVATE_KEY": "your-agent-private-key",
+        "DELEGATION": "your-base64-delegation"
+      },
+      "shell": true,
+      "cwd": "./"
+    }
+  }
+}
+```
+
+Replace the placeholder values with your actual PrivateKey and base64 delegation.
+
+</Steps>
+
+## Using the MCP Tools
+
+Storacha MCP Server provides the following tools for interacting with decentralized storage.
+
+### Upload Tool
+
+Upload files to the Storacha Network:
+
+```javascript
+// Example usage in an AI application
+const result = await uploadFile({
+  file: base64EncodedContent,
+  name: "document.pdf",
+  publishToFilecoin: true
+});
+```
+
+Parameters:
+
+- `file`: Base64 encoded file content
+- `name`: Filename with extension
+- `publishToFilecoin`: (Optional) Whether to publish to Filecoin
+- `delegation`: (Optional) Custom delegation proof
+- `gatewayUrl`: (Optional) Custom gateway URL
+
+### Retrieve Tool
+
+Retrieve files from the Storacha Network:
+
+```javascript
+// Example retrieval by CID
+const document = await retrieveFile({
+  filepath: "bafybei...gq5a/document.pdf"
+});
+```
+
+Parameters:
+
+- `filepath`: CID path in format: `CID/filename`, `/ipfs/CID/filename`, or `ipfs://CID/filename`
+- `useMultiformatBase64`: (Optional) Whether to use multiformat base64 encoding
+
+### Identity Tool
+
+Retrieve the DIDKey of the Storacha Agent:
+
+```javascript
+const identity = await getIdentity({});
+```
+
+## Use Cases
+
+- **Document Storage & Analysis**: Store and retrieve documents for AI processing
+- **Structured Data Storage**: Maintain data optimized for longevity and accessibility
+- **Cross-Agent Data Sharing**: Share data between AI agents using CIDs
+- **AI Model Development**: Support AI models with reliable access to datasets
+- **LLM Integration**: Connect LLMs directly with Storacha for data access
+
+## Advanced Integration
+
+For more detailed integration patterns including SDK usage and Docker deployment, refer to the [integrations guide](https://github.com/storacha/mcp-storage-server/blob/main/docs/integrations.md).
+
+## Support
+
+For support, join our [Storacha Discord sever](https://discord.gg/knzG9V9Uzf) or open an issue in the GitHub repository.
