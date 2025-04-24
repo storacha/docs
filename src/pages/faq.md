@@ -37,3 +37,7 @@ Yes! There is a [client in Go](/go-w3up). However, it is heavily under developme
 ## How can I edit a file or add files to a folder?
 
 Since CIDs are immutable, it's not possible to edit files or add files to a folder. However, we are working on UCAN-based immutable pointers to enable this use case.
+
+## Where can I find your logo, media branding kit, and assets?
+
+You can find our branding guide or kit along with logos and assets either in this [IPFS directory](https://bafybeia2v7unj7mfkkqfc4zu5boyfui6mofyruoq222swpj3sfyjmiwcnq.ipfs.w3s.link/) or [Google Drive folder](https://drive.google.com/drive/folders/1X7W40TYguqFD9hOntb364BT3P62Za8fT?usp=sharing).
