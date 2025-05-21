@@ -94,7 +94,7 @@ Replace `<YOUR_CID>`, `<FILE_NAME>`, and `<OUTPUT_FILE>` with their respective v
 | `<FILE_NAME>` | The _name_ of the file that you originally uploaded to Storacha. | `example.txt` |
 | `<OUTPUT_FILE>` | The path and filename that you want curl to save the file to. This can be different to `<FILE_NAME>`. | `./output-file.txt` |
 
-We support downdloading flat files out of the box, to download an extra large file or a directory, try passing `dag-scope=entity` in your request to not traverse recursively:
+We support downloading flat files out of the box. When downloading an extra large file or a directory, you may need to use `dag-scope=entity` in your request to avoid fetching the entire upload CAR:
 
 ```
 https://bafybeie2bjap32zi2yqh5jmpve5njwulnkualcbiszvwfu36jzjyqskceq.ipfs.w3s.link/?format=car&dag-scope=entity
