@@ -15,7 +15,7 @@ When retrieving any data, you'll be using the content CID of the upload (prefixe
 
 ## Using an IPFS HTTP gateway
 
-You can easily fetch any data stored using Storacha using an IPFS HTTP gateway. Because IPFS is a peer-to-peer, decentralized network, you can use any public HTTP gateway to fetch your data. In this guide, we'll use the gateway at w3s.link (which is optimized for data stored with Storacha), but you can see more worldwide gateways on the [IPFS Public Gateway Checker](https://ipfs.github.io/public-gateway-checker/).
+You can easily fetch any data stored using Storacha using an IPFS HTTP gateway. Because IPFS is a peer-to-peer, decentralized network, you can use any public HTTP gateway to fetch your data. In this guide, we'll use the gateway at w3s.link (which is optimized for data stored with Storacha), but you can see more worldwide gateways on the [IPFS Public Gateway Checker](https://ipfs.github.io/public-gateway-checker/). To see the full set of parameters and options supported by our gateway, please check out the [Trustless Gateway Specification](https://specs.ipfs.tech/http-gateways/trustless-gateway/#http-request).
 
 You can use an IPFS gateway to view a list of all the files in that directory from your browser. To do so, simply create a gateway URL. For example, if your CID is `bafybeidd2gyhagleh47qeg77xqndy2qy3yzn4vkxmk775bg2t5lpuy7pcu`, you can make a URL for the w3s.link gateway as follows:
 
@@ -74,7 +74,7 @@ ipfs get bafybeidd2gyhagleh47qeg77xqndy2qy3yzn4vkxmk775bg2t5lpuy7pcu/youareanons
 
 ## Using `curl`
 
-Sometimes you may need to just download a specific file to your computer using the command line.
+Sometimes you may need to just download a specific file to your computer using the command line. Check out our example below.
 
 1. Open a terminal window.
 2. Use curl to download your file:
@@ -93,6 +93,14 @@ Replace `<YOUR_CID>`, `<FILE_NAME>`, and `<OUTPUT_FILE>` with their respective v
 | `<YOUR_CID>` | The CID of the file you want to download. | `bafybeie2bjap32zi2yqh5jmpve5n jwulnkualcbiszvwfu36jzjyqskceq` |
 | `<FILE_NAME>` | The _name_ of the file that you originally uploaded to Storacha. | `example.txt` |
 | `<OUTPUT_FILE>` | The path and filename that you want curl to save the file to. This can be different to `<FILE_NAME>`. | `./output-file.txt` |
+
+We support downloading flat files out of the box. When downloading an extra large file or a directory, you may need to use `dag-scope=entity` in your request to avoid fetching the entire upload CAR:
+
+```
+https://bafybeie2bjap32zi2yqh5jmpve5njwulnkualcbiszvwfu36jzjyqskceq.ipfs.w3s.link/?format=car&dag-scope=entity
+```
+
+To see a full list of supported gateway options, check out the [Trustless Gateway Specification](https://specs.ipfs.tech/http-gateways/trustless-gateway/#http-request).
 
 ## Next steps
 
