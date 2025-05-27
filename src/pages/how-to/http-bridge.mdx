@@ -19,7 +19,7 @@ The instructions below are oriented toward capabilities invoked on spaces. These
 `upload/list`, `upload/remove` and `usage/report`.
 
 Other capabilities are invoked on other entities. They are supported by the bridge, but
-you will need to generate auth tokens that are targetted at different DIDs and may not
+you will need to generate auth tokens that are targeted at different DIDs and may not
 be well supported by our tools - please let us know if you are interested in this functionality
 so we can better support your use cases!
 
@@ -255,7 +255,7 @@ finish "uploading" your file to Storacha you'll need to register your upload as 
 ## Registering Uploads
 
 To support arbitrarily large file uploads, our upload service requires large files to be sharded into multiple CARs, each
-of which is uploaded seperately according to the instructions in the "Storing Files" section above.
+of which is uploaded separately according to the instructions in the "Storing Files" section above.
 
 Once the files have been uploaded, create a file (in this example we'll name it `upload.json`) with the following contents, replacing
 `did:key:z6Mkabc123` with the DID of the space you used to generate auth headers above:
