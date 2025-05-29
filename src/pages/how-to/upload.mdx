@@ -70,10 +70,10 @@ A new client can claim access to their existing Spaces by validating their email
 
 ```mermaid
 sequenceDiagram
-Client-\>\>storacha service: Here is my email address and Agent DID
-storacha service--\>\>Client: Please click the link to validate
-Client--\>\>storacha service: Email address validated
-storacha service-\>\>Client: Here is a UCAN attesting that your Agent DID belongs to your email
+    Client->>storacha service: Here is my email address and Agent DID
+    storacha service-->>Client: Please click the link to validate
+    Client-->>storacha service: Email address validated
+    storacha service->>Client: Here is a UCAN attesting that your Agent DID belongs to your email
 ```
 
 You can use Storacha's email authorization flow to give permissions to your client. This can be good if your environment will be persistent (otherwise it would be prohibitive to click an email validation link every time the client is re-instantiated).
@@ -107,9 +107,9 @@ await client.setCurrentSpace('did:key:...') // select the relevant Space DID tha
 
 ```mermaid
 sequenceDiagram
-Developer-\>\>Developer: Create Agent private key and DID
-Developer-\>\>Developer: Delegate UCAN from Space to Agent
-Developer-\>\>Client: Here is my Agent private key and UCAN delegating permissions
+    Developer-->>Developer: Create Agent private key and DID
+    Developer-->>Developer: Delegate UCAN from Space to Agent
+    Developer-->>Client: Here is my Agent private key and UCAN delegating permissions
 ```
 
 An option that works for any backend environment is for a developer to create and provision a Space, and then delegate access to a different Agent DID that will be used by the client. This is especially useful if you're using the client in a serverless environment (e.g., AWS Lambda).
@@ -170,8 +170,8 @@ There are two main options to getting content into your Space:
 
 ```mermaid
 sequenceDiagram
-User-\>\>Application Backend: Upload data
-Application Backend-\>\>storacha service: Upload data
+    User->>Application Backend: Upload data
+    Application Backend->>storacha service: Upload data
 ```
 
 You are already set up to upload using your client instance as data becomes available to your backend - you can call `uploadFile` or `uploadDirectory` with it.
@@ -194,13 +194,13 @@ In the example above, `directoryCid` resolves to an IPFS directory.
 
 ```mermaid
 sequenceDiagram
-participant User
-participant Application Backend
-participant storacha service
-User-\>\>User: Client instantiated with default Agent
-User-\>\>Application Backend: Request delegation with user's Agent DID
-Application Backend-\>\>User: Send delegation from Space to user's Agent DID
-User-\>\>storacha service: Upload data
+    participant User
+    participant Application Backend
+    participant storacha service
+    User->>User: Client instantiated with default Agent
+    User->>Application Backend: Request delegation with user's Agent DID
+    Application Backend->>User: Send delegation from Space to user's Agent DID
+    User->>storacha service: Upload data
 ```
 
 Your backend instance can also be used to delegate upload permissions directly to your user to upload. The code snippet below shows an example of how you might set up a client instance in your application frontend and how it might interact with your backend client. You can see how the frontend client Agent DID is used for the backend client to delegate permissions to; from there, it will be the frontend client that will call the `upload` method.
