@@ -27,7 +27,7 @@ Install the `@web3-storage/w3cli` package with `npm`
 npm install -g @web3-storage/w3cli
 ```
 
-Once the install is complete, you'll have a `w3` command available. Try running `w3 --help` to get an idea of what's possible.
+Once the installation is complete, you'll have a `w3` command available. Try running `w3 --help` to get an idea of what's possible.
 
 ### Standalone Binaries
 
@@ -35,7 +35,7 @@ Once the install is complete, you'll have a `w3` command available. Try running 
   These binaries are built from the Go client codebase which is not as fully featured as the JS client.
 </Callout>
 
-Pre-compiled, standalone binaries are now available for MacOS, Linux and Windows: [Download latest release](https://github.com/storacha/go-w3up/releases/latest).
+Pre-compiled, standalone binaries are now available for MacOS, Linux, and Windows: [Download latest release](https://github.com/storacha/go-w3up/releases/latest).
 
 We strongly recommend reading the [Go CLI documentation](https://github.com/storacha/go-w3up#cli). These binaries are built from the Go client codebase which is not as fully featured as the JS client. To use the Go CLI tool, you will need to obtain a delegation created by the JS CLI or [console](https://console.storacha.network).
 
@@ -79,7 +79,7 @@ w3 up your-file.txt
 
 Once your upload is complete, you should see a URL that links to your file on the `w3s.link` <abbr id="gateway">IPFS gateway</abbr>.
 
-If you uploaded a single file, the link will resolve to an IPFS directory listing, with the actual file contained in the directory. This "wrapper" directory preserves the original filename of your upload, which can help organize your content and allows people to download files using their original names. If you don't want to create the wrapper directory, you can pass in the `--no-wrap` flag when running `w3 up`.
+If you upload a single file, the link will resolve to an IPFS directory listing, with the actual file contained in the directory. This "wrapper" directory preserves the original filename of your upload, which can help organize your content and allow people to download files using their original names. If you don't want to create the wrapper directory, you can pass in the `--no-wrap` flag when running `w3 up`.
 
 When uploading directories, files beginning with a `.` character are ignored by default. To include hidden files instead, pass in the `-H` or `--hidden` flag.
 
