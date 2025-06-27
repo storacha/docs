@@ -1,5 +1,10 @@
 {
   "quickstart": "Quickstart",
   "elizaos": "ElizaOS",
-  "community-ai-integrations": "Community Integrations"
+  "mcp": "MCP Storage Server",
+  "community-ai-integrations": {
+    "newWindow": true,
+    "title": "Community AI Integrations",
+    "href": "https://github.com/storacha/awesome-storacha?tab=readme-ov-file#projects"
+  }
 }
