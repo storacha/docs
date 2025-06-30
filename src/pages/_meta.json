@@ -1,17 +1,21 @@
 {
   "index": "Welcome",
   "quickstart": "Quickstart",
-  "w3cli": "Command line",
+  "w3cli": "Command Line",
   "w3up-client": "JS Client",
   "go-w3up": "Go Client",
   "ai": "AI / LLMs",
   "how-to": "How to",
   "concepts": "Concepts",
-  "community-integrations": "Community Integrations",
+  "community-integrations": {
+    "newWindow": true,
+    "title": "Community Integrations",
+    "href": "https://github.com/storacha/awesome-storacha"
+  },
   "faq": "FAQ",
   "privacy-policy": "Privacy Policy",
-  "service-level-agreement": "Service level agreement",
-  "terms": "Terms of service",
+  "service-level-agreement": "Service Level Agreement",
+  "terms": "Terms of Service",
   "referral-terms": "Referral Program Terms and Conditions",
   "download-sc": "Download w3up Source Code",
   "specs": {
