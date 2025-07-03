@@ -53,7 +53,7 @@ jobs:
           number: ${{ steps.finder.outputs.pr }}
           message: |
             ### Website preview 🔗✨
-            - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.w3s.link
+            - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.storacha.link
             - ⛅️ ${{ steps.cloudflare_url.outputs.stdout }}
 
             [build log](/${{ github.repository }}/actions/runs/${{ github.run_id }})
@@ -61,7 +61,7 @@ jobs:
         run: |
           echo "
           ### Website preview 🔗✨
-          - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.w3s.link
+          - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.storacha.link
           - ⛅️ ${{ steps.cloudflare_url.outputs.stdout }}
           " >> $GITHUB_STEP_SUMMARY
 
@@ -100,6 +100,6 @@ jobs:
           ⁂ https://docs.storacha.network
 
           ### Snapshot urls 🔗✨
-            - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.w3s.link
+            - 🙂 https://${{ steps.ipfs.outputs.cid }}.ipfs.storacha.link
             - ⛅️ ${{ steps.cloudflare_url.outputs.stdout }}
           " >> $GITHUB_STEP_SUMMARY

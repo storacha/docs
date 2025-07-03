@@ -14,11 +14,11 @@ We wrote it as the solution to address increasing adoption of Storacha, which pr
 ## How do I log in the CLI or other client after making an account on the console?
 
 If you already created an account in the console, then you'll need to log in the CLI or other client.
-For the CLI, you can use the `w3 login your-email@here.com`. For the JS client, call `client.login('your-email@here.com')`. After it runs, an email will be send to your inbox. Once you click the `Verify Email Address` link from the email, the client you used to send the email will be access to the account including created Spaces and uploaded content.
+For the CLI, you can use the `storacha login your-email@here.com`. For the JS client, call `client.login('your-email@here.com')`. After it runs, an email will be send to your inbox. Once you click the `Verify Email Address` link from the email, the client you used to send the email will be access to the account including created Spaces and uploaded content.
 
-## How do I store data on Storacha that is already available over the IPFS network without having to download and reupload it myself?
+## How do I store data on Storacha that is already available over the IPFS network without having to download and re-upload it myself?
 
-To keep costs low, we no longer offer an implementation of the Pinning Service API. But fear not, you can just download a copy of your content in CAR file form (e.g., access your data via `https://{cid}.ipfs.dweb.link/path?format=car`) and upload that directly using w3up. We’re working on a new product to make it as easy as possible to do this!
+To keep costs low, we no longer offer an implementation of the Pinning Service API. But fear not, you can just download a copy of your content in CAR file form (e.g., access your data via `https://{cid}.ipfs.dweb.link/path?format=car`) and upload that directly using Storacha. We’re working on a new product to make it as easy as possible to do this!
 
 ## How can I delete items from Storacha?
 
@@ -32,7 +32,7 @@ Unfortunately, right now you cannot delete a Space. Having extra, empty Spaces w
 
 ## Are there client libraries other than Javascript?
 
-Yes! There is a [client in Go](/go-w3up). However, it is heavily under development at the time of writing and not yet fully featured. Alternatively, you can use the CLI for many programmatic use cases.
+Yes! There is a [client in Go](/go-client). However, it is heavily under development at the time of writing and not yet fully featured. Alternatively, you can use the CLI for many programmatic use cases.
 
 ## How can I edit a file or add files to a folder?
 
@@ -40,4 +40,4 @@ Since CIDs are immutable, it's not possible to edit files or add files to a fold
 
 ## Where can I find your logo, media branding kit, and assets?
 
-You can find our branding guide or kit along with logos and assets either in this [IPFS directory](https://bafybeia2v7unj7mfkkqfc4zu5boyfui6mofyruoq222swpj3sfyjmiwcnq.ipfs.w3s.link/) or [Google Drive folder](https://drive.google.com/drive/folders/1X7W40TYguqFD9hOntb364BT3P62Za8fT?usp=sharing).
+You can find our branding guide or kit along with logos and assets either in this [IPFS directory](https://bafybeia2v7unj7mfkkqfc4zu5boyfui6mofyruoq222swpj3sfyjmiwcnq.ipfs.storacha.link/) or [Google Drive folder](https://drive.google.com/drive/folders/1X7W40TYguqFD9hOntb364BT3P62Za8fT?usp=sharing).

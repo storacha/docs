@@ -1,6 +1,6 @@
 # Terms of service
 
-The following terms and conditions govern all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”). The Services are offered subject to your acceptance without modification of all of the terms and conditions contained herein. As all data uploaded to storacha.network will be available via IPFS, the Services are also subject to the [Terms of Service of IPFS.io](https://discuss.ipfs.tech/tos) and [Privacy Policy of IPFS.io](https://discuss.ipfs.tech/privacy).
+The following terms and conditions govern all use of the storacha.network website (“storacha.network” or the “Website”), the storacha/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”). The Services are offered subject to your acceptance without modification of all of the terms and conditions contained herein. As all data uploaded to storacha.network will be available via IPFS, the Services are also subject to the [Terms of Service of IPFS.io](https://discuss.ipfs.tech/tos) and [Privacy Policy of IPFS.io](https://discuss.ipfs.tech/privacy).
 
 If you do not agree to all the terms and conditions of this agreement (“Agreement” or “TOS”), then you may not access the Website or use any of the Services.
 

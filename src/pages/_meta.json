@@ -1,9 +1,9 @@
 {
   "index": "Welcome",
   "quickstart": "Quickstart",
-  "w3cli": "Command Line",
-  "w3up-client": "JS Client",
-  "go-w3up": "Go Client",
+  "cli": "Command Line",
+  "js-client": "JS Client",
+  "go-client": "Go Client",
   "ai": "AI / LLMs",
   "how-to": "How to",
   "concepts": "Concepts",
@@ -17,7 +17,7 @@
   "service-level-agreement": "Service Level Agreement",
   "terms": "Terms of Service",
   "referral-terms": "Referral Program Terms and Conditions",
-  "download-sc": "Download w3up Source Code",
+  "download-sc": "Download Source Code",
   "specs": {
     "newWindow": true,
     "title": "Specs",

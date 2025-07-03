@@ -1,6 +1,6 @@
 import { Callout } from 'nextra/components'
 
-# Removing data from your account
+# Removing Data from your Account
 
 You might want to remove data from being associated with your account. You can do so using the JS client, CLI, or web console.
 
@@ -8,15 +8,15 @@ Note that there is a minimum 30 day retention period for uploaded data, and even
 
 <Callout type="error" emoji="⚠️❗">
   **Public Data 🌎**<br/>
-  All data uploaded to w3up is available to anyone who requests it using the correct CID. Do not store any private or sensitive information in an unencrypted form using w3up.
+  All data uploaded to the Storacha Network is available to anyone who requests it using the correct CID. Do not store any private or sensitive information in an unencrypted form using Storacha.
 </Callout>
 
 <Callout type="error" emoji="⚠️❗">
   **Permanent Data ♾️**<br/>
-  Removing files from w3up will remove them from the file listing for your account, but that doesn't prevent nodes on the decentralized storage network from retaining copies of the data indefinitely. Storacha itself generally retains and charges users for any uploaded data for a minimum of 30 days. Do not use w3up for data that may need to be permanently deleted in the future.
+  Removing files from the Storacha Network will remove them from the file listing for your account, but that doesn't prevent nodes on the decentralized storage network from retaining copies of the data indefinitely. Storacha itself generally retains and charges users for any uploaded data for a minimum of 30 days. Do not use Storacha for data that may need to be permanently deleted in the future.
 </Callout>
 
-## Removing uploads (content CIDs) vs. stores (shard CIDs)
+## Removing Uploads (content CIDs) vs. Blobs (shard CIDs)
 
 Storacha tracks two different things for its users to support content addressing. These concepts were first introduced in the Upload section:
 
@@ -27,32 +27,32 @@ Storacha tracks usage for payment (i.e., how much storage is utilized by a user)
 
 Fortunately, this shouldn't make things any more complicated - we go into more detail below, but in general, when you remove a content CID from your account, you'll want to remove the shard CIDs as well (e.g., in the client calling `client.remove(contentCID, { shards: true })`).
 
-However, if you are a power user interacting with shard CIDs as well (e.g., using the client's `capability.store.*` or CLI's `w3 can store *` methods), then you need to be more cautious about removing shard CIDs from your account. (This is why the default for the client and CLI methods is for shards to be maintained after removing a content CID). You can read more about why you might want to interact with shard CIDs directly and the implications in the Upload vs. Store section.
+However, if you are a power user interacting with shard CIDs as well (e.g., using the client's `capability.blob.*` or CLI's `storacha can blob *` methods), then you need to be more cautious about removing shard CIDs from your account. (This is why the default for the client and CLI methods is for shards to be maintained after removing a content CID). You can read more about why you might want to interact with shard CIDs directly and the implications in the Upload vs. Store section.
 
-## Using the JS client or CLI
+## Using the JS Client or CLI
 
 If you followed the Upload section, you should already have your client or CLI set up with an Agent for your Space. From there, to remove a content CID from your account, you'll generally be using:
 
 - Client: `client.remove(contentCID)`
-- CLI: `w3 rm <contentCID>`
+- CLI: `storacha rm <contentCID>`
 
-If you initially uploaded your content by using the recommended upload methods (e.g., used `Client.upload()` or `w3 up`) and didn't interact with CAR shards at all when uploading, we recommend removing the shard CIDs associated with the content CID from your account. Otherwise, you will still be paying for the data stored with Storacha (as mentioned above). The easiest way to do that is to set the `shards` option to `true`:
+If you initially uploaded your content by using the recommended upload methods (e.g., used `client.uploadDirectory()` or `storacha up`) and didn't interact with CAR shards at all when uploading, we recommend removing the shard CIDs associated with the content CID from your account. Otherwise, you will still be paying for the data stored with Storacha (as mentioned above). The easiest way to do that is to set the `shards` option to `true`:
 
 - Client: `client.remove(contentCID, { shards: true })`
-- CLI: `w3 rm <contentCID> --shards`
+- CLI: `storacha rm <contentCID> --shards`
 
 ## Removing content CIDs and shard CIDs separately
 
-If you have managed your shard CIDs and upload CIDs separately (e.g., used `client.capability.store.add()` and `client.capability.upload.add()` in the client or `w3 can store add` and `w3 can upload add` in the CLI), you might want to remove the upload CIDs and underlying shard CIDs separately as well. You can read more about why you might want to interact with shard CIDs directly and the implications in the Upload vs. Store section.
+If you have managed your shard CIDs and upload CIDs separately (e.g., used `client.capability.blob.add()` and `client.capability.upload.add()` in the client or `storacha can blob add` and `storacha can upload add` in the CLI), you might want to remove the upload CIDs and underlying shard CIDs separately as well. You can read more about why you might want to interact with shard CIDs directly and the implications in the Upload vs. Store section.
 
 To remove shard CIDs and upload CIDs separately, you'll generally do this by:
 
 1. Determine shards to remove (skip this step if you already know!):
    - Client: `client.capability.upload.list(contentCID)`
-   - CLI: `w3 can upload ls <contentCID> --shards`
+   - CLI: `storacha can upload ls <contentCID> --shards`
 2. Remove the upload:
    - Client: `client.capability.upload.remove(contentCID)`
-   - CLI: `w3 can upload rm <contentCID>`
+   - CLI: `storacha can upload rm <contentCID>`
 3. Remove each of the shards (ensure first that no other content is using that shard!):
    - Client: `client.capability.blob.remove(shardMultihash)`
-   - CLI: `w3 can blob rm <shardMultihash>`
+   - CLI: `storacha can blob rm <shardMultihash>`

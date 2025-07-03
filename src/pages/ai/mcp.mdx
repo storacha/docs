@@ -39,13 +39,13 @@ pnpm install
 First, install the CLI tool:
 
 ```bash
-npm install -g @web3-storage/w3cli
+npm install -g @storacha/cli
 ```
 
 Then login to Storacha:
 
 ```bash
-w3 login
+storacha login
 ```
 
 Select **Via GitHub** (or Email) and follow returned steps to authenticate.
@@ -53,7 +53,7 @@ Select **Via GitHub** (or Email) and follow returned steps to authenticate.
 Create a space for your data:
 
 ```bash
-w3 space create your-space-name
+storacha space create your-space-name
 ```
 
 <Callout type="warning">
@@ -63,7 +63,7 @@ w3 space create your-space-name
 Generate a private key:
 
 ```bash
-w3 key create
+storacha key create
 ```
 
 This outputs an **AgentId** and **PrivateKey** that you'll need in the next step.
@@ -71,7 +71,7 @@ This outputs an **AgentId** and **PrivateKey** that you'll need in the next step
 Create a delegation with proper permissions:
 
 ```bash
-w3 delegation create your-agent-id \
+storacha delegation create your-agent-id \
   --can 'filecoin/offer' \
   --can 'upload/add' \
   --can 'space/blob/add' \

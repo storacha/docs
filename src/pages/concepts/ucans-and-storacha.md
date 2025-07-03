@@ -1,10 +1,10 @@
 # UCANs and Storacha
 
-For authorization, w3up services use [ucanto](https://github.com/storacha/ucanto), a Remote Procedure Call (RPC) framework built around [UCAN](https://ucan.xyz/), or User Controlled Authorization Networks. UCANs are a powerful capability-based authorization system that allows fine-grained sharing of permissions through a process called _delegation_ on top of [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography).
+For authorization, the Storacha Network uses [ucanto](https://github.com/storacha/ucanto), a Remote Procedure Call (RPC) framework built around [UCAN](https://ucan.xyz/), or User Controlled Authorization Networks. UCANs are a powerful capability-based authorization system that allows fine-grained sharing of permissions through a process called _delegation_ on top of [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography).
 
-You can think about UCAN replacing bearer tokens in traditional APIs for authorization with w3up. Since any actor can be represented by a cryptographic keypair and permissions can be delegated to them, users can interact with w3up directly in cases where a developer might have needed to previously run additional back-end infrastructure to keep API keys secure. This can be extended even to have end users using applications integrated with w3up using their own keypair-based identity.
+You can think about UCAN replacing bearer tokens in traditional APIs for authorization with Storacha. Since any actor can be represented by a cryptographic keypair and permissions can be delegated to them, users can interact with Storacha directly in cases where a developer might have needed to previously run additional back-end infrastructure to keep API keys secure. This can be extended even to have end users using applications integrated with Storacha using their own keypair-based identity.
 
-## How w3up and w3up-client use UCANs
+## How Storacha uses UCANs
 
 Our client and CLI use ucanto to take care of the details of UCANs for you, but a few of the underlying terms and concepts may "bubble up" to the surface of the API, so we'll cover the basics. We'll also go over some terms that are specific to Storacha that you might not have encountered elsewhere.
 
@@ -12,17 +12,17 @@ UCAN-based APIs are centered around _capabilities_, which are comprised of an _a
 
 ### Space
 
-When you upload data to w3up, your uploads are linked to a unique _Space_ that acts as a "namespace" for the data you upload. Each Space corresponds to a _DID_, or [Decentralized Identity Document](https://www.w3.org/TR/did-core/). In Storacha's implementation of w3up, these Space DIDs generally use the key DID method, of the form did:key:publicKey with a corresponding private signing key.
+When you upload data to Storacha, your uploads are linked to a unique _Space_ that acts as a "namespace" for the data you upload. Each Space corresponds to a _DID_, or [Decentralized Identity Document](https://www.w3.org/TR/did-core/). In the Storacha Network, Space DIDs generally use the key DID method, of the form did:key:publicKey with a corresponding private signing key.
 
-When creating a Space, it generates this private key and did:key for you locally. To use Storacha, you then register a Space by associating it with your email address. From there, when invoking storage capabilities with Storacha, the Space did:key is the "resource" portion of the capability, while the ability is an action like space/blob/add or space/blob/remove. (A Space registered with Storacha is imperfectly analogous to an "account" with Storacha.)
+When creating a Space, it generates this private key and did:key for you locally. To use Storacha, you then register a Space by associating it with your email address. From there, when invoking storage capabilities with Storacha, the Space did:key is the "resource" portion of the capability, while the ability is an action like `space/blob/add` or `space/blob/remove`. A Space registered with Storacha is imperfectly analogous to an "account" with Storacha.
 
-Under the hood in the email registration process, your Space delegates the capabilities needed to use w3up to your email address, and this delegation is stored by Storacha. If you need access to your Space in the future from any device, Storacha allows you to reclaim those capabilities the same way you would reset a password in other services - using an email verification process. This means you don't need to store or manage Space private keys to use w3up - just create a new space, register it with w3up and use it from as many devices as you like. More on this "sign in" process is detailed in the next section on Agents.
+Under the hood in the email registration process, your Space delegates the capabilities needed to use Storacha to your email address, and this delegation is stored by Storacha. If you need access to your Space in the future from any device, Storacha allows you to reclaim those capabilities the same way you would reset a password in other services - using an email verification process. This means you don't need to store or manage Space private keys to use Storacha - just create a new space, register it with Storacha and use it from as many devices as you like. More on this "sign in" process is detailed in the next section on Agents.
 
 ### Agent
 
-To invoke a capability like space/blob/add on a Space using the client or CLI, the client must have an _Agent_. Like a Space, an Agent corresponds to a did:key whose private key is generated locally. An Agent is useful once the client or CLI has a UCAN delegation where a registered Space(s) delegates the Agent its capabilities. (An imperfect analogy is Agent to login session.)
+To invoke a capability like `space/blob/add` on a Space using the client or CLI, the client must have an _Agent_. Like a Space, an Agent corresponds to a `did:key` whose private key is generated locally. An Agent is useful once the client or CLI has a UCAN delegation where a registered Space(s) delegates the Agent its capabilities. (An imperfect analogy is Agent to login session.)
 
-The delegation from a Space to your Agent that w3up-client needs can be passed either by verifying the email address the Space is registered to and claiming the UCAN delegation (authorize(email) then capability.access.claim) or directly if you have the UCAN delegation available locally (addSpace(delegation)).
+The delegation from a Space to your Agent can be passed either by verifying the email address the Space is registered to and claiming the UCAN delegation (authorize(email) then capability.access.claim) or directly if you have the UCAN delegation available locally (addSpace(delegation)).
 
 ### Delegation to other actors
 
@@ -31,12 +31,12 @@ Just like Spaces can delegate permissions to Agents you own, you can also delega
 **Backend**
 
 ```js
-import { CarReader } from '@ipld/car'
 import * as DID from '@ipld/dag-ucan/did'
-import * as Delegation from '@ucanto/core/delegation'
-import * as Signer from '@ucanto/principal/ed25519'
-import * as Client from '@web3-storage/w3up-client'
-import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
+import * as Client from '@storacha/client'
+import * as Proof from '@storacha/client/proof'
+import * as Delegation from '@storacha/client/delegation'
+import * as Signer from '@storacha/client/principal/ed25519'
+import { StoreMemory } from '@storacha/client/stores/memory'
 
 async function backend(did) {
   // Load client with specific private key
@@ -45,7 +45,7 @@ async function backend(did) {
   const client = await Client.create({ principal, store })
 
   // Add proof that this agent has been delegated capabilities on the space
-  const proof = await parseProof(process.env.PROOF)
+  const proof = await Proof.parse(process.env.PROOF)
   const space = await client.addSpace(proof)
   await client.setCurrentSpace(space.did())
 
@@ -59,16 +59,6 @@ async function backend(did) {
   const archive = await delegation.archive()
   return archive.ok
 }
-
-/** @param {string} data Base64 encoded CAR file */
-async function parseProof(data) {
-  const blocks = []
-  const reader = await CarReader.fromBytes(Buffer.from(data, 'base64'))
-  for await (const block of reader.blocks()) {
-    blocks.push(block)
-  }
-  return Delegation.importDAG(blocks)
-}
 ```
 
 When the `backend` function is called in the developer's backend:
@@ -80,15 +70,15 @@ When the `backend` function is called in the developer's backend:
 **Frontend**
 
 ```js
-import * as Delegation from '@ucanto/core/delegation'
-import * as Client from '@web3-storage/w3up-client'
+import * as Client from '@storacha/client'
+import * as Delegation from '@storacha/client/delegation'
 
 async function frontend() {
   // Create a new client
   const client = await Client.create()
 
   // Fetch the delegation from the backend
-  const apiUrl = `/api/w3up-delegation/${client.agent.did()}`
+  const apiUrl = `/api/storacha-delegation/${client.agent.did()}`
   const response = await fetch(apiUrl)
   const data = await response.arrayBuffer()
 

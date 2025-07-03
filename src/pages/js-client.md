@@ -1,6 +1,6 @@
-# `w3up-client`
+# JS Client
 
-You can easily integrate Storacha into your JavaScript apps using `w3up-client`, our JavaScript client for the w3up platform.
+You can easily integrate Storacha into your JavaScript apps using `@storacha/client`, our JavaScript client for the Storacha Network.
 
 In this guide, we'll walk through the following steps:
 
@@ -21,22 +21,22 @@ node --version && npm --version
 Add the library to your project's dependencies:
 
 ```bash
-npm install @web3-storage/w3up-client
+npm install @storacha/client
 ```
 
 To use the client, import and call the `create` function:
 
 ```js
-import { create } from "@web3-storage/w3up-client";
+import { create } from "@storacha/client";
 
 const client = await create();
 ```
 
-See the [w3up-client README](https://github.com/storacha/w3up/blob/main/packages/w3up-client/README.md) for more creation options.
+See the [README](https://github.com/storacha/upload-service/blob/main/packages/w3up-client/README.md) for more creation options.
 
 ## Create and Provision a Space
 
-Each uploaded thing to Storacha is associated with a "Space". A space is a unique identifier that acts as a namespace for your content. Spaces are identified by a DID (decentralized identifier) using keys created locally on your devices.
+Everything uploaded to Storacha is associated with a "Space". A space is a unique identifier that acts as a namespace for your content. Spaces are identified by a DID (decentralized identifier) using keys created locally on your devices.
 
 The first thing to do is login your Agent with your email address. Calling `login` will cause an email to be sent to the given address. Once a user clicks the confirmation link in the email, the `login` method will resolve. Make sure to check for errors, as `login` will fail if the email is not confirmed within the expiration timeout. Authorization needs to happen only once per agent.
 
@@ -57,7 +57,7 @@ Spaces can be created using the `createSpace` client method.
 const space = await client.createSpace("my-awesome-space", { account });
 ```
 
-Alternatively, you can use the `w3cli` command [`w3 space create`](https://github.com/storacha/w3cli#w3-space-create-name) for a streamlined approach.
+Alternatively, you can use the CLI command [`storacha space create`](https://github.com/storacha/upload-service/tree/main/packages/cli#storacha-space-create-name) for a streamlined approach.
 
 **Additional Notes**
 
@@ -83,7 +83,8 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
     When creating a space, you can specify which Gateways are authorized to serve the content you upload. By default, if no other flags are set the client will automatically grant access to the [Storacha Gateway](https://github.com/storacha/freeway) to serve the content you upload to your space.
 
-    However, you can authorize other Storacha compliant gateways to serve content instead.
+    <details>
+    <summary>However, you can authorize other Storacha compliant gateways to serve content instead.</summary>
 
     To achieve this, you must first establish a connection with the desired Gateway. This connection enables the client to publish the necessary delegations that grant the Gateway permission to serve your content.
 
@@ -93,12 +94,12 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
     import * as UcantoClient from '@ucanto/client'
     import { HTTP } from '@ucanto/transport'
     import * as CAR from '@ucanto/transport/car'
-
+    
     // Connects to Storacha Freeway Gateway
     const storachaGateway = UcantoClient.connect({
         id: id,
         codec: CAR.outbound,
-        channel: HTTP.open({ url: new URL('https://w3s.link') }),
+        channel: HTTP.open({ url: new URL('https://storacha.link') }),
     });
     ```
 
@@ -106,8 +107,8 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
     ```js
     const space = await client.createSpace("my-awesome-space", { 
-      account,
-      authorizeGatewayServices: [storachaGateway],
+        account,
+        authorizeGatewayServices: [storachaGateway],
     });
     ```
 
@@ -115,10 +116,11 @@ Alternatively, you can use the `w3cli` command [`w3 space create`](https://githu
 
     ```js
     const space = await client.createSpace("my-awesome-space", { 
-      account,
-      skipGatewayAuthorization: true,
+        account,
+        skipGatewayAuthorization: true,
     });
     ```
+    </details>
 
 ## Upload Files
 
@@ -157,7 +159,7 @@ In the example above, `directoryCid` resolves to an IPFS directory with the foll
 
 The `uploadFile` and `uploadDirectory` methods described in the previous step both return a CID, or Content Identifier - a unique hash of the data.
 
-To create a link to view your file on an IPFS gateway, create a URL of the form `https://${cid}.ipfs.${gatewayHost}`, where `${cid}` is the CID of the content you want to view, and `${gatewayHost}` is the domain of the gateway. To use our own gateway at `w3s.link`, your URL would be `https://${cid}.ipfs.w3s.link`.
+To create a link to view your file on an IPFS gateway, create a URL of the form `https://${cid}.ipfs.${gatewayHost}`, where `${cid}` is the CID of the content you want to view, and `${gatewayHost}` is the domain of the gateway. To use our own gateway at `storacha.link`, your URL would be `https://${cid}.ipfs.storacha.link`.
 
 Opening the gateway URL in a browser will take you to your uploaded file, or a directory listing of files, depending on what you uploaded.
 
