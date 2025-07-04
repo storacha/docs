@@ -176,7 +176,7 @@ func main() {
 ```
 
 <Callout type="warning">
-  Maximum upload size is 4,261,412,864 bytes (around 4GB). To upload CAR files larger than this, please use the [sharding utility](https://github.com/web3-storage/go-w3up/blob/main/car/sharding/sharding.go) to split the CAR into multiple shards.
+  Maximum upload size is 4,261,412,864 bytes (around 4GB). To upload CAR files larger than this, please use the [sharding utility](https://github.com/storacha/guppy/blob/main/pkg/car/sharding/sharding.go) to split the CAR into multiple shards.
 </Callout>
 
 A DAG can be sharded amongst multiple CAR files (see maximum upload size above). To tie together multiple stored CAR files to a content root CID you can register an "upload". An "upload" is a content root CID + a set of CAR shards that it is contained within.
