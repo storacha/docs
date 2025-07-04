@@ -94,7 +94,7 @@ Alternatively, you can use the CLI command [`storacha space create`](https://git
     import * as UcantoClient from '@ucanto/client'
     import { HTTP } from '@ucanto/transport'
     import * as CAR from '@ucanto/transport/car'
-    
+
     // Connects to Storacha Freeway Gateway
     const storachaGateway = UcantoClient.connect({
         id: id,
@@ -120,6 +120,7 @@ Alternatively, you can use the CLI command [`storacha space create`](https://git
         skipGatewayAuthorization: true,
     });
     ```
+
     </details>
 
 ## Upload Files
