@@ -1,6 +1,6 @@
 import { Callout } from 'nextra/components'
 
-# How to upload data using Storacha
+# How to Upload Data Using Storacha
 
 In this how-to guide, you'll learn how to store data programmatically for your development projects using the Storacha client library in JavaScript using your (developer-owned) Space. This includes various architecture options for the data pipeline for your users to upload to Storacha, which then makes your data available on the decentralized IPFS network with persistent long-term storage provided by Filecoin.
 
@@ -8,25 +8,25 @@ Later in this section, we also cover uploading data using the CLI or web console
 
 <Callout type="error" emoji="⚠️❗">
   **Public Data 🌎**<br/>
-  All data uploaded to w3up is available to anyone who requests it using the correct CID. Do not store any private or sensitive information in an unencrypted form using w3up.
+  All data uploaded to the Storacha Network is available to anyone who requests it using the correct CID. Do not store any private or sensitive information in an unencrypted form using Storacha.
 </Callout>
 
 <Callout type="error" emoji="⚠️❗">
   **Permanent Data ♾️**<br/>
-  Removing files from w3up will remove them from the file listing for your account, but that doesn't prevent nodes on the decentralized storage network from retaining copies of the data indefinitely. Storacha itself generally retains and charges users for any uploaded data for a minimum of 30 days. Do not use w3up for data that may need to be permanently deleted in the future.
+  Removing files from the Storacha Network will remove them from the file listing for your account, but that doesn't prevent nodes on the decentralized storage network from retaining copies of the data indefinitely. Storacha itself generally retains and charges users for any uploaded data for a minimum of 30 days. Do not use Storacha for data that may need to be permanently deleted in the future.
 </Callout>
 
 ## Using the CLI
 
 If you followed the [Create Account](create-account) and [Create Space](create-space) sections, you will already have the CLI set up with a Space. However, you might be using the CLI on a new machine, in which case you can follow these instructions:
 
-1. Install the CLI from npm using your command line: `npm install -g @web3-storage/w3cli`.
-2. Run `w3 login alice@example.com` in the command line using your email address. Click on the validation link sent to your email.
-3. After successfully running `login`, your CLI Agent has been delegated access to all Spaces associated with your email address. You can see a list of these Spaces using `w3 space ls` and select the one you'd like to upload to using `w3 space use <space_did>`.
+1. Install the CLI from npm using your command line: `npm install -g @storacha/cli`.
+2. Run `storacha login alice@example.com` in the command line using your email address. Click on the validation link sent to your email.
+3. After successfully running `login`, your CLI Agent has been delegated access to all Spaces associated with your email address. You can see a list of these Spaces using `storacha space ls` and select the one you'd like to upload to using `storacha space use <space_did>`.
 
-When the right Space is selected, you are ready to upload! You can do so by running `w3 up <path>`.
+When the right Space is selected, you are ready to upload! You can do so by running `storacha up <path>`.
 
-There are a few useful flags (check out the reference docs or `w3 up --help` to see a full list):
+There are a few useful flags (check out the reference docs or `storacha up --help` to see a full list):
 
 ```shell
 --no-wrap    # Don't wrap input files with a directory.
@@ -34,19 +34,19 @@ There are a few useful flags (check out the reference docs or `w3 up --help` to 
 -c, --car    # File is a CAR file.
 ```
 
-## Using the JS client
+## Using the JS Client
 
-### Installing the client
+### Installing the Client
 
 In your JavaScript project, add the Storacha package to your dependencies:
 
 ```sh
-npm install @web3-storage/w3up-client
+npm install @storacha/client
 ```
 
-### Creating a client instance
+### Creating a Client Instance
 
-The package provides a [static create function](https://storacha.github.io/w3up/functions/_web3_storage_w3up_client.create.html) that returns a [Client object](https://storacha.github.io/w3up/classes/_web3_storage_w3up_client.Client.html). How you initialize it depends on the environment the client is used in: **persistent** or **ephemeral**.
+The package provides a static `create` function that returns a `Client` object. How you initialize it depends on the environment the client is used in: **persistent** or **ephemeral**.
 
 Examples of **persistent** environments:
 
@@ -60,7 +60,7 @@ Examples of **ephemeral** environments:
 - Running inside Docker instances
 - CI
 
-#### Claim delegations via email validation
+#### Claim Delegations via Email Validation
 
 <Callout type="warning">
   For persistent environment only
@@ -81,7 +81,7 @@ You can use Storacha's email authorization flow to give permissions to your clie
 When a Space is created, access permissions are delegated to your email address. We use a special kind of DID for this, a `did:mailto:`. These UCANs are stashed with the Storacha service. When you validate your email address with a new Agent DID, Storacha issues a UCAN attestation, that says your Agent DID is owned by your email address. It also returns the UCAN permissions you previously stashed. You can then use the returned UCANs, along with the attestation to prove you are authorized to perform actions.
 
 ```javascript
-import { create } from '@web3-storage/w3up-client'
+import { create } from '@storacha/client'
 const client = await create()
 ```
 
@@ -99,7 +99,7 @@ Once a user clicks the confirmation link in the email, the login method will res
 await client.setCurrentSpace('did:key:...') // select the relevant Space DID that is associated with your account
 ```
 
-#### Bring your own delegations
+#### Bring Your Own Delegations
 
 <Callout type="info">
   For any backend (including non-persistent and/or serverless)
@@ -114,24 +114,24 @@ Developer-\>\>Client: Here is my Agent private key and UCAN delegating permissio
 
 An option that works for any backend environment is for a developer to create and provision a Space, and then delegate access to a different Agent DID that will be used by the client. This is especially useful if you're using the client in a serverless environment (e.g., AWS Lambda).
 
-In your command line where `w3cli` is configured with the Space you want to use (e.g., where you created the Space):
+In your terminal where the Storacha CLI is installed configured with the Space you want to use (e.g., where you created the Space):
 
 ```shell
 # The following command returns what will be your Agent private key and DID
-w3 key create
+storacha key create
 
 # ❗️ Store the private key (starting "Mg...") in environment variable KEY
 
-# The following command creates a UCAN delegation from the w3cli agent to the
+# The following command creates a UCAN delegation from the CLI agent to the
 # agent you generated above.
 #
-# Use `w3 space use` prior to this to set the Space you intend on delegating
-# access to.
+# Use `storacha space use` prior to this to set the Space you intend on
+# delegating access to.
 #
 # If you want to limit permissions being passed to the Agent, you can specify
 # permissions to give, e.g., `--can space/blob/add --can space/index/add --can
 # filecoin/offer --can upload/add` limits to just being able to upload.
-w3 delegation create <did_from_ucan-key_command_above> --base64
+storacha delegation create <did_from_ucan-key_command_above> --base64
 
 # ❗️ Store the output in environment variable PROOF
 ```
@@ -139,22 +139,20 @@ w3 delegation create <did_from_ucan-key_command_above> --base64
 Then, when you initialize and configure the client, you can pass in this private key and UCAN delegation.
 
 ```javascript
-import * as Client from '@web3-storage/w3up-client'
-import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
-import * as Proof from '@web3-storage/w3up-client/proof'
-import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
+import * as Client from '@storacha/client'
+import { StoreMemory } from '@storacha/client/stores/memory'
+import * as Proof from '@storacha/client/proof'
+import { Signer } from '@storacha/client/principal/ed25519'
 
-async function main () {
-  // Load client with specific private key
-  const principal = Signer.parse(process.env.KEY)
-  const store = new StoreMemory()
-  const client = await Client.create({ principal, store })
-  // Add proof that this agent has been delegated capabilities on the space
-  const proof = await Proof.parse(process.env.PROOF)
-  const space = await client.addSpace(proof)
-  await client.setCurrentSpace(space.did())
-  // READY to go!
-}
+// Load client with specific private key
+const principal = Signer.parse(process.env.KEY)
+const store = new StoreMemory()
+const client = await Client.create({ principal, store })
+// Add proof that this agent has been delegated capabilities on the space
+const proof = await Proof.parse(process.env.PROOF)
+const space = await client.addSpace(proof)
+await client.setCurrentSpace(space.did())
+// READY to go!
 ```
 
 ### Uploading to Storacha
@@ -166,7 +164,7 @@ There are two main options to getting content into your Space:
 - Upload data to Storacha from the backend client itself (e.g., you're storing data that your users are uploading to your backend)
 - Upload data to Storacha directly from your user's environment (like your application's user's browser) by delegating a UCAN that has permission to upload to your Space
 
-### Upload from backend client directly
+### Upload from Backend Client Directly
 
 ```mermaid
 sequenceDiagram
@@ -177,7 +175,7 @@ Application Backend-\>\>storacha service: Upload data
 You are already set up to upload using your client instance as data becomes available to your backend - you can call `uploadFile` or `uploadDirectory` with it.
 
 ```javascript
-import { create } from '@web3-storage/w3up-client'
+import { create } from '@storacha/client'
 import { filesFromPaths } from 'files-from-path'
 
 // e.g "./best-gifs"
@@ -190,7 +188,7 @@ const directoryCid = await client.uploadDirectory(files)
 
 In the example above, `directoryCid` resolves to an IPFS directory.
 
-### Delegate UCAN for your user to upload directly
+### Delegate UCAN for your User to Upload Directly
 
 ```mermaid
 sequenceDiagram
@@ -208,10 +206,10 @@ Your backend instance can also be used to delegate upload permissions directly t
 **Backend**
 
 ```js
-import * as Client from '@web3-storage/w3up-client'
-import { StoreMemory } from '@web3-storage/w3up-client/stores/memory'
-import * as Proof from '@web3-storage/w3up-client/proof'
-import { Signer } from '@web3-storage/w3up-client/principal/ed25519'
+import * as Client from '@storacha/client'
+import { StoreMemory } from '@storacha/client/stores/memory'
+import * as Proof from '@storacha/client/proof'
+import { Signer } from '@storacha/client/principal/ed25519'
 import * as DID from '@ipld/dag-ucan/did'
 
 async function backend(did) {
@@ -240,15 +238,15 @@ async function backend(did) {
 **Frontend**
 
 ```js
-import * as Delegation from '@web3-storage/w3up-client/delegation'
-import * as Client from '@web3-storage/w3up-client'
+import * as Delegation from '@storacha/client/delegation'
+import * as Client from '@storacha/client'
 
 async function frontend() {
   // Create a new client
   const client = await Client.create()
 
   // Fetch the delegation from the backend
-  const apiUrl = `/api/w3up-delegation/${client.agent.did()}`
+  const apiUrl = `/api/storacha-delegation/${client.agent.did()}`
   const response = await fetch(apiUrl)
   const data = await response.arrayBuffer()
 
@@ -266,7 +264,7 @@ async function frontend() {
 }
 ```
 
-### Preparing files and uploading
+### Preparing Files and Uploading
 
 You are now ready to upload using the client! In general, the easiest way to upload data is using the `uploadFile` or `uploadDirectory` method.
 
@@ -361,6 +359,6 @@ function makeFileObjects () {
 }
 ```
 
-## Next steps
+## Next Steps
 
 Learn more about how to fetch your data using the CID in the next section, [retrieve](/how-to/retrieve/).

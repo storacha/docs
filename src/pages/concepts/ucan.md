@@ -1,6 +1,6 @@
 # UCAN: User controlled authorization networks
 
-The w3up platform by Storacha is built on a technology called UCAN, a system which takes a different approach to user identity and authorization than you may be used to from building or interacting with "web 2.0" services. Read on to learn about what makes UCAN special.
+The w3up protocol by Storacha is built on a technology called UCAN, a system which takes a different approach to user identity and authorization than you may be used to from building or interacting with "web 2.0" services. Read on to learn about what makes UCAN special.
 
 UCAN stands for User Controlled Authorization Networks, and it's fundamentally about changing the relationship between users and service providers in a way that empowers the end-user.
 

@@ -1,12 +1,9 @@
 import { highlight } from '@/lib/shiki'
 import { Lang, Theme } from 'shiki'
 
-const w3upExample = `
-import * as Client from '@web3-storage/w3up-client'
+const clientExample = `
+import * as Client from '@storacha/client'
 import { filesFromPaths } from 'files-from-path'
-import * as UcantoClient from '@ucanto/client'
-import { HTTP } from '@ucanto/transport'
-import * as CAR from '@ucanto/transport/car'
 
 const client = await Client.create()
 
@@ -42,6 +39,6 @@ export function CodeSample (props: {code: string, theme?: Theme, lang?: Lang}) {
   )
 }
 
-export function W3UPClientExample () {
-  return <CodeSample code={w3upExample} />
+export function ClientExample () {
+  return <CodeSample code={clientExample} />
 }
