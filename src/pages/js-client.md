@@ -165,3 +165,7 @@ To create a link to view your file on an IPFS gateway, create a URL of the form 
 Opening the gateway URL in a browser will take you to your uploaded file, or a directory listing of files, depending on what you uploaded.
 
 Of course, gateways aren't the only option for fetching data from IPFS! If you're running a [kubo](https://github.com/ipfs/kubo) node, you can use [`ipfs get <your-cid>`](https://docs.ipfs.tech/reference/kubo/cli/#ipfs-get) to fetch your content from the peer-to-peer IPFS Bitswap network.
+
+## API Reference
+
+[API Reference](https://github.com/storacha/upload-service/tree/main/packages/w3up-client#api)
