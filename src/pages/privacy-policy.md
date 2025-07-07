@@ -2,7 +2,7 @@
 
 ## Privacy
 
-This Privacy Policy governs all use of the storacha.network website (“storacha.network” or the “Website”), the w3link/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”).
+This Privacy Policy governs all use of the storacha.network website (“storacha.network” or the “Website”), the storacha/w3s.link gateway (“Gateway”) and all content, services and products available at or through the Website or Gateway (collectively, “Services”).
 
 The Services are offered subject to your acceptance without modification of all the terms and conditions herein, and all other other operating rules, policies (including, without limitation, our [Terms of Service](/terms/) and procedures that may be updated from time to time.  By accessing or using any part of our Services you agree to be bound by the terms and conditions of the Privacy Policy.  If you do not agree to all of the terms and conditions of this Privacy Policy, then you may not access our Services.
 

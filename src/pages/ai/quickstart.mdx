@@ -23,13 +23,13 @@ Currently the best way to generate a DID (Decentralized Identifier) for your age
 Make sure [Node.js](https://nodejs.org) is installed first, then install the CLI tool:
 
 ```sh
-npm install -g @web3-storage/w3cli
+npm install -g @storacha/cli
 ```
 
 ### Generate a DID
 
 ```sh
-w3 key create
+storacha key create
 ```
 
 Output should look something like:
@@ -59,13 +59,13 @@ Proofs are _delegations_ to your agent enabling it to perform tasks. Currently t
 If you haven't already, [install the CLI tool](#install-the-cli-tool) and [generate a DID](#generate-a-did).
 
 ```sh
-w3 space create [NAME]
+storacha space create [NAME]
 ```
 
 ### Delegate Capabilities to Your Agent
 
 ```sh
-w3 delegation create -c space/blob/add -c space/index/add -c filecoin/offer -c upload/add <AGENT_DID> --base64
+storacha delegation create -c space/blob/add -c space/index/add -c filecoin/offer -c upload/add <AGENT_DID> --base64
 ```
 
 This will create a delegation with the minimum permissions required for your agent to _write_ to your space. Make sure you use your agent DID, not the DID of the space you just created!
@@ -83,7 +83,7 @@ The JS Client, Go Client or HTTP Bridge can be integrated directly in _any_ AI A
 Instructions for initializing clients with an identity and delegation:
 
 - [JS Client](../how-to/upload.mdx#bring-your-own-delegations)
-- [Go Client](../go-w3up.mdx#load-private-key-and-proofs)
+- [Go Client](../go-client.mdx#load-private-key-and-proofs)
 - [HTTP Bridge](../how-to/http-bridge.mdx)
 
 We also provide integrations for specific frameworks making it even easier to use Storacha in these environments.
@@ -102,7 +102,7 @@ Enable the plugin in the `character` file, and then use the client implementatio
 ```js
 const storageClient = await getStorageClient(runtime);
 if (storageClient) {
-    const cid = await storageClient.getStorage().uploadFile(...);
+  const cid = await storageClient.getStorage().uploadFile(...);
 }
 ```
 

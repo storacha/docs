@@ -1,13 +1,13 @@
 import { Callout } from 'nextra/components'
 import { Steps } from 'nextra/components'
 
-# `go-w3up`
+# Guppy
 
 <Callout type="warning">
-  The Go client is under heavy development and is not as fully featured as the [JS client](/w3up-client).
+  The Go client is under heavy development and is not as fully featured as the [JS client](/js-client).
 </Callout>
 
-You can easily integrate Storacha into your Go apps using `go-w3up`, our Go client for the w3up platform.
+You can easily integrate Storacha into your Go apps using `guppy`, our Go client for the Storacha Network.
 
 In this guide, we'll walk through the following steps:
 
@@ -19,30 +19,30 @@ In this guide, we'll walk through the following steps:
 
 ## Install
 
-You'll need [Go](https://go.dev/) version 1.21.4 or higher.
+You'll need [Go](https://go.dev/) version 1.24.4 or higher.
 
-In addition to the w3up library you're also likely to need elements of `go-ucanto` - a library for performing UCAN RPC calls. Add the libraries to your project's dependencies:
+In addition to the client library you're also likely to need elements of `go-ucanto` - a library for performing UCAN RPC calls. Add the libraries to your project's dependencies:
 
 ```bash
-go get github.com/storacha/go-w3up
+go get github.com/storacha/guppy
 go get github.com/storacha/go-ucanto
 ```
 
 ## Generate a DID
 
-Currently the best way to generate a DID (decentralized identifier) is to use the w3up JS CLI:
+Currently the best way to generate a DID (decentralized identifier) is to use the JS CLI:
 
 <Steps>
-### Install w3 CLI
+### Install CLI
 
 ```sh
-npm install -g @web3-storage/w3cli
+npm install -g @storacha/cli
 ```
 
 ### Generate a DID
 
 ```sh
-w3 key create
+storacha key create
 ```
 
 Output should look something like:
@@ -60,13 +60,13 @@ MgCb+bRGl02JqlWMPUxCyntxlYj0T/zLtR2tn8LFvw6+Yke0BKAP/OUu2tXpd+tniEoOzB3pxqxHZpRh
 
 ## Obtain Proofs
 
-Proofs are delegations to your DID enabling it to perform tasks. Currently the best way to obtain proofs that will allow you to interact with the Storacha API is to use the w3up JS CLI:
+Proofs are delegations to your DID enabling it to perform tasks. Currently the best way to obtain proofs that will allow you to interact with the Storacha API is to use the JS CLI:
 
 <Steps>
-### Install w3 CLI
+### Install CLI
 
 ```sh
-npm install -g @web3-storage/w3cli
+npm install -g @storacha/cli
 ```
 
 ### Generate a DID
@@ -76,13 +76,13 @@ npm install -g @web3-storage/w3cli
 ### Create a Space
 
 ```sh
-w3 space create [NAME]
+storacha space create [NAME]
 ```
 
 ### Delegate Capabilities to Your DID
 
 ```sh
-w3 delegation create -c 'store/*' -c 'upload/*' [DID] -o proof.ucan
+storacha delegation create -c 'space/blob/add' -c space/index/add -c 'upload/add' -c 'filecoin/offer' [DID] -o proof.ucan
 ```
 
 </Steps>
@@ -101,9 +101,9 @@ package main
 import (
   "ioutil"
 
-  "github.com/web3-storage/go-ucanto/did"
-  "github.com/web3-storage/go-ucanto/principal/ed25519/signer"
-  "github.com/web3-storage/go-w3up/delegation"
+  "github.com/storacha/go-ucanto/did"
+  "github.com/storacha/go-ucanto/principal/ed25519/signer"
+  "github.com/storacha/guppy/pkg/delegation"
 )
 
 // space that the client will interact with
@@ -122,6 +122,10 @@ proof, _ := delegation.ExtractProof(prfbytes)
 
 Once you have loaded your space DID, your private key and your delegation proofs, you can upload a CAR ([content addressed archive file](/concepts/car)) to Storacha.
 
+<Callout type="error">
+  The following code sample is out of date. An update is coming soon.
+</Callout>
+
 ```go
 package main
 
@@ -133,8 +137,8 @@ import (
 	"github.com/ipfs/go-cid"
 	"github.com/ipld/go-ipld-prime/linking/cid"
 	"github.com/multiformats/go-multihash"
-	"github.com/web3-storage/go-w3up/capability/storeadd"
-	"github.com/web3-storage/go-w3up/client"
+	"github.com/storacha/guppy/capability/storeadd"
+	"github.com/storachas/guppy/client"
 )
 
 func main() {
@@ -172,7 +176,7 @@ func main() {
 ```
 
 <Callout type="warning">
-  Maximum upload size is 4,261,412,864 bytes (around 4GB). To upload CAR files larger than this, please use the [sharding utility](https://github.com/web3-storage/go-w3up/blob/main/car/sharding/sharding.go) to split the CAR into multiple shards.
+  Maximum upload size is 4,261,412,864 bytes (around 4GB). To upload CAR files larger than this, please use the [sharding utility](https://github.com/storacha/guppy/blob/main/pkg/car/sharding/sharding.go) to split the CAR into multiple shards.
 </Callout>
 
 A DAG can be sharded amongst multiple CAR files (see maximum upload size above). To tie together multiple stored CAR files to a content root CID you can register an "upload". An "upload" is a content root CID + a set of CAR shards that it is contained within.

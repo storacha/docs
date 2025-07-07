@@ -32,7 +32,7 @@ Storacha, Inc. ("Company") commits to provide a level of service for Storacha Cu
 
 2.10 “Upload Service” refers to uploads through the website, client, and CLI for supported file types and sizes as defined by the docs available at https://docs.storacha.network/.
 
-2.11 “Read Service” refers to reading successfully uploaded data, using its CID, over https://w3s.link or via Bitswap using IPFS nodes peered with Storacha nodes.
+2.11 “Read Service” refers to reading successfully uploaded data, using its CID, over https://storacha.link, https://w3s.link or via Bitswap using IPFS nodes peered with Storacha nodes.
 
 2.12 "Service Level" means standards Company chooses to adhere to and by which it measures the level of service it provides as specifically set forth below.
 

@@ -4,7 +4,7 @@ import { DocsLogo } from './components/brand'
 /**
  * @type {import('nextra-theme-docs').DocsThemeConfig}
  */
-export default {
+const config = {
   logo: <DocsLogo>Storacha Docs</DocsLogo>,
   primaryHue: {
     dark: 192,
@@ -12,7 +12,7 @@ export default {
   },
   primarySaturation: 100,
   project: {
-    link: 'https://github.com/storacha/w3up'
+    link: 'https://github.com/storacha/upload-service'
   },
   docsRepositoryBase: 'https://github.com/storacha/docs/tree/main',
   footer: {
@@ -75,3 +75,4 @@ export default {
   }
 }
 
+export default config

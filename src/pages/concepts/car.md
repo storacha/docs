@@ -22,7 +22,7 @@ First, formatting everything on the client allows us to calculate the root Conte
 
 Another reason to use CARs is to support large files, which would otherwise hit size limits on the Storacha backend platform. The data in a CAR is already chunked into small blocks, which makes CARs easy to shard into small pieces that can be uploaded in batches. This also enables the Storacha platform to get larger content into Filecoin deals.
 
-CAR files are a format that pretty much any IPFS tool or implementation can interact with. You can export data from your personal IPFS node into a CAR file and upload it to Storacha using `w3 up --car` or `client.uploadCAR`. As a result, we dive into the various ways you might interact with CAR files.
+CAR files are a format that pretty much any IPFS tool or implementation can interact with. You can export data from your personal IPFS node into a CAR file and upload it to Storacha using `storacha up --car` or `client.uploadCAR`. As a result, we dive into the various ways you might interact with CAR files.
 
 ## Command line tools
 

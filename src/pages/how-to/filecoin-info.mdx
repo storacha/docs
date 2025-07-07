@@ -1,15 +1,15 @@
 import { Callout } from 'nextra/components'
 
-# Get Filecoin information for a Piece
+# Get Filecoin Information for a Piece
 
 To retrieve a [Data Aggregation Proof](/concepts/podsi#data-aggregation-proof) (including [PoDSI](/concepts/podsi)) you can issue a `filecoin/info` invocation to the Storacha service.
 
-## Using the JS client
+## Using the JS Client
 
 Piece CIDs are calculated by the client before data is uploaded and are made available in the `onShardStored` callback of `uploadFile`, `uploadDirectory` or `uploadCAR`.
 
 <Callout type="info">
-  If you did not store the piece CID when your content was uploaded you can query [content claims](https://www.npmjs.com/package/@web3-storage/content-claims) for an equivalency claim.
+  If you did not store the piece CID when your content was uploaded you can query the [indexing service](https://www.npmjs.com/package/@storacha/indexing-service-client) for an equivalency claim.
 </Callout>
 
 Later, you can use the piece CID to retrieve a [Data Aggregation Proof](/concepts/podsi#data-aggregation-proof):
@@ -49,16 +49,16 @@ for (const { provider, aux } of result.ok.deals) {
 
 ## Using the CLI
 
-Piece CIDs are calculated by the client before data is uploaded and will be printed to the terminal if you pass the `--verbose` option to `w3 up`.
+Piece CIDs are calculated by the client before data is uploaded and will be printed to the terminal if you pass the `--verbose` option to `storacha up`.
 
 <Callout type="info">
-  If you did not store the piece CID when your content was uploaded you can query [content claims](https://www.npmjs.com/package/@web3-storage/content-claims) for an equivalency claim.
+  If you did not store the piece CID when your content was uploaded you can query the [indexing service](https://www.npmjs.com/package/@storacha/indexing-service-client) for an equivalency claim.
 </Callout>
 
 Later, you can use the piece CID to print out [Data Aggregation Proof](/concepts/podsi#data-aggregation-proof) information:
 
 ```sh
-$ w3 can filecoin info bafkzcibe52kq2dtip2bmrrw5qhphsa35onsxxvkuxl33dnotq2allfpz7tdxlhc5di
+$ storacha can filecoin info bafkzcibe52kq2dtip2bmrrw5qhphsa35onsxxvkuxl33dnotq2allfpz7tdxlhc5di
 
 Piece CID: bafkzcibe52kq2dtip2bmrrw5qhphsa35onsxxvkuxl33dnotq2allfpz7tdxlhc5di
 Deals: 
