@@ -211,6 +211,7 @@ import { StoreMemory } from '@storacha/client/stores/memory'
 import * as Proof from '@storacha/client/proof'
 import { Signer } from '@storacha/client/principal/ed25519'
 import * as DID from '@ipld/dag-ucan/did'
+import type { ServiceAbility } from '@storacha/client'
 
 async function backend(did) {
   // Load client with specific private key
@@ -225,7 +226,7 @@ async function backend(did) {
 
   // Create a delegation for a specific DID
   const audience = DID.parse(did)
-  const abilities = ['space/blob/add', 'space/index/add', 'filecoin/offer', 'upload/add']
+  const abilities: ServiceAbility[] = ['space/blob/add', 'space/index/add', 'filecoin/offer', 'upload/add']
   const expiration = Math.floor(Date.now() / 1000) + (60 * 60 * 24) // 24 hours from now
   const delegation = await client.createDelegation(audience, abilities, { expiration })
 
