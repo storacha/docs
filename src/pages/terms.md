@@ -20,9 +20,9 @@ All data uploaded to storacha.network is available to anyone who requests it usi
 
 ### Billing
 
-In order to begin storing files via the Services, you will need to provide us with one or more Payment Methods. "Payment Method" means a current, valid method of payment, which may involve a third party or payment processing vendor. You can increase your storage limit and add paid features to your account by signing up for a paid subscription plan (“Paid Plan”).
+In order to begin storing files via the Services, you will need to provide us with one or more Payment Methods. "Payment Method" means a current, valid method of payment, which may involve a third party or payment processing vendor. You can increase your storage and egress limits and add paid features to your account by signing up for a paid subscription plan (“Paid Plan”).
 
-You agree that you’ll pay the amounts set forth in https://storacha.network/#pricing for your chosen tier (“Subscription Charge”) plus any charges for additional usage beyond the storage limit of your selected tier during the previous month (“Overages”) (collectively, “Subscription Charge” and “Overages” are referred to as (the “Fees”) for each billing cycle).
+You agree that you’ll pay the amounts set forth in https://storacha.network/#pricing for your chosen tier (“Subscription Charge”) plus any charges for additional usage beyond the storage and egress limits of your selected tier during the previous month (“Overages”) (collectively, “Subscription Charge” and “Overages” are referred to as (the “Fees”) for each billing cycle).
 
 When determining tier storage limits and Overages, we track usage for payment using the volume of data associated with shard content identifiers/CIDs (CIDs referencing the actual data sent to storacha.network and stored) – usage is not tracked based on content CIDs (CIDs used to reference and access uploads in a format useful to users, like specific files and directories).
 
