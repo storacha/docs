@@ -1,6 +1,9 @@
 import { Callout } from 'nextra/components'
 import { Tabs } from 'nextra/components'
 
+export const languages = "Python,Ruby,PHP,Rust,Java".split(',')
+export const Tab = Tabs.Tab
+
 # Programmatic CLI Usage
 
 > Use Storacha from any programming language by calling the CLI as a subprocess.
@@ -35,6 +38,7 @@ storacha key create --json
 ```
 
 Output:
+
 ```json
 {
   "did": "did:key:z6MkjK9yatoy1KGgRecYgRnqWJFcjMEBXAnLfoEpx1WCE158",
@@ -43,6 +47,7 @@ Output:
 ```
 
 Save both values:
+
 - `did` - The public identifier for your server
 - `key` - The private key (**keep this secret!**)
 
@@ -67,6 +72,7 @@ storacha delegation create <SERVER_DID> \
 ### 3. Transfer credentials to your server
 
 Securely transfer to your server:
+
 - The `delegation.ucan` file
 - The private `key` value
 
@@ -97,16 +103,18 @@ storacha up /path/to/file.txt
 ```
 
 Output:
-```
-  1 file 0.1KB
-🐔 Stored 1 file
-🐔 https://storacha.link/ipfs/bafybeia7izi43t7pq7jc77oru6a4e7d7o636c4y3rgbjtgrb24ytp7f6ve
+
+```text
+1 file 0.1KB
+Stored 1 file
+https://storacha.link/ipfs/bafybeia7izi43t7pq7jc77oru6a4e7d7o636c4y3rgbjtgrb24ytp7f6ve
 ```
 
 ## Language Examples
 
-<Tabs items={['Python', 'Ruby', 'PHP', 'Rust', 'Java']}>
-  <Tabs.Tab>
+<Tabs items={languages}>
+<Tab>
+
 ```python
 import subprocess
 import os
@@ -152,8 +160,10 @@ if __name__ == "__main__":
     cid = upload_file("myfile.txt")
     print(f"Uploaded: https://storacha.link/ipfs/{cid}")
 ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+
+</Tab>
+<Tab>
+
 ```ruby
 require 'json'
 require 'open3'
@@ -179,8 +189,10 @@ end
 cid = upload_file('myfile.txt')
 puts "Uploaded: https://storacha.link/ipfs/#{cid}"
 ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+
+</Tab>
+<Tab>
+
 ```php
 <?php
 
@@ -210,8 +222,10 @@ function listUploads() {
 $cid = uploadFile('myfile.txt');
 echo "Uploaded: https://storacha.link/ipfs/{$cid}\n";
 ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+
+</Tab>
+<Tab>
+
 ```rust
 use std::process::Command;
 use std::env;
@@ -240,8 +254,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
-  </Tabs.Tab>
-  <Tabs.Tab>
+
+</Tab>
+<Tab>
+
 ```java
 import java.io.*;
 import org.json.*;
@@ -279,7 +295,8 @@ public class StorachaClient {
     }
 }
 ```
-  </Tabs.Tab>
+
+</Tab>
 </Tabs>
 
 ## Available Commands
@@ -314,6 +331,7 @@ Run `storacha space add delegation.ucan` to import the space from your delegatio
 ### "Capability not authorized"
 
 Ensure your delegation includes the required capabilities. Check with:
+
 ```bash
 storacha proof ls
 ```
@@ -321,6 +339,7 @@ storacha proof ls
 ### Command not found
 
 Ensure the CLI is installed globally:
+
 ```bash
 npm install -g @storacha/cli
 ```
