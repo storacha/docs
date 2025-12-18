@@ -1,0 +1,332 @@
+import { Callout } from 'nextra/components'
+import { Tabs } from 'nextra/components'
+
+# Programmatic CLI Usage
+
+> Use Storacha from any programming language by calling the CLI as a subprocess.
+
+This guide shows how to integrate Storacha into **any programming language** (Python, Rust, PHP, Ruby, Java, etc.) by using the CLI with delegated credentials. No interactive login required.
+
+## Overview
+
+The approach is:
+
+1. **One-time setup** (by account owner): Create a signing key and delegation
+2. **Server setup** (one-time): Import the delegation using environment variables
+3. **Runtime**: Call the CLI as a subprocess from your application
+
+<Callout type='info'>
+  This is the recommended approach for non-JavaScript projects that previously used the HTTP Bridge.
+</Callout>
+
+## Prerequisites
+
+- Node.js 18 or higher installed on your server
+- The Storacha CLI: `npm install -g @storacha/cli`
+
+## One-Time Setup (Account Owner)
+
+Someone with access to your Storacha account needs to create credentials. This only needs to be done once.
+
+### 1. Generate a key pair for your server
+
+```bash
+storacha key create --json
+```
+
+Output:
+```json
+{
+  "did": "did:key:z6MkjK9yatoy1KGgRecYgRnqWJFcjMEBXAnLfoEpx1WCE158",
+  "key": "MgCY2h0V5s7B+Yz5Rn2x4aVkAIyPM4h+/TqSfFqHHm+JN0e0BSDbtA9G2D2acXLY0OLjJMzeJVbLAzolaim97YJEHkkc="
+}
+```
+
+Save both values:
+- `did` - The public identifier for your server
+- `key` - The private key (**keep this secret!**)
+
+### 2. Create a delegation for the server
+
+The account owner (who is logged in) creates a delegation:
+
+```bash
+# Replace <SERVER_DID> with the `did` value from step 1
+storacha delegation create <SERVER_DID> \
+  --can 'space/*' \
+  --can 'upload/*' \
+  --can 'blob/*' \
+  --output delegation.ucan
+```
+
+<Callout type='warning'>
+  For production, consider limiting capabilities to only what's needed:
+  `--can 'space/blob/add' --can 'space/index/add' --can 'upload/add' --can 'filecoin/offer'`
+</Callout>
+
+### 3. Transfer credentials to your server
+
+Securely transfer to your server:
+- The `delegation.ucan` file
+- The private `key` value
+
+## Server Setup (One-Time)
+
+On your server, import the delegation. **No login required.**
+
+```bash
+# Set environment variables
+export STORACHA_PRINCIPAL="<PRIVATE_KEY>"
+export STORACHA_STORE_NAME="my-server"
+
+# Import the space from the delegation
+storacha space add delegation.ucan
+```
+
+This registers the space with your server's CLI profile. You only need to do this once.
+
+## Upload Files
+
+Now you can upload files programmatically:
+
+```bash
+export STORACHA_PRINCIPAL="<PRIVATE_KEY>"
+export STORACHA_STORE_NAME="my-server"
+
+storacha up /path/to/file.txt
+```
+
+Output:
+```
+  1 file 0.1KB
+🐔 Stored 1 file
+🐔 https://storacha.link/ipfs/bafybeia7izi43t7pq7jc77oru6a4e7d7o636c4y3rgbjtgrb24ytp7f6ve
+```
+
+## Language Examples
+
+<Tabs items={['Python', 'Ruby', 'PHP', 'Rust', 'Java']}>
+  <Tabs.Tab>
+```python
+import subprocess
+import os
+import json
+
+# Set credentials
+os.environ["STORACHA_PRINCIPAL"] = "<PRIVATE_KEY>"
+os.environ["STORACHA_STORE_NAME"] = "my-server"
+
+def upload_file(filepath):
+    """Upload a file and return the CID."""
+    result = subprocess.run(
+        ["storacha", "up", filepath, "--json"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    data = json.loads(result.stdout)
+    return data["root"]["/"]
+
+def list_uploads():
+    """List all uploads as JSON."""
+    result = subprocess.run(
+        ["storacha", "ls", "--json"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    return result.stdout
+
+def remove_upload(cid):
+    """Remove an upload by CID."""
+    result = subprocess.run(
+        ["storacha", "rm", cid],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    return result.returncode == 0
+
+# Example usage
+if __name__ == "__main__":
+    cid = upload_file("myfile.txt")
+    print(f"Uploaded: https://storacha.link/ipfs/{cid}")
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```ruby
+require 'json'
+require 'open3'
+
+ENV['STORACHA_PRINCIPAL'] = '<PRIVATE_KEY>'
+ENV['STORACHA_STORE_NAME'] = 'my-server'
+
+def upload_file(filepath)
+  stdout, stderr, status = Open3.capture3('storacha', 'up', filepath, '--json')
+  raise "Upload failed: #{stderr}" unless status.success?
+  
+  data = JSON.parse(stdout)
+  data['root']['/']
+end
+
+def list_uploads
+  stdout, stderr, status = Open3.capture3('storacha', 'ls', '--json')
+  raise "List failed: #{stderr}" unless status.success?
+  stdout
+end
+
+# Example usage
+cid = upload_file('myfile.txt')
+puts "Uploaded: https://storacha.link/ipfs/#{cid}"
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```php
+<?php
+
+putenv('STORACHA_PRINCIPAL=<PRIVATE_KEY>');
+putenv('STORACHA_STORE_NAME=my-server');
+
+function uploadFile($filepath) {
+    $output = [];
+    $returnCode = 0;
+    exec("storacha up " . escapeshellarg($filepath) . " --json", $output, $returnCode);
+    
+    if ($returnCode !== 0) {
+        throw new Exception("Upload failed");
+    }
+    
+    $data = json_decode(implode("\n", $output), true);
+    return $data['root']['/'];
+}
+
+function listUploads() {
+    $output = [];
+    exec("storacha ls --json", $output);
+    return implode("\n", $output);
+}
+
+// Example usage
+$cid = uploadFile('myfile.txt');
+echo "Uploaded: https://storacha.link/ipfs/{$cid}\n";
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```rust
+use std::process::Command;
+use std::env;
+use serde_json::Value;
+
+fn upload_file(filepath: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let output = Command::new("storacha")
+        .args(["up", filepath, "--json"])
+        .env("STORACHA_PRINCIPAL", "<PRIVATE_KEY>")
+        .env("STORACHA_STORE_NAME", "my-server")
+        .output()?;
+
+    if !output.status.success() {
+        return Err("Upload failed".into());
+    }
+
+    let stdout = String::from_utf8(output.stdout)?;
+    let data: Value = serde_json::from_str(&stdout)?;
+    let cid = data["root"]["/"].as_str().unwrap_or("");
+    Ok(cid.to_string())
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let cid = upload_file("myfile.txt")?;
+    println!("Uploaded: https://storacha.link/ipfs/{}", cid);
+    Ok(())
+}
+```
+  </Tabs.Tab>
+  <Tabs.Tab>
+```java
+import java.io.*;
+import org.json.*;
+
+public class StorachaClient {
+    
+    public static String uploadFile(String filepath) throws Exception {
+        ProcessBuilder pb = new ProcessBuilder("storacha", "up", filepath, "--json");
+        pb.environment().put("STORACHA_PRINCIPAL", "<PRIVATE_KEY>");
+        pb.environment().put("STORACHA_STORE_NAME", "my-server");
+        
+        Process process = pb.start();
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(process.getInputStream())
+        );
+        
+        StringBuilder output = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            output.append(line);
+        }
+        
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new Exception("Upload failed");
+        }
+        
+        JSONObject data = new JSONObject(output.toString());
+        return data.getJSONObject("root").getString("/");
+    }
+    
+    public static void main(String[] args) throws Exception {
+        String cid = uploadFile("myfile.txt");
+        System.out.println("Uploaded: https://storacha.link/ipfs/" + cid);
+    }
+}
+```
+  </Tabs.Tab>
+</Tabs>
+
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `storacha up <file>` | Upload a file or directory |
+| `storacha up <file> --json` | Upload and output JSON with CID |
+| `storacha ls` | List uploads |
+| `storacha ls --json` | List uploads as JSON |
+| `storacha rm <cid>` | Remove an upload |
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `STORACHA_PRINCIPAL` | Private signing key (from `storacha key create`) |
+| `STORACHA_STORE_NAME` | Profile name to isolate credentials |
+
+## Security Best Practices
+
+1. **Never commit credentials** - Use environment variables or secrets management
+2. **Limit capabilities** - Only delegate what's needed for your use case
+3. **Use separate keys** - Different keys for different environments (dev, staging, prod)
+
+## Troubleshooting
+
+### "No space selected"
+
+Run `storacha space add delegation.ucan` to import the space from your delegation.
+
+### "Capability not authorized"
+
+Ensure your delegation includes the required capabilities. Check with:
+```bash
+storacha proof ls
+```
+
+### Command not found
+
+Ensure the CLI is installed globally:
+```bash
+npm install -g @storacha/cli
+```
+
+## See Also
+
+- [CLI Reference](/cli) - Full CLI documentation
+- [Upload from CI](/how-to/ci) - CI/CD specific guide
+- [Go Client](/go-client) - Native Go implementation
