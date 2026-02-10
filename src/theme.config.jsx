@@ -1,5 +1,6 @@
 import { useConfig } from 'nextra-theme-docs'
 import { DocsLogo } from './components/brand'
+import { CopyAsMarkdown } from './components/copy-as-markdown'
 
 /**
  * @type {import('nextra-theme-docs').DocsThemeConfig}
@@ -15,6 +16,12 @@ const config = {
     link: 'https://github.com/storacha/upload-service'
   },
   docsRepositoryBase: 'https://github.com/storacha/docs/tree/main',
+  main: ({ children }) => (
+    <>
+      {children}
+      <CopyAsMarkdown />
+    </>
+  ),
   footer: {
     component: <footer className='py-6 text-center text-lg'></footer>
   },
