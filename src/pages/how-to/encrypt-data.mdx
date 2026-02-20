@@ -1,0 +1,225 @@
+import { Callout } from 'nextra/components'
+
+# Encrypt your data
+
+Everything on Storacha is public by default -- anyone who knows the CID can read your data. That is great for open content, but not for user data, private documents, or anything sensitive. Client-side encryption changes that: your data is encrypted on your device before it ever touches the network. The infrastructure never sees your plaintext, and only people you authorize can decrypt it.
+
+This guide walks you through encrypting files before upload, retrieving and decrypting them, and understanding how the key management works under the hood.
+
+<Callout type="error" emoji="⚠️">
+**Public by default.** All data uploaded to Storacha is available to anyone who requests it using the CID. Do not store private or sensitive information without encryption.
+</Callout>
+
+<Callout type="info">
+**Prerequisites:**
+- A Storacha account and space ([Create an Account](create-account), [Create a Space](create-space))
+- `@storacha/encrypt-upload-client` installed: `npm install @storacha/encrypt-upload-client`
+- `@storacha/client` installed and configured
+</Callout>
+
+## How encryption works
+
+Before diving into code, here is the high-level picture of what happens when you encrypt and upload a file. No deep cryptography knowledge required -- just the mental model.
+
+1. **Your device generates a random encryption key.** This is called a Data Encryption Key (DEK). It is a one-time-use AES-256 key that is unique to this particular file.
+2. **Your data is encrypted locally with that key.** The encryption happens entirely on your machine. The plaintext never leaves your device.
+3. **The key itself is wrapped (encrypted) using a master key from the Key Management Service (KMS).** The KMS holds a Key Encryption Key (KEK). Your DEK is encrypted with that KEK so it can be safely stored alongside the ciphertext.
+4. **The encrypted data and the wrapped key are uploaded together.** Everything that lands on the Storacha network is ciphertext. The CID you get back points to encrypted bytes.
+5. **To decrypt, the KMS unwraps the key (only for authorized users), then the data is decrypted locally.** Authorization is enforced with UCAN delegations. If you do not have the right proof, the KMS will not unwrap the key.
+
+The network only stores ciphertext. Storacha never sees your plaintext. Neither does the KMS -- it only wraps and unwraps the encryption key, never the data itself.
+
+## Set up the encrypted client
+
+The `@storacha/encrypt-upload-client` package provides an `EncryptedClient` that wraps the standard Storacha client with encryption and decryption capabilities. You create it by combining three things: a regular Storacha client, a crypto adapter that handles the encryption strategy, and optionally a gateway URL for retrieval.
+
+```javascript
+import { create as createStorachaClient } from '@storacha/client'
+import { create as createEncryptedClient } from '@storacha/encrypt-upload-client'
+import { createGenericKMSAdapter } from '@storacha/encrypt-upload-client/factories.node'
+// For browser environments, use:
+// import { createGenericKMSAdapter } from '@storacha/encrypt-upload-client/factories.browser'
+
+// Set up the base Storacha client
+const storachaClient = await createStorachaClient()
+
+// Create the crypto adapter (KMS strategy)
+const cryptoAdapter = createGenericKMSAdapter(
+  'https://kms.storacha.network',  // KMS service URL
+  'did:web:kms.storacha.network'   // KMS service DID
+)
+
+// Create the encrypted client
+const encryptedClient = await createEncryptedClient({
+  storachaClient,
+  cryptoAdapter,
+})
+```
+
+That is it. The `createEncryptedClient` function returns a promise that resolves to an `EncryptedClient` with two main methods: `encryptAndUploadFile` for uploading encrypted data, and `retrieveAndDecryptFile` for fetching and decrypting it.
+
+The `createGenericKMSAdapter` factory handles all the cryptographic details for you. It sets up AES-256 symmetric encryption internally, generates a fresh key for each file, wraps it using an RSA public key from the KMS, and reverses the process during decryption. You do not need to manage keys manually.
+
+If you have already set up your Storacha client following the [upload guide](upload) -- logged in, selected a space, configured delegations -- the same client instance works here. The encrypted client builds on top of it.
+
+## Encrypt and upload a file
+
+With the encrypted client ready, uploading an encrypted file is a single method call. You provide the file, some encryption configuration that tells the client which KMS key to use, and optionally some file metadata that will be preserved through the encrypt-decrypt round trip.
+
+```javascript
+const file = new File(['sensitive data'], 'private.txt', { type: 'text/plain' })
+
+const cid = await encryptedClient.encryptAndUploadFile(file, {
+  issuer: storachaClient.agent,
+  spaceDID: storachaClient.currentSpace(),
+  location: 'global',
+  keyring: 'storacha',
+  fileMetadata: {
+    name: 'private.txt',
+    type: 'text/plain',
+    extension: 'txt',
+  },
+})
+
+console.log('Encrypted upload CID:', cid.toString())
+```
+
+Let us walk through what each piece of the encryption config does:
+
+- **`issuer`** is the signing identity (your agent) that authorizes the encryption operation. This is a UCAN signer -- typically `storachaClient.agent`.
+- **`spaceDID`** identifies which space the upload belongs to. The KMS uses this to scope encryption keys to your space.
+- **`location`** and **`keyring`** tell the KMS _where_ to find the master key for wrapping your DEK. The `'global'` location and `'storacha'` keyring are the defaults for the Storacha-managed KMS.
+- **`fileMetadata`** is optional but recommended. It preserves the file's name, MIME type, and extension through the encryption round trip, so when someone decrypts the file later they know what they are looking at.
+
+Your file was encrypted on your device, and only the ciphertext was uploaded. The CID points to the encrypted version -- anyone who fetches it gets unreadable bytes. Without the right UCAN delegation to unwrap the encryption key, the data is useless.
+
+You can also pass `proofs` in the encryption config if you need to include additional UCAN proofs beyond what your agent already has. This is useful when operating on behalf of another user or when your agent has been delegated capabilities from a different space owner.
+
+## Retrieve and decrypt a file
+
+Decryption is the mirror of encryption. You provide the CID from the upload and a decryption config that includes the UCAN delegation proving you are authorized to unwrap the encryption key.
+
+```javascript
+const result = await encryptedClient.retrieveAndDecryptFile(cid, {
+  decryptDelegation: proof, // UCAN delegation authorizing decryption
+  spaceDID: storachaClient.currentSpace(),
+})
+
+// result.stream is a ReadableStream of the decrypted content
+const decrypted = await new Response(result.stream).text()
+console.log(decrypted) // 'sensitive data'
+
+// File metadata is preserved
+console.log(result.fileMetadata) // { name: 'private.txt', type: 'text/plain', extension: 'txt' }
+```
+
+The `decryptDelegation` is a UCAN proof that authorizes the `space/encryption/key/decrypt` capability. When the encrypted client calls the KMS to unwrap the DEK, it presents this delegation as proof of authorization. The KMS checks the proof chain, verifies that the caller is authorized, and returns the unwrapped key. The actual decryption then happens locally -- the KMS never touches your data.
+
+The `result` object gives you two things:
+
+- **`result.stream`** is a standard `ReadableStream` of the decrypted file contents. You can pipe it to a file, convert it to text, pass it to a `Response`, or handle it however your application needs.
+- **`result.fileMetadata`** contains the metadata you attached during upload (name, type, extension). This is only present if you provided `fileMetadata` when encrypting.
+
+### Getting the decryption delegation
+
+The `decryptDelegation` is a UCAN delegation that grants the `space/encryption/key/decrypt` capability. How you get this delegation depends on your application architecture:
+
+- **Same user encrypting and decrypting:** Your agent already has the necessary capabilities on the space. You can create a self-issued delegation or use your existing proofs.
+- **Sharing encrypted data with another user:** The space owner (or anyone with delegation authority) creates a UCAN delegation granting `space/encryption/key/decrypt` to the recipient's agent DID. This works the same way as any other UCAN delegation in Storacha -- see the delegation examples in the [upload guide](upload) for the pattern.
+- **Backend service decrypting on behalf of users:** Your backend agent needs a delegation from the space owner, similar to the "bring your own delegations" pattern described in the [upload guide](upload).
+
+The beauty of UCAN-based access control is that encryption key access is managed with the same delegation system as everything else in Storacha. No separate access control layer, no API keys to rotate, no central permission server that could go down.
+
+## How key management works
+
+The encryption system uses a pattern called _envelope encryption_. This is the same approach used by AWS KMS, Google Cloud KMS, and other production key management systems. Here is how the pieces fit together:
+
+### During encryption
+
+1. A fresh **Data Encryption Key (DEK)** is generated for every file. This is a random AES-256 key that is used once and never reused.
+2. The DEK encrypts the file content locally on your device.
+3. The KMS provides an RSA public key (the **Key Encryption Key**, or KEK).
+4. The DEK is _wrapped_ (encrypted) with the KEK public key.
+5. The **wrapped DEK** is stored alongside the encrypted content as part of the upload.
+
+### During decryption
+
+1. The wrapped DEK is extracted from the stored data.
+2. The encrypted client sends the wrapped DEK to the KMS along with a UCAN delegation proving authorization.
+3. The KMS verifies the UCAN proof chain. If valid, it _unwraps_ (decrypts) the DEK using its private key.
+4. The unwrapped DEK is returned to your device.
+5. Your device uses the DEK to decrypt the file content locally.
+
+The KMS never sees your data. It only handles key wrapping and unwrapping. The plaintext of your files exists only on authorized devices. Even if someone compromises the storage layer, they get ciphertext and a wrapped key they cannot unwrap without KMS authorization.
+
+This design means that access revocation is clean: if you revoke someone's UCAN delegation, the KMS will refuse to unwrap the DEK for them. They might still have access to the ciphertext (it is on a public network, after all), but without the DEK it is just random bytes.
+
+<Callout type="info">
+**Alternative: Lit Protocol.** For decentralized key management using blockchain-based access control, the `@storacha/encrypt-upload-client` also supports a Lit Protocol strategy. This requires a blockchain wallet and Lit session setup. See the [Lit Protocol examples](https://github.com/storacha/upload-service/tree/main/packages/encrypt-upload-client/examples) for details.
+</Callout>
+
+## Putting it all together
+
+Here is a complete example that sets up the encrypted client, uploads an encrypted file, and then retrieves and decrypts it:
+
+```javascript
+import { create as createStorachaClient } from '@storacha/client'
+import { create as createEncryptedClient } from '@storacha/encrypt-upload-client'
+import { createGenericKMSAdapter } from '@storacha/encrypt-upload-client/factories.node'
+
+// 1. Set up the clients
+const storachaClient = await createStorachaClient()
+const cryptoAdapter = createGenericKMSAdapter(
+  'https://kms.storacha.network',
+  'did:web:kms.storacha.network'
+)
+const encryptedClient = await createEncryptedClient({
+  storachaClient,
+  cryptoAdapter,
+})
+
+// 2. Encrypt and upload
+const file = new File(['sensitive data'], 'private.txt', { type: 'text/plain' })
+
+const cid = await encryptedClient.encryptAndUploadFile(file, {
+  issuer: storachaClient.agent,
+  spaceDID: storachaClient.currentSpace(),
+  location: 'global',
+  keyring: 'storacha',
+  fileMetadata: {
+    name: 'private.txt',
+    type: 'text/plain',
+    extension: 'txt',
+  },
+})
+
+console.log('Encrypted upload CID:', cid.toString())
+
+// 3. Retrieve and decrypt (see "Getting the decryption delegation" above)
+const proof = storachaClient.proofs()
+const result = await encryptedClient.retrieveAndDecryptFile(cid, {
+  decryptDelegation: proof,
+  spaceDID: storachaClient.currentSpace(),
+})
+
+const decrypted = await new Response(result.stream).text()
+console.log('Decrypted:', decrypted) // 'sensitive data'
+console.log('Metadata:', result.fileMetadata) // { name: 'private.txt', ... }
+```
+
+## What you just built
+
+With encrypted uploads, your application provides:
+
+- **Zero-knowledge storage** -- the infrastructure cannot read your users' data. Storacha stores ciphertext, the KMS only handles key wrapping, and plaintext exists only on authorized devices.
+- **Privacy by design** -- compliance with privacy regulations like GDPR and HIPAA becomes architectural, not policy-based. You do not need to trust the storage provider because the math guarantees confidentiality.
+- **User trust** -- you can truthfully tell users that you cannot access their data, even if compelled. The encryption keys are scoped to their space and controlled by UCAN delegations that you do not hold.
+- **Granular access control** -- sharing encrypted data is as simple as issuing a UCAN delegation. Revoke the delegation and access is gone, no need to re-encrypt or rotate keys.
+
+## Next steps
+
+You have learned how to encrypt data before uploading and decrypt it on retrieval. Here is where to go next:
+
+- [Encrypted key-value storage](../concepts/encrypted-kv) -- Learn how encryption fits with mutable references and key-value storage in Storacha's architecture.
+- [Store and update data](store-and-update) -- Add mutable references so encrypted data can be updated at a stable address without changing the link.
+- [Private key-value store](private-kv-store) -- Build a full private key-value store combining encryption with mutable KV for structured, updatable, private data.

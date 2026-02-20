@@ -15,5 +15,8 @@
   },
   "filecoin-info": "Get Filecoin info",
   "w3name": "Publish IPNS names",
-  "ci": "Upload from CI"
+  "ci": "Upload from CI",
+  "store-and-update": "Store and Update Data",
+  "encrypt-data": "Encrypt Your Data",
+  "private-kv-store": "Build a Private KV Store"
 }

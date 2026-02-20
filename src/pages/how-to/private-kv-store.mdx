@@ -1,0 +1,418 @@
+import { Callout } from 'nextra/components'
+
+# Build a private key-value store
+
+```javascript
+import { Name, Revision, Value } from '@storacha/ucn/pail'
+import { MemoryBlockstore } from '@storacha/ucn/block'
+
+const name = await Name.create()
+const blocks = new MemoryBlockstore()
+
+// Store key-value pairs
+const init = await Revision.v0Put(blocks, 'user/name', nameCID)
+for (const block of init.additions) await blocks.put(block)
+const value = Value.create(name, init.revision.operation.root, [init.revision])
+
+const update = await Revision.put(blocks, value, 'user/email', emailCID)
+for (const block of update.additions) await blocks.put(block)
+
+// Read it back
+const result = await Revision.get(blocks, value, 'user/name')
+```
+
+You just built a mutable key-value store on Storacha -- decentralized, shareable, and ready for encryption. The keys are plain strings, the values are CIDs pointing to any content you want, and the whole thing is backed by a CRDT so multiple writers can update concurrently without conflicts.
+
+This guide walks you through the full picture: creating a KV store, adding and reading entries, batch operations, publishing to the network, and layering on encryption so the infrastructure cannot read your data.
+
+## What this unlocks
+
+A private key-value store on Storacha opens up patterns that are hard or impossible with traditional infrastructure:
+
+- **Collaborative encrypted apps** -- shared mutable state that the storage layer cannot read. Multiple users update the same KV store, and the CRDT handles merges automatically.
+- **User-controlled data stores** -- users own their data and grant access to applications, not the other way around. Revoke access at any time with a UCAN delegation change.
+- **Application state without a database** -- no server needed. Your app reads and writes to a decentralized KV store that syncs across devices via the network.
+
+<Callout type="info">
+**Prerequisites:**
+- A Storacha account and space ([Create an Account](create-account), [Create a Space](create-space))
+- `@storacha/ucn` installed: `npm install @storacha/ucn`
+- Familiar with [storing and updating data](store-and-update)
+</Callout>
+
+## Set up the blockstore
+
+The KV store is built on content-addressed blocks. Each operation you perform -- putting a key, deleting an entry, committing a batch -- produces new IPLD blocks that encode the updated data structure. These blocks need to live somewhere accessible so that subsequent operations can reference them. A blockstore handles this. Think of it as a local cache for the content-addressed data your KV store is built from.
+
+```javascript
+import { MemoryBlockstore } from '@storacha/ucn/block'
+
+const blocks = new MemoryBlockstore()
+```
+
+`MemoryBlockstore` keeps everything in memory, which is perfect for getting started and for short-lived scripts. For production applications you would swap this out for a persistent blockstore backed by disk or a database, but the API stays the same.
+
+Every Pail operation that modifies the KV store returns an object with `additions` and `removals` -- the blocks that were created and the blocks that are no longer needed. You need to store the additions after each operation so the next operation can find them. Here is a small helper that does that:
+
+```javascript
+async function storeBlocks(blockstore, newBlocks) {
+  for (const block of newBlocks) {
+    await blockstore.put(block)
+  }
+}
+```
+
+You will use this helper after every write operation throughout the guide.
+
+## Your first key-value entry
+
+With the blockstore ready, you can create your first KV entry. This uses `Revision.v0Put`, which does double duty: it initializes the KV data structure _and_ inserts the first key-value pair in a single call.
+
+```javascript
+import { Name, Revision, Value } from '@storacha/ucn/pail'
+
+// Create a mutable reference for the KV store
+const name = await Name.create()
+
+// Create the first entry
+const init = await Revision.v0Put(blocks, 'settings/theme', themeCID)
+
+// Store the new blocks so future operations can find them
+await storeBlocks(blocks, init.additions)
+
+// Create the value view -- this represents the KV store's current state
+const value = Value.create(name, init.revision.operation.root, [init.revision])
+```
+
+Let us break down what just happened:
+
+1. **`Name.create()`** generates a new mutable reference backed by an ed25519 keypair. This is the same `Name` from the [store and update guide](store-and-update) -- a stable address that always resolves to the latest version of your data.
+2. **`Revision.v0Put(blocks, key, valueCID)`** creates the initial revision of the KV store with one entry. The `v0` prefix means this is the very first revision (version zero). The `key` is a string, and `valueCID` is a CID pointing to whatever content you want to associate with that key.
+3. **`storeBlocks`** persists the new blocks in our blockstore. This is critical -- if you skip this step, the next operation will fail because it cannot find the blocks it needs.
+4. **`Value.create(name, root, revisions)`** builds a `ValueView` that represents the current state of the KV store. You pass it the root CID from the revision's operation and the revision itself. This value is what you will hand to every subsequent read or write operation.
+
+This pattern -- _operation, store additions, create value_ -- is the rhythm of working with Pail. Every write operation follows the same three steps:
+
+1. Call the operation (`v0Put`, `put`, `del`, or `commit`)
+2. Store the `additions` blocks in the blockstore
+3. Create a new `Value` from the result and use it for the next operation
+
+Once you internalize this pattern, everything else is just variations on the theme.
+
+## Add and read entries
+
+Now that you have a KV store with one entry, adding more follows the same pattern. The difference is that you use `Revision.put` instead of `Revision.v0Put`, and you pass the current value so the operation knows the current state of the store.
+
+```javascript
+// Add another entry
+const result = await Revision.put(blocks, value, 'settings/language', langCID)
+await storeBlocks(blocks, result.additions)
+const value2 = Value.create(name, result.revision.operation.root, [result.revision])
+```
+
+Notice that `value2` is a _new_ value view representing the updated state. The original `value` still represents the state with only `settings/theme`. This is content-addressed data -- nothing is mutated in place. Each operation produces a new snapshot.
+
+### Reading a single entry
+
+To look up a key, use `Revision.get`:
+
+```javascript
+const theme = await Revision.get(blocks, value2, 'settings/theme')
+console.log(theme) // CID of the theme data
+```
+
+`Revision.get` returns the CID associated with the key, or `undefined` if the key does not exist. The CID itself points to whatever content you stored -- a JSON blob, an image, a configuration file, anything. You would then fetch that CID from Storacha (or your local blockstore) to get the actual data.
+
+### Listing all entries
+
+To iterate over every key-value pair in the store, use `Revision.entries`:
+
+```javascript
+for await (const [key, val] of Revision.entries(blocks, value2)) {
+  console.log(key, val)
+}
+// settings/language -> CID
+// settings/theme -> CID
+```
+
+`Revision.entries` returns an async iterable of `[string, UnknownLink]` tuples. The keys come back in sorted order, which is useful if you are using hierarchical key names like `settings/theme` and `settings/language` -- you can iterate over a "directory" of related keys.
+
+## Delete entries
+
+Removing a key is just as straightforward:
+
+```javascript
+const delResult = await Revision.del(blocks, value2, 'settings/language')
+await storeBlocks(blocks, delResult.additions)
+const value3 = Value.create(name, delResult.revision.operation.root, [delResult.revision])
+```
+
+After this, `Revision.get(blocks, value3, 'settings/language')` returns `undefined`, and iterating with `Revision.entries` will no longer include it. The key is gone from the current state of the KV store.
+
+Like all content-addressed operations, the deletion does not erase history. The previous state still exists as blocks in the blockstore (and potentially on the network). What changes is the _current root_ -- the latest snapshot no longer includes that key. If you need to verify that a key was actually present before deleting it, check with `Revision.get` first.
+
+## Batch operations
+
+When you need to update multiple keys at once, doing them one at a time works but creates a separate revision for each change. Batch operations let you queue up multiple puts and deletes and execute them as a single atomic revision.
+
+```javascript
+import { create as createBatch } from '@storacha/ucn/pail/batch'
+
+const batcher = await createBatch(blocks, currentValue)
+
+await batcher.put('user/name', newNameCID)
+await batcher.put('user/avatar', avatarCID)
+await batcher.del('user/old-field')
+
+// Execute all operations atomically
+const batchResult = await batcher.commit()
+await storeBlocks(blocks, batchResult.additions)
+const batchedValue = Value.create(
+  name,
+  batchResult.revision.operation.root,
+  [batchResult.revision]
+)
+```
+
+All three changes happen as a single atomic operation. Either all succeed or none do. This is important for maintaining consistency -- if you are updating a user profile, you do not want the name to update but the avatar to fail.
+
+The batch API is simple:
+
+- **`createBatch(blocks, currentValue)`** creates a new batcher from the current KV state
+- **`batcher.put(key, valueCID)`** queues a put operation
+- **`batcher.del(key)`** queues a delete operation
+- **`batcher.commit()`** executes everything and returns the same `{ revision, additions, removals }` shape as individual operations
+
+Use batches whenever you have logically related changes that should be applied together. It is also more efficient than individual operations since the CRDT only needs to compute the merged state once.
+
+## Publish and resolve
+
+So far, everything has been local. The KV store lives in your in-memory blockstore and nobody else can see it. To make it available on the network -- for other devices, other users, or just for persistence -- you need to publish it. Publishing pushes the blocks and revision metadata to the Storacha network, and resolving pulls the latest state back down. Together, they give you sync.
+
+### Publishing
+
+Publishing takes the current revision and pushes it to the network under the name's DID:
+
+```javascript
+// Publish the current state to the network
+const published = await Revision.publish(blocks, name, latestRevision)
+```
+
+Publishing pushes the blocks and revision metadata to the default Storacha clock service. After publishing, anyone who knows the name's DID can resolve it to get the current state of your KV store.
+
+### Resolving
+
+On another device (or as another user who has been granted access), you resolve the name to get the current KV state:
+
+```javascript
+// Resolve the current state from the network
+const resolved = await Revision.resolve(blocks, name)
+
+// Now you can read from it
+const currentTheme = await Revision.get(blocks, resolved.value, 'settings/theme')
+console.log(currentTheme) // CID of the theme data
+```
+
+The `base` option in `Revision.resolve` lets you provide a known previous state, so the resolution only fetches what has changed since then. This is useful for efficient syncing:
+
+```javascript
+// Only fetch changes since our last known state
+const updated = await Revision.resolve(blocks, name, {
+  base: previousValue,
+})
+```
+
+Because Pail is built on a CRDT (conflict-free replicated data type), concurrent updates from multiple writers merge automatically. If two users update different keys at the same time, both updates are preserved. If they update the _same_ key, the CRDT uses a deterministic merge strategy so everyone converges to the same result.
+
+### Sharing access
+
+You can grant others access to your KV store using the same UCAN delegation system from the [store and update guide](store-and-update):
+
+```javascript
+// Grant read-only access
+const readDelegation = await Name.grant(name, recipientDID, { readOnly: true })
+
+// Grant read-write access
+const fullDelegation = await Name.grant(name, recipientDID)
+```
+
+Read-only recipients can resolve and read the KV store but cannot publish updates. Read-write recipients can do both. Access is cryptographic -- no central server to manage permissions.
+
+You can also scope delegations with an expiration timestamp, so temporary collaborators lose access automatically:
+
+```javascript
+// Grant read-only access that expires in 24 hours
+const tempDelegation = await Name.grant(name, recipientDID, {
+  readOnly: true,
+  expiration: Math.floor(Date.now() / 1000) + 86400,
+})
+```
+
+## Add encryption
+
+This is where things get really interesting. A KV store on its own is useful, but the data is public -- anyone who resolves the name can read the values. By layering encryption on top, you get a private KV store where the keys (the string names) are visible, but the values are encrypted. Only authorized users can decrypt them.
+
+The pattern is straightforward: instead of storing raw CIDs as values, you encrypt the data first and store the _encrypted_ CID as the value.
+
+### Set up the encrypted client
+
+```javascript
+import { create as createEncryptedClient } from '@storacha/encrypt-upload-client'
+import { createGenericKMSAdapter } from '@storacha/encrypt-upload-client/factories.node'
+
+const cryptoAdapter = createGenericKMSAdapter(
+  'https://kms.storacha.network',
+  'did:web:kms.storacha.network'
+)
+const encryptedClient = await createEncryptedClient({
+  storachaClient,
+  cryptoAdapter,
+})
+```
+
+If you have not used the encrypted client before, the [encrypt data guide](encrypt-data) covers the setup in detail.
+
+### Encrypt a value before storing it
+
+```javascript
+// Encrypt a value before storing in the KV
+const file = new File(
+  [JSON.stringify(userData)],
+  'data.json',
+  { type: 'application/json' }
+)
+
+const encryptedCID = await encryptedClient.encryptAndUploadFile(file, {
+  issuer: storachaClient.agent,
+  spaceDID: storachaClient.currentSpace(),
+  location: 'global',
+  keyring: 'storacha',
+})
+
+// Store the encrypted CID in the KV store
+const result = await Revision.put(blocks, value, 'user/private-data', encryptedCID)
+await storeBlocks(blocks, result.additions)
+const encryptedValue = Value.create(
+  name,
+  result.revision.operation.root,
+  [result.revision]
+)
+```
+
+Now the KV store's keys are public -- anyone who resolves the name can see the key names like `user/private-data`. But the values are CIDs pointing to encrypted blobs. Without the right UCAN delegation to unwrap the encryption key from the KMS, those CIDs resolve to unreadable ciphertext.
+
+### Decrypt a value when reading
+
+```javascript
+// Read the encrypted CID from the KV store
+const encCID = await Revision.get(blocks, encryptedValue, 'user/private-data')
+
+// Decrypt it
+const decrypted = await encryptedClient.retrieveAndDecryptFile(encCID, {
+  decryptDelegation: proof,
+  spaceDID: storachaClient.currentSpace(),
+})
+
+const userData = JSON.parse(await new Response(decrypted.stream).text())
+```
+
+This two-layer architecture -- UCAN for access control, KMS for key management -- means you get defense in depth. Even if someone manages to resolve your name and enumerate your keys, they cannot read the values without a valid decryption delegation.
+
+You can mix encrypted and unencrypted values in the same KV store. Some keys might point to public data (like a user's display name) while others point to encrypted blobs (like private messages or financial data). The KV store does not care -- it just stores CIDs. The encryption decision is per-value, not per-store.
+
+<Callout type="warning">
+**Key names are not encrypted.** The string keys in your KV store (like `user/private-data`) are visible to anyone who can resolve the name. Only the _values_ (the CIDs and the data they point to) are encrypted. If your key names themselves are sensitive, consider using opaque identifiers (like UUIDs or hashes) instead of descriptive names.
+</Callout>
+
+## Complete example
+
+Here is a full end-to-end script that creates a private KV store, adds entries, performs a batch update, publishes to the network, and resolves from another context:
+
+```javascript
+import { Name, Revision, Value } from '@storacha/ucn/pail'
+import { create as createBatch } from '@storacha/ucn/pail/batch'
+import { MemoryBlockstore } from '@storacha/ucn/block'
+
+// -- Helper --
+async function storeBlocks(blockstore, newBlocks) {
+  for (const block of newBlocks) {
+    await blockstore.put(block)
+  }
+}
+
+// -- Setup --
+const name = await Name.create()
+const blocks = new MemoryBlockstore()
+
+// -- Create the KV store with the first entry --
+const init = await Revision.v0Put(blocks, 'app/version', versionCID)
+await storeBlocks(blocks, init.additions)
+let currentValue = Value.create(name, init.revision.operation.root, [init.revision])
+let latestRevision = init.revision
+
+// -- Add more entries --
+const put1 = await Revision.put(blocks, currentValue, 'app/config', configCID)
+await storeBlocks(blocks, put1.additions)
+currentValue = Value.create(name, put1.revision.operation.root, [put1.revision])
+latestRevision = put1.revision
+
+// -- Batch update --
+const batcher = await createBatch(blocks, currentValue)
+await batcher.put('user/name', userNameCID)
+await batcher.put('user/email', userEmailCID)
+await batcher.put('user/avatar', avatarCID)
+const batchResult = await batcher.commit()
+await storeBlocks(blocks, batchResult.additions)
+currentValue = Value.create(
+  name,
+  batchResult.revision.operation.root,
+  [batchResult.revision]
+)
+latestRevision = batchResult.revision
+
+// -- Read everything back --
+for await (const [key, val] of Revision.entries(blocks, currentValue)) {
+  console.log(`${key} -> ${val}`)
+}
+// app/config -> CID
+// app/version -> CID
+// user/avatar -> CID
+// user/email -> CID
+// user/name -> CID
+
+// -- Delete an entry --
+const del = await Revision.del(blocks, currentValue, 'user/avatar')
+await storeBlocks(blocks, del.additions)
+currentValue = Value.create(name, del.revision.operation.root, [del.revision])
+latestRevision = del.revision
+
+// -- Publish to the network --
+await Revision.publish(blocks, name, latestRevision)
+
+// -- Resolve from another context --
+const resolved = await Revision.resolve(blocks, name)
+const config = await Revision.get(blocks, resolved.value, 'app/config')
+console.log('Resolved config CID:', config)
+```
+
+## What you just built
+
+With a private KV store on Storacha, you have:
+
+- **Structured mutable state** -- a key-value interface on top of content-addressed, CRDT-backed storage. Keys are sorted strings, values are CIDs pointing to any content.
+- **Conflict-free collaboration** -- multiple writers can update the store concurrently. The CRDT merges changes automatically without coordination.
+- **Atomic batch updates** -- group related changes into a single revision for consistency.
+- **Network-wide availability** -- publish once and resolve from anywhere. Other devices and authorized users see the same state.
+- **Optional encryption** -- layer KMS-backed encryption on top so the infrastructure stores only ciphertext. Key names are visible for routing, but values are private.
+- **Decentralized access control** -- UCAN delegations manage who can read, write, and decrypt. No central auth server, no API keys to rotate.
+
+This is the foundation for any application that needs private, mutable, structured data without a traditional database. User preferences, app configurations, collaborative documents, encrypted message threads -- the pattern is the same. And because every piece is content-addressed, you get built-in integrity verification: if a block has been tampered with, its CID will not match, and the operation will fail. No extra checksums or validation logic needed.
+
+## Next steps
+
+You have learned how to create a private key-value store, manage entries, batch operations, publish to the network, and encrypt values. Here is where to go next:
+
+- [Encrypted key-value storage concepts](../concepts/encrypted-kv) -- Learn how mutable references, encryption, and key-value storage fit together in Storacha's architecture.
+- [Store and update data](store-and-update) -- Deep dive into mutable references and access control, including saving and restoring names for persistence.
+- [Encrypt data](encrypt-data) -- Learn more about encryption strategies, key management, and how the KMS wraps and unwraps keys.
+- [Pail CRDT internals](https://github.com/storacha/pail/blob/main/READMOAR.md) -- Understand the Merkle clock and CRDT theory behind the KV store's conflict-free merge behavior.

@@ -1,0 +1,275 @@
+import { Callout } from 'nextra/components'
+
+# Store and update data
+
+Storacha is content-addressed -- upload a file, get a CID. Change the file, get a different CID. That is great for verifiability and permanence, but what if you need a stable address that always resolves to the _latest_ version? Mutable references give you exactly that: a permanent address for data that changes.
+
+Think of it like a bookmark. The bookmark itself stays the same, but the page it points to can update whenever you want. Anyone who has the bookmark always lands on the most recent version.
+
+In this guide you will create a mutable reference, publish content to it, update that content, share access with others, and persist everything for later use. By the end you will have the building blocks for any application that needs stable links to changing data.
+
+<Callout type="info">
+**Prerequisites:**
+- A Storacha account and space ([Create an Account](create-account), [Create a Space](create-space))
+- `@storacha/ucn` installed: `npm install @storacha/ucn`
+</Callout>
+
+## Create a mutable reference
+
+A mutable reference is a stable address for changing data. Under the hood it is backed by an ed25519 cryptographic keypair. The public key becomes a DID (decentralized identifier) that stays the same for the lifetime of the reference, while the content it points to can update freely. You can think of it like a URL that always resolves to the latest page.
+
+Creating one takes a single call:
+
+```javascript
+import { Name } from '@storacha/ucn'
+
+const name = await Name.create()
+console.log(name.did()) // did:key:z6Mk...
+```
+
+That is it. You now have a mutable reference with its own cryptographic identity. The DID returned by `name.did()` is the stable address that you (and anyone you share it with) will use to find your data.
+
+<Callout type="info">
+The name generates its own cryptographic identity automatically. This DID is the stable address others will use to locate your data. You do not need to manage keys yourself unless you want to -- see [Save and restore a reference](#save-and-restore-a-reference) for persistence options.
+</Callout>
+
+If you already have an ed25519 agent (a `Signer`) that you would like to use as the identity behind the name, you can pass it in directly:
+
+```javascript
+import { Name } from '@storacha/ucn'
+
+// Use an existing agent as the name's identity
+const name = await Name.create(agent)
+```
+
+This is useful when you are integrating mutable references into an existing system that already manages signing keys.
+
+## Publish your first value
+
+A name on its own does not point to anything yet. To associate it with content, you create a _revision_ and _publish_ it. A revision is a versioned pointer: it wraps a CID value along with metadata that the network uses to order updates.
+
+The first revision is always created with `Revision.v0`:
+
+```javascript
+import { Name, Revision } from '@storacha/ucn'
+
+const name = await Name.create()
+
+// Create the first revision pointing to your content's CID
+const revision = await Revision.v0('/ipfs/bafybeigdyrzt...')
+
+// Publish to the network
+const state = await Revision.publish(name, revision)
+```
+
+`Revision.v0` marks this as the initial version (sequence number zero). `Revision.publish` signs the revision with the name's private key and pushes it to the network. The returned `state` object captures the current published state, which you will need later when updating the value.
+
+Now anyone who knows this name's DID can resolve it to find your content.
+
+## Resolve the current value
+
+Resolving a name means asking the network "what does this name currently point to?" You do this with `Revision.resolve`:
+
+```javascript
+import { Name, Revision } from '@storacha/ucn'
+
+// Given a name (or one restored from an archive)
+const state = await Revision.resolve(name)
+console.log(state.revision[0].value) // '/ipfs/bafybeigdyrzt...'
+```
+
+The `state` object contains the full revision history that the network knows about. The first entry in `state.revision` holds the most recently published value.
+
+### Handling a name with no value
+
+If nothing has been published to a name yet, `Revision.resolve` throws a `NoValueError`. You can handle this gracefully:
+
+```javascript
+import { Name, Revision, NoValueError } from '@storacha/ucn'
+
+try {
+  const state = await Revision.resolve(name)
+  console.log('Current value:', state.revision[0].value)
+} catch (err) {
+  if (err instanceof NoValueError) {
+    console.log('Nothing published to this name yet.')
+  } else {
+    throw err
+  }
+}
+```
+
+This is especially handy during initialization, when you are not sure whether the name has been used before.
+
+## Update the value
+
+Updating a mutable reference follows the same pattern as publishing for the first time, with one difference: instead of `Revision.v0`, you use `Revision.increment`. This bumps the sequence number so the network knows which revision is newer.
+
+You need the `state` from a previous `Revision.resolve` or `Revision.publish` call:
+
+```javascript
+import { Revision } from '@storacha/ucn'
+
+// state is from a previous resolve or publish
+const newRevision = await Revision.increment(state, '/ipfs/bafyNewCID...')
+const newState = await Revision.publish(name, newRevision)
+```
+
+The address stays the same. Anyone resolving the name now gets the updated content. No broken links, no redirect chains, no manual bookkeeping. You can call `Revision.increment` and `Revision.publish` as many times as you need -- each update supersedes the last.
+
+A typical update cycle looks like this:
+
+1. Resolve the current state with `Revision.resolve`.
+2. Create a new revision with `Revision.increment`.
+3. Publish with `Revision.publish`.
+
+That is the entire workflow. Three lines of code to update a stable address.
+
+## Share access
+
+This is where mutable references really shine. Access control is built on [UCAN](https://ucan.xyz/) (User Controlled Authorization Networks), a decentralized authorization protocol. Instead of managing API keys or passwords on a central server, you grant capabilities _directly_ to other users' cryptographic identities.
+
+### Grant read-only access
+
+If you want someone to be able to resolve the current value but _not_ update it:
+
+```javascript
+import { Name } from '@storacha/ucn'
+
+const readDelegation = await Name.grant(name, recipientDID, { readOnly: true })
+```
+
+The `recipientDID` is the decentralized identifier of the person or agent you are sharing with. They receive a UCAN delegation -- a cryptographic proof that you authorized them to read this name.
+
+### Grant read-write access
+
+To let someone both read _and_ update the value:
+
+```javascript
+const fullDelegation = await Name.grant(name, recipientDID)
+```
+
+When `readOnly` is not specified (or set to `false`), the delegation includes write capabilities. The recipient can publish new revisions to your name just as you can.
+
+### Grant time-limited access
+
+You can scope a delegation to expire after a set period. The `expiration` field takes a Unix timestamp in seconds:
+
+```javascript
+// Grant read-only access that expires in 24 hours
+const tempDelegation = await Name.grant(name, recipientDID, {
+  readOnly: true,
+  expiration: Math.floor(Date.now() / 1000) + 86400
+})
+```
+
+After the expiration time passes, the delegation becomes invalid. The recipient can no longer use it to resolve the name through authorized channels. This is useful for temporary collaborations, trial access, or any scenario where you want access to automatically revoke itself.
+
+### How UCAN delegation works
+
+Access is controlled through cryptographic delegations, not a central server. You grant capabilities directly to other users' identities. They can use the delegation to prove they have access -- no API keys, no passwords, no central authority that could be compromised or go offline.
+
+The delegation itself is a signed UCAN token. It travels with the recipient and can be verified by anyone without calling home to a server. This means access control works offline, across services, and without any single point of failure.
+
+## Save and restore a reference
+
+In real applications you will want to persist a mutable reference so you can come back to it later -- after a server restart, across sessions, or on a different machine. The `Name.archive` and `Name.extract` functions handle serialization.
+
+### Save a reference
+
+`Name.archive` encodes the name (including its identity proofs) as a CAR file in a `Uint8Array`. You can write this to disk, store it in a database, or stash it in `localStorage`:
+
+```javascript
+import { Name } from '@storacha/ucn'
+
+// Encode the name as bytes
+const archived = await Name.archive(name)
+
+// Save to a file (Node.js)
+import fs from 'fs'
+await fs.promises.writeFile('my-name.car', archived)
+
+// Or save to localStorage (browser)
+localStorage.setItem('my-name', btoa(String.fromCharCode(...archived)))
+```
+
+### Restore a reference
+
+When you need the name again, use `Name.extract` with the original agent (signing key) and the archived bytes:
+
+```javascript
+import { Name } from '@storacha/ucn'
+import fs from 'fs'
+
+// Load from file
+const bytes = await fs.promises.readFile('my-name.car')
+const restored = await Name.extract(agent, bytes)
+
+// Now you can resolve, update, or grant access as before
+const state = await Revision.resolve(restored)
+```
+
+<Callout type="warning">
+The archive includes the name's identity proofs but **not** the signing key. You need the original agent (signing key) to restore it. If you lose the agent, you will not be able to publish updates to this name. Store your agent keys securely.
+</Callout>
+
+### Restore from proofs
+
+If you have the individual delegation proofs rather than a CAR archive, you can reconstruct a name with `Name.from`:
+
+```javascript
+import { Name } from '@storacha/ucn'
+
+const restored = await Name.from(agent, proofs, { id: nameDID })
+```
+
+This is useful when you have received delegations from someone else and want to build a usable name reference from them.
+
+## Putting it all together
+
+Here is a complete example that creates a mutable reference, publishes a value, updates it, and then resolves the latest version:
+
+```javascript
+import { Name, Revision } from '@storacha/ucn'
+
+// 1. Create a new mutable reference
+const name = await Name.create()
+console.log('Name DID:', name.did())
+
+// 2. Publish the initial value
+const firstRevision = await Revision.v0('/ipfs/bafybeigdyrzt...')
+let state = await Revision.publish(name, firstRevision)
+console.log('Published v0:', state.revision[0].value)
+
+// 3. Update to a new value
+const secondRevision = await Revision.increment(state, '/ipfs/bafyUpdated...')
+state = await Revision.publish(name, secondRevision)
+console.log('Published v1:', state.revision[0].value)
+
+// 4. Resolve from anywhere using the same name
+const resolved = await Revision.resolve(name)
+console.log('Resolved:', resolved.revision[0].value)
+
+// 5. Save for later
+const archived = await Name.archive(name)
+```
+
+## What you just built
+
+With mutable references, you now have the foundation for any application that needs stable addresses for changing data. Here are some real-world use cases:
+
+- **App configurations** that update across all devices. Publish your config once, give every device the name's DID, and push updates that propagate automatically.
+- **User profiles** that evolve over time. The profile address never changes, even as the user updates their avatar, bio, or preferences.
+- **Content feeds** where new items replace old ones. Subscribers always resolve to the latest edition without needing to re-subscribe.
+- **Collaborative documents** where multiple authorized users can publish updates. Use read-write delegations to control who can contribute.
+- **IoT sensor data** where devices publish their latest readings to a stable address that dashboards poll.
+
+Because access control is cryptographic and decentralized, these patterns work without a central server managing permissions. You can grant and revoke access with UCAN delegations, and everything is verifiable offline.
+
+## Next steps
+
+You have learned how to create mutable references, publish and update values, share access, and persist names for later use. Here is where to go next:
+
+- [Encrypted key-value storage](../concepts/encrypted-kv) -- Learn how mutable references, encryption, and key-value storage fit together in Storacha's architecture.
+- [Encrypt data](encrypt-data) -- Add encryption to your data so only authorized users can read it, even though the storage network is public.
+- [Private key-value store](private-kv-store) -- Build a full private key-value store with structured data, combining mutable references with encryption.
