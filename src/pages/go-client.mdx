@@ -99,7 +99,7 @@ To interact with the Storacha API you need your private key to sign UCAN invocat
 package main
 
 import (
-  "ioutil"
+  "os"
 
   "github.com/storacha/go-ucanto/did"
   "github.com/storacha/go-ucanto/principal/ed25519/signer"
@@ -110,68 +110,60 @@ import (
 space, _ := did.Parse("did:key:z6MkwDuRThQcyWjqNsK54yKAmzfsiH6BTkASyiucThMtHt1y")
 
 // private key to sign UCAN invocations with
-priv, _ := ioutil.ReadFile("path/to/private.key")
-issuer, _ := signer.Parse(priv)
+keybytes, _ := os.ReadFile("path/to/private.key")
+issuer, _ := signer.FromRaw(keybytes)
 
 // UCAN proof(s) that the signer can perform tasks in this space (a delegation chain)
-prfbytes, _ := ioutil.ReadFile("path/to/proof.ucan")
+prfbytes, _ := os.ReadFile("path/to/proof.ucan")
 proof, _ := delegation.ExtractProof(prfbytes)
 ```
 
 ## Upload a CAR
 
-Once you have loaded your space DID, your private key and your delegation proofs, you can upload a CAR ([content addressed archive file](/concepts/car)) to Storacha.
-
-<Callout type="error">
-  The following code sample is out of date. An update is coming soon.
-</Callout>
+Once you have loaded your space DID, your private key and your delegation proof, you can upload a CAR ([content addressed archive file](/concepts/car)) to Storacha.
 
 ```go
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"net/http"
+  "context"
+  "fmt"
+  "os"
 
-	"github.com/ipfs/go-cid"
-	"github.com/ipld/go-ipld-prime/linking/cid"
-	"github.com/multiformats/go-multihash"
-	"github.com/storacha/guppy/capability/storeadd"
-	"github.com/storachas/guppy/client"
+  "github.com/storacha/go-ucanto/did"
+  "github.com/storacha/go-ucanto/principal/ed25519/signer"
+  "github.com/storacha/guppy/pkg/client"
+  "github.com/storacha/guppy/pkg/delegation"
 )
 
 func main() {
-  data, _ := ioutil.ReadFile("path/to/my.car")
+  ctx := context.Background()
 
-  // generate the CID for the CAR
-  mh, _ := multihash.Sum(data, multihash.SHA2_256, -1)
-  link := cidlink.Link{Cid: cid.NewCidV1(0x0202, mh)}
+  // space that the client will interact with
+  space, _ := did.Parse("did:key:z6MkwDuRThQcyWjqNsK54yKAmzfsiH6BTkASyiucThMtHt1y")
 
-  rcpt, _ := client.StoreAdd(
-    issuer,
-    space,
-    &storeadd.Caveat{Link: link, Size: len(data)},
-    client.WithProofs(proofs),
+  // private key to sign UCAN invocations with
+  keybytes, _ := os.ReadFile("path/to/private.key")
+  issuer, _ := signer.FromRaw(keybytes)
+
+  // UCAN proof(s) that the signer can perform tasks in this space (a delegation chain)
+  prfbytes, _ := os.ReadFile("path/to/proof.ucan")
+  proof, _ := delegation.ExtractProof(prfbytes)
+
+  // create a client with your identity and proof
+  c, _ := client.NewClient(
+    client.WithPrincipal(issuer),
+    client.WithAdditionalProofs(proof),
   )
 
-  // "upload" means it needs to be uploaded, "done" means it is already done!
-  if rcpt.Out().Ok().Status == "upload" {
-    hr, _ := http.NewRequest("PUT", *rcpt.Out().Ok().Url, bytes.NewReader(data))
+  // open the CAR file
+  carFile, _ := os.Open("path/to/my.car")
+  defer carFile.Close()
 
-    hdr := map[string][]string{}
-    for k, v := range rcpt.Out().Ok().Headers.Values {
-      hdr[k] = []string{v}
-    }
+  // upload the CAR — the client handles hashing, allocation, and HTTP upload
+  blob, _ := c.SpaceBlobAdd(ctx, carFile, space)
 
-    hr.Header = hdr
-    hr.ContentLength = len(data)
-    httpClient := http.Client{}
-    res, _ := httpClient.Do(hr)
-    res.Body.Close()
-  }
-
-  fmt.Println(link.String())
+  fmt.Printf("Uploaded blob: %d bytes\n", blob.Size)
 }
 ```
 
@@ -188,10 +180,5 @@ A DAG can be sharded amongst multiple CAR files (see maximum upload size above).
 Registering an upload is simple:
 
 ```go
-rcpt, _ := client.UploadAdd(
-  issuer,
-  space,
-  &uploadadd.Caveat{Root: root, Shards: shards},
-  client.WithProofs(proofs),
-)
+uploadOk, _ := c.UploadAdd(ctx, space, root, shards)
 ```
