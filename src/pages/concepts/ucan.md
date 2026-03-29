@@ -50,8 +50,9 @@ As a user of a UCAN-based system, you can freely delegate some or all of your ca
 
 Delegated UCANs have a proof chain with multiple "links" in the form of UCAN tokens. At the root of the chain is the token issued by the resource owner, with additional tokens granting some or all of those capabilities to other agents. By allowing users to control which agents can exercise their capabilities, UCANs offer tremendous flexibility in how users can interact with a service.
 
-Delegation is at the heart of what makes UCAN special! To learn more about delegation in the context of the w3up APIs, see our [delegation overview](./delegation.md).
+Delegation is at the heart of what makes UCAN special! To learn more about delegation in the context of the w3up APIs, see our [delegation overview](#ucan-delegation).
 
+# UCAN Delegation
 ## User owned accounts by default
 
 In our [Intro to UCAN article](https://blog.web3.storage/posts/intro-to-ucan), we gave a high-level overview of the new authorization protocol at the heart of our next-generation storage APIs. One of the most exciting things about UCAN is the ability for users to delegate access to their account's resources to other users, services, and devices. This guide will highlight some of the ways that delegation can be used with w3up, our new upload API. But first, let's consider some use cases that don't require delegation.
