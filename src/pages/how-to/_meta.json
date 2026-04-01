@@ -5,6 +5,7 @@
   "retrieve": "Retrieve",
   "list": "List",
   "remove": "Remove",
+  "programmatic": "Programmatic CLI",
   "plan": {
     "title": "Change price plan",
     "display": "hidden"
